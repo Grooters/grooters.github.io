@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>网络层 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="网络层在TCP/IP网络体系常被称为网际层 网络层的连发各种服务TCP/IP体系的网络层提供的是数据报服务 网络层的两种重要的功能分别是路由选择和分组转发 网际协议IP与其配套使用的还有：地址解析协议(ARP)  根据IP地址获取物理地址。 收到返回消息后将该IP地址和物理地址存入本机ARP缓存中并保留一定时间。 其他主机收到应答报文时不会检测该报文的真实性就会将其记入本机ARP缓存。  ARP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络层">
+<meta property="og:url" content="https://grooters.github.io/2018/05/28/网络层/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="网络层在TCP/IP网络体系常被称为网际层 网络层的连发各种服务TCP/IP体系的网络层提供的是数据报服务 网络层的两种重要的功能分别是路由选择和分组转发 网际协议IP与其配套使用的还有：地址解析协议(ARP)  根据IP地址获取物理地址。 收到返回消息后将该IP地址和物理地址存入本机ARP缓存中并保留一定时间。 其他主机收到应答报文时不会检测该报文的真实性就会将其记入本机ARP缓存。  ARP">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527492697315&di=ea6e1f592be046de321a7fd9ab8db535&imgtype=0&src=http%3A%2F%2Fwww.educity.cn%2Farticle_images%2F2013-12-23%2F6c7e0632-13b4-4089-8c0b-1203e1f51ba4.jpg">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527493098528&di=f6142ee5d0a58d186c07a741e485ea5f&imgtype=0&src=http%3A%2F%2Fstatic.yihaodou.com%2Ftec_data%2F2015%2F06%2F14349587585587bba69eec32bqPi.gif">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527495014733&di=4b2ec0c1f0d4f9c2ef613d6de3bfa4d8&imgtype=0&src=http%3A%2F%2Fpic.ikafan.com%2Fimgp%2FL3Byb3h5L2h0dHAvaW1hZ2U4LjM2MGRvYy5jb20vRG93bmxvYWRJbWcvMjAxMC8wNC8xMzE2LzI4NTQ3MjhfNy5qcGc%3D.jpg">
+<meta property="og:image" content="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=4174955677,1754196954&fm=27&gp=0.jpg">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/一般不使用的特殊IP地址.png">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/子网合法主机地址.PNG">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527567245209&di=000b2986c44ab85376cb3061ef8ff64a&imgtype=jpg&src=http%3A%2F%2Fimg2.imgtn.bdimg.com%2Fit%2Fu%3D563448447%2C944371832%26fm%3D214%26gp%3D0.jpg">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527567254695&di=462393863f9df2f25257a110ec7cc85c&imgtype=0&src=http%3A%2F%2Fwww.educity.cn%2Farticle_images%2F2013-11-04%2F2bd42780-fbd4-49a0-a36b-c011755c342f.jpg">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/ARP协议的作用.png">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528178775&di=570a021de5291d09c4da176057b4e546&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.kuqin.com%2Fupimg%2Fallimg%2F160918%2F2104592X0-6.jpg%3FimageMogr2%2Fauto-orient%2Fstrip%257CimageView2%2F2%2Fw%2F1240">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/IP数据报检验和的计算过程.png">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/求首部检验和.png">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/解首部检验和.png">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/路由表举例.png">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/子网.png">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/IP各字段和子网掩码.png">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/求IP数据报片偏移MF值.png">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/地址块匹配问题.png">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/求使用子网时分组转发的过程.png">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/解使用子网时分组转发的过程.png">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/ICMP报文格式.png">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/几种常用的ICMP报文类型.png">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/ICMP差错报告报文的数据字段的内容.png">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/自治系统和内部网关协议和外部网关协议.png">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/距离向量算法.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/RIP2的报文格式.png">
+<meta property="og:image" content="https://grooters.github.io/img/计算机网络/RIP协议的特点.png">
+<meta property="og:updated_time" content="2018-06-29T12:01:26.458Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络层">
+<meta name="twitter:description" content="网络层在TCP/IP网络体系常被称为网际层 网络层的连发各种服务TCP/IP体系的网络层提供的是数据报服务 网络层的两种重要的功能分别是路由选择和分组转发 网际协议IP与其配套使用的还有：地址解析协议(ARP)  根据IP地址获取物理地址。 收到返回消息后将该IP地址和物理地址存入本机ARP缓存中并保留一定时间。 其他主机收到应答报文时不会检测该报文的真实性就会将其记入本机ARP缓存。  ARP">
+<meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527492697315&di=ea6e1f592be046de321a7fd9ab8db535&imgtype=0&src=http%3A%2F%2Fwww.educity.cn%2Farticle_images%2F2013-12-23%2F6c7e0632-13b4-4089-8c0b-1203e1f51ba4.jpg">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#网络层的连发各种服务"><span class="toc-text">网络层的连发各种服务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#网际协议IP"><span class="toc-text">网际协议IP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#虚拟互联网络"><span class="toc-text">虚拟互联网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP地址与硬件地址"><span class="toc-text">IP地址与硬件地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#地址解析协议ARP"><span class="toc-text">地址解析协议ARP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP数据报的格式"><span class="toc-text">IP数据报的格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP转发分组的流程"><span class="toc-text">IP转发分组的流程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#划分子网和构造超网"><span class="toc-text">划分子网和构造超网</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#划分子网"><span class="toc-text">划分子网</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用子网时分组的转发"><span class="toc-text">使用子网时分组的转发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#无分类编址CIDR-构造超网"><span class="toc-text">无分类编址CIDR(构造超网)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#网际控制报文协议ICMP"><span class="toc-text">网际控制报文协议ICMP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#互联网的路由选择协议"><span class="toc-text">互联网的路由选择协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#内部网关协议RIP"><span class="toc-text">内部网关协议RIP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#距离向量算法"><span class="toc-text">距离向量算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RIP协议的报文格式"><span class="toc-text">RIP协议的报文格式</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-网络层" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">网络层</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.05.28</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/计算机网络/">计算机网络</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><strong><font size="5sp">网络层在TCP/IP网络体系常被称为网际层</font></strong></p>
+<h1 id="网络层的连发各种服务"><a href="#网络层的连发各种服务" class="headerlink" title="网络层的连发各种服务"></a>网络层的连发各种服务</h1><p><strong>TCP/IP体系的网络层提供的是数据报服务</strong><br><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1527492697315&amp;di=ea6e1f592be046de321a7fd9ab8db535&amp;imgtype=0&amp;src=http%3A%2F%2Fwww.educity.cn%2Farticle_images%2F2013-12-23%2F6c7e0632-13b4-4089-8c0b-1203e1f51ba4.jpg" alt="虚电路服务于数据报服务的对比"></p>
+<p><strong>网络层的两种重要的功能分别是路由选择和分组转发</strong></p>
+<h1 id="网际协议IP"><a href="#网际协议IP" class="headerlink" title="网际协议IP"></a>网际协议IP</h1><p>与其配套使用的还有：<br><strong><li>地址解析协议(ARP)</li></strong></p>
+<ol>
+<li>根据IP地址获取物理地址。</li>
+<li>收到返回消息后将该IP地址和物理地址存入本机ARP缓存中并保留一定时间。</li>
+<li>其他主机收到应答报文时不会检测该报文的真实性就会将其记入本机ARP缓存。</li>
+</ol>
+<p><strong>ARP 是 TCP/IP 协议簇中的网络接入层协议</strong></p>
+<p><strong><li>网际控制报文协议(ICMP)</li></strong></p>
+<ol>
+<li>管理网络通不通、主机是否可达、路由是否可用等网络本身的消息。</li>
+<li>ICMP靠IP协议来完成任务，所以ICMP报文中要封装在IP头部。</li>
+</ol>
+<p><strong><li>网际组管理协议(IGMP)</li></strong></p>
+<ol>
+<li>提供internet网际多点传送的功能,即将一个ip包拷贝给多个host,windows系列采用了这个协议。</li>
+<li>尚未成熟。</li>
+</ol>
+<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1527493098528&amp;di=f6142ee5d0a58d186c07a741e485ea5f&amp;imgtype=0&amp;src=http%3A%2F%2Fstatic.yihaodou.com%2Ftec_data%2F2015%2F06%2F14349587585587bba69eec32bqPi.gif" alt="网际协议IP及其配套协议"></p>
+<h2 id="虚拟互联网络"><a href="#虚拟互联网络" class="headerlink" title="虚拟互联网络"></a>虚拟互联网络</h2><p>网络互联需要一些中间设备：</p>
+<p><li>物理层：转发器</li></p>
+<p><li>数据链路层：网桥或桥接器</li></p>
+<p><li>网际层：路由器</li></p>
+<p><li>网际层以上：网关</li></p>
+<p>虚拟互联网络简称为IP网，在这种覆盖全球的IP网上层使用TCP协议则是现在的互联网(Internet)。</p>
+<p><strong>IP由互联网名字和数字分配机构(ICANN)分配。</strong></p>
+<p><strong>IP编址方法：</strong></p>
+<ol>
+<li>分类的IP地址</li>
+<li>子网的划分</li>
+<li>构成超网</li>
+</ol>
+<p><font size="5dp">分类的IP地址</font></p>
+<p>IP地址分为五类：A,B,C,D,E.<br><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1527495014733&amp;di=4b2ec0c1f0d4f9c2ef613d6de3bfa4d8&amp;imgtype=0&amp;src=http%3A%2F%2Fpic.ikafan.com%2Fimgp%2FL3Byb3h5L2h0dHAvaW1hZ2U4LjM2MGRvYy5jb20vRG93bmxvYWRJbWcvMjAxMC8wNC8xMzE2LzI4NTQ3MjhfNy5qcGc%3D.jpg" alt="ip地址中网络号字段和主机号字段"></p>
+<p>D类地址为网络地址，E类地址为广播地址</p>
+<p><strong><li>A类</li></strong><br><strong>1.0.0.1—126.155.255.254</strong></p>
+<ol>
+<li>网络号有8位，第一位已固定为0，固有7位可用。</li>
+<li>10.0.0.0到10.255.255.255是私有地址（在互联网上不使用，而被用在局域网络中的地址）。</li>
+</ol>
+<p>127.0.0.0到127.255.255.255是保留地址，用做循环测试用的。<br>0.0.0.0到0.255.255.255也是保留地址，用做表示所有的IP地址。<br>故有<strong>2^7-2=126</strong>个网络号</p>
+<p><strong><li>B类</li></strong><br><strong>128.0.0.1—191.255.255.254</strong><br>网络号有16位，但第一二位已确定为10，所以只有14位可用，虽然由于前两位导致网络号不可能全零或全一，但128.0.0.0是不指派的，故可分配的网络号有：2^14-1=65534个。</p>
+<p><strong><li>C类</li></strong><br><strong>192.0.0.1—223.255.255.254</strong><br>前三位固定为110，192.0.0.0也是不指派的，有2^21-1=2097151个网络号</p>
+<p><strong><li>D类</li></strong><br><strong>224.0.0.1—239.255.255.254</strong><br>前四位固定为1110<br>作为网络地址</p>
+<p><strong><li>E类</li></strong><br><strong>240.0.0.1—255.255.255.254</strong><br>前五位固定为11110<br>作为广播地址</p>
+<p><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=4174955677,1754196954&amp;fm=27&amp;gp=0.jpg" alt="IP地址指派范围"></p>
+<p><img src="/img/计算机网络/一般不使用的特殊IP地址.png" alt="一般不使用的特殊IP地址"></p>
+<p><strong>主机位全1为广播地址，全为0为网络地址，其它为主机地址</strong></p>
+<p><em>如果网络 150.25.0.0 的子网掩码是 255.255.224.0，下面的哪一个是合法的主机地址（    ）。</em><br><img src="/img/计算机网络/子网合法主机地址.PNG" alt="子网合法主机地址"></p>
+<p><strong>IP地址是标志一台主机或路由器和一条链路的接口。具有两个IP地址的主机称为多归属主机</strong></p>
+<ol>
+<li>路由器具有两个或两个以上的IP地址即没一个路由器的接口都有一个不同网络号的IP地址</li>
+<li>当两个路由器直接相连时，两端的接口可以分配也可以不分配IP地址，若分配了IP地址，这一段连线就构成了一种只包含一段线路的特殊网络。若不分配则把这段特殊网络叫做无编号网络。</li>
+</ol>
+<h2 id="IP地址与硬件地址"><a href="#IP地址与硬件地址" class="headerlink" title="IP地址与硬件地址"></a>IP地址与硬件地址</h2><p><strong>物理地址是数据链路层和物理层使用的地址，而IP地址是网络层及以上使用的地址，是一种逻辑地址</strong></p>
+<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1527567245209&amp;di=000b2986c44ab85376cb3061ef8ff64a&amp;imgtype=jpg&amp;src=http%3A%2F%2Fimg2.imgtn.bdimg.com%2Fit%2Fu%3D563448447%2C944371832%26fm%3D214%26gp%3D0.jpg" alt="IP地址与硬件地址的区别"></p>
+<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1527567254695&amp;di=462393863f9df2f25257a110ec7cc85c&amp;imgtype=0&amp;src=http%3A%2F%2Fwww.educity.cn%2Farticle_images%2F2013-11-04%2F2bd42780-fbd4-49a0-a36b-c011755c342f.jpg" alt="不同层次和不同区间的源地址和目的地址"></p>
+<ol>
+<li>在IP层抽象的互联网上只能看到IP数据报</li>
+<li>路由器只根据目的站的IP地址的网络号进行路由选择</li>
+<li>在局域网的链路层只能看到MAC帧</li>
+</ol>
+<h2 id="地址解析协议ARP"><a href="#地址解析协议ARP" class="headerlink" title="地址解析协议ARP"></a>地址解析协议ARP</h2><p><img src="/img/计算机网络/ARP协议的作用.png" alt="ARP协议的作用"></p>
+<p><strong>ARP协议会在主机ARP高速缓存（ARP cache）中存放一个IP地址到硬件地址的映射表。</strong></p>
+<p>当主机A要向本局域网上的某台主机B发送IP数据报时就在其ARP cache中查找是否有主机B的IP地址，如有就在ARP cache中找出对应的MAC地址，再把该硬件地址写入MAX帧，然后通过局域网把该MAC帧发往此硬件地址。</p>
+<p><strong>若高速缓存为空，则需要执行以下步骤：</strong><br>ARP进程会在本局域网广播一个ARP请求分组，结构为：“源IP地址，目的IP地址，请求内容”，当匹配到了IP地址相同的主机时，该主机就将发送一个ARP响应分组，将自己的MAC地址写入该分组中，同时该主机也会把发送端的MAC地址记录到本地的MAC Cache中。</p>
+<p><strong>ARP对保存在高速缓存中的每一个映射地址都设置了生存空间，即该映射地址能在该缓存存活多久。</strong></p>
+<p><strong>ARP报文封装在以太帧中传送</strong></p>
+<h2 id="IP数据报的格式"><a href="#IP数据报的格式" class="headerlink" title="IP数据报的格式"></a>IP数据报的格式</h2><p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1528178775&amp;di=570a021de5291d09c4da176057b4e546&amp;imgtype=jpg&amp;er=1&amp;src=http%3A%2F%2Fimg.kuqin.com%2Fupimg%2Fallimg%2F160918%2F2104592X0-6.jpg%3FimageMogr2%2Fauto-orient%2Fstrip%257CimageView2%2F2%2Fw%2F1240" alt="IP数据报格式"></p>
+<p><strong><li>版本</li></strong><br>占4位，目前广泛使用的是4，即IPv4。</p>
+<p><strong><li>首部长度</li></strong><br>占4位，转换成十进制数为15，但注意：<strong>首部长度字段所表示的单位是32位字即4个字节</strong>，因为IP首部的固定长度为20字节，所以首部字段长度最小值为5，即就只有固定长度那20字节，当首部长度为最大值时则有15*4=60字节。</p>
+<p><strong><li>区分服务</li></strong><br>占8位，该字段在就标准中叫做服务类型，后来被IETF改名为区分服务DS</p>
+<p><strong><li>总长度</li></strong><br>指首部和数据之和的长度，单位为字节。总长度字段为16位，故该数据报的最大长度为2^16-1=65535字节。<br>在IP层下面的每一种数据链路层协议都规定了一个数据帧中的数据字段的最大长度，这被称为最大传送单元MTU。若所传送的数据报长度超过数据链路层的MTU值，就必须把过长的数据报进行分片处理。</p>
+<p><strong><li>标识</li></strong><br>占16位，IP软件在存储器中维持一个计数器，每产生一个数据报，计数器就加1，并将辞职赋给标识字段。</p>
+<p><strong><li>标志</li></strong><br>占3位</p>
+<ol>
+<li><strong>标志字段最低位记为MF。当MF=1时即表示后面“还有分片”的数据报；MF=0表示这已是若干数据报片中的最后一个</strong></li>
+<li><strong>标志字段中间的一位记为DF，指不能分片，只有当DF=0时才允许分片</strong></li>
+</ol>
+<p><strong><li>片偏移</li></strong><br>占13位，分片后某片在原分组中的相对位置，<strong>片偏移以8个字节为偏移单位，也就是说每个分片的长度必须是8字节的整数倍</strong></p>
+<p><strong><li>生存时间</li></strong><br>指定数据报在网络中的寿命，以秒为TTL的值的单位，没经过一个路由就减去在路由器中所花费的时间，当TTL小于1秒就减1，直到TTL值减为0就丢弃该数据报。<br>如今TTL单位为跳数，TTL的意义为在互联网中至多可以经过多少个路由器，最多可经过255（其占8位）个路由器。</p>
+<p><strong><li>首部检验和</li></strong><br>占16位，<strong>只检验数据报首部，但不包括数据部分</strong><br><strong><font size="4sp">检验方法：</font></strong><br>发送方：先把IP数据报首部划分为16位的序列，然后将检验和部分置零，将所有单元进行反码和运算，将得到的结果写入检验和字段。<br>接收方：将首部所有字段再进行一次反码和运算，若得出的结果为0，则说明数据正常。</p>
+<p><img src="/img/计算机网络/IP数据报检验和的计算过程.png" alt="IP数据报检验和的计算过程"></p>
+<p><em>求首部检验和：</em></p>
+<p><img src="/img/计算机网络/求首部检验和.png" alt="求首部检验和"></p>
+<p><em>解首部检验和：</em></p>
+<p><img src="/img/计算机网络/解首部检验和.png" alt="解首部检验和"></p>
+<blockquote>
+<p>1.版本4和首部长度5各占4位，区分服务0占8位，写成16位序列为：<br>0100010100000000<br>2.总长度28占16位，写成16位序列为：<br>0000000000011100<br>…</p>
+</blockquote>
+<h2 id="IP转发分组的流程"><a href="#IP转发分组的流程" class="headerlink" title="IP转发分组的流程"></a>IP转发分组的流程</h2><p><img src="/img/计算机网络/路由表举例.png" alt="路由表举例"></p>
+<p><strong><font size="5sp">分组转发算法如下：</font></strong></p>
+<ol>
+<li>从数据报首部提取目的主机的IP地址D，得出目的网络地址N。</li>
+<li>若N就是此路由器直接相连的某个网络地址，则直接交付，否则执行3进行间接交付。</li>
+<li>若路由表中的目的地址为D的特定主机路由，则把数据报传送给路由表所指明的下一跳路由器，否则执行4.</li>
+<li>若路由表中有到达N的路由，则把数据报传送给路由表中所指明的下一跳路由器，否则执行5.</li>
+<li>若路由表中有默认路由，则把数据报传送给默认路由，否则执行6.</li>
+<li>报告转发分组失败。</li>
+</ol>
+<h1 id="划分子网和构造超网"><a href="#划分子网和构造超网" class="headerlink" title="划分子网和构造超网"></a>划分子网和构造超网</h1><h2 id="划分子网"><a href="#划分子网" class="headerlink" title="划分子网"></a>划分子网</h2><p><strong>IP地址：：{&lt;网络号&gt;,&lt;子网号&gt;,&lt;主机号&gt;}</strong></p>
+<p><img src="/img/计算机网络/子网.png" alt="子网"></p>
+<p><strong>子网掩码：</strong><br>从IP数据报首部无法看出源主机和目的在主机所连接的网络是否进行过子网划分，所以需要子网掩码进行判断和求出网络地址</p>
+<p><img src="/img/计算机网络/IP各字段和子网掩码.png" alt="IP各字段和子网掩码"></p>
+<p>如上图子网号为3的网络的网络地址为145.13.3.0</p>
+<p><strong>通过子网掩码和IP地址进行逐位相与，可得出所要找的子网的网络地址145.13.3.0</strong></p>
+<p><strong>子网掩码是一个网络或一个子网的重要属性</strong></p>
+<p>子网数是根据子网号算出来的，若subnet-id有n位，则共有2^n种可能的排列，<strong>除去全0和全1这两种情况</strong>就可得出子网数</p>
+<p><em>计算对应目的地址的下一跳：</em></p>
+<table>
+<thead>
+<tr>
+<th>目的网络</th>
+<th>子网掩码</th>
+<th>下一跳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>128.96.39.0</td>
+<td>255.255.255.128</td>
+<td>m0</td>
+</tr>
+</tbody>
+</table>
+<p>128.96.39.10</p>
+<p>128.96.39.10 与 255.255.255.128 求与的：128.96.39.0，故：<br>对应的下一跳是m0</p>
+<p><img src="/img/计算机网络/求IP数据报片偏移MF值.png" alt="求IP数据报片偏移MF值"></p>
+<p><em>求数目为6的A类子网掩码：</em><br>设nbit，则6=2^n-2,=&gt;n=3,故有:<br><strong>11111111.11100000…..=&gt; 255.192.0.0</strong></p>
+<p><img src="/img/计算机网络/地址块匹配问题.png" alt="地址块匹配问题"></p>
+<h2 id="使用子网时分组的转发"><a href="#使用子网时分组的转发" class="headerlink" title="使用子网时分组的转发"></a>使用子网时分组的转发</h2><p><strong>路由表必须包括：目的网络地址，子网掩码和下一跳地址</strong></p>
+<p>在划分子网的情况下，路由器转发分组的算法如下：</p>
+<ol>
+<li>从收到的数据报首部获取目的IP地址D。</li>
+<li>先判断是否为直接交付，即对与路由器直接相连的网络的子网掩码与D逐位相与，看结果是否与相应的网络地址匹配，若匹配则直接交付（需要把D转换成物理地址封装成帧发送出去），否则执行3.</li>
+<li>若路由表中有目的地址为D的特定主机路由器，则把数据报传送给路由表所指明的下一跳路由器，否则执行4.</li>
+<li>对路由表中的每一行，用其中的子网掩码与D逐位相与，其结果若与改行目的网络地址相匹配，则把数据传给改行指定的下一跳路由器，否则执行5。</li>
+<li>若路由表中有一个默认路由，则把数据报传送给路由表中所指明的默认路由器，否则执行6。</li>
+<li>报告转发分组错误。</li>
+</ol>
+<p><img src="/img/计算机网络/求使用子网时分组转发的过程.png" alt="求使用子网时分组转发的过程"><br><img src="/img/计算机网络/解使用子网时分组转发的过程.png" alt="解使用子网时分组转发的过程"></p>
+<h2 id="无分类编址CIDR-构造超网"><a href="#无分类编址CIDR-构造超网" class="headerlink" title="无分类编址CIDR(构造超网)"></a>无分类编址CIDR(构造超网)</h2><p>在变长子网掩码VLSM的基础上研究出了无分类编址，即无分类域间路由选择CIDR。</p>
+<p><em>CIDR特点：</em></p>
+<ol>
+<li>CIDR消除了传统的A类，B类和C类地址以及划分子网的概念。</li>
+<li>CIDR吧网络前缀相同的连续的IP地址组成一个“CIDR地址块”。</li>
+</ol>
+<p><strong>IP地址 :: = {&lt;网络前缀&gt;，&lt;主机号&gt;}</strong><br>da sejhuiosaHJDKLAshndjkl;asJdnmksl;Zcmn LZDK:<br>有三级编址（使用子网掩码）转为两级编址</p>
+<p><em>eg：128.14.35.7/20</em></p>
+<p>写成二进制：10000000 00001110 00100011 00000111，则：<br><strong>前二十位为网络号，后十二位为主机号</strong></p>
+<table>
+<thead>
+<tr>
+<th>最小地址</th>
+<th>128.14.32.0</th>
+<th>10000000 00001110 00100000 00000000</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>最大地址</td>
+<td>128.14.47.255</td>
+<td>10000000 00001110 00101111 11111111</td>
+</tr>
+</tbody>
+</table>
+<p>CIDR使用的地址掩码也可以继续称为子网掩码，例如以上的子网掩码就是：<br><strong>11111111 11111111 11110000 00000000</strong></p>
+<p>路由表中利用CIDR地址块来查找目的网络，这种地址的聚合称为路由聚合，也称为构成超网</p>
+<p>CIDR的特殊写法：<br>10.0.0.0/10 = 10/10<br>00001010 00*</p>
+<p><strong>每一个CIDR地址数一定是2的整数次幂</strong></p>
+<p><strong>路由表中的每一个项目由“网络前缀”和”下一跳地址”组成”</strong></p>
+<h1 id="网际控制报文协议ICMP"><a href="#网际控制报文协议ICMP" class="headerlink" title="网际控制报文协议ICMP"></a>网际控制报文协议ICMP</h1><p>ICMP允许主机或路由器提供差错情况和有关异常情况的报告。</p>
+<p>ICMP是存在于IP数据报中的，故不是高层协议。</p>
+<p><img src="/img/计算机网络/ICMP报文格式.png" alt="ICMP报文格式"></p>
+<p><em>ICMP报文种类有两种：</em></p>
+<p><strong><li>ICMP差错报告报文</li></strong></p>
+<p><img src="/img/计算机网络/几种常用的ICMP报文类型.png" alt="几种常用的ICMP报文类型"></p>
+<p><em>改变路由：路由器把改变路由报文发送给主机，让主机知道下次应将数据报发送给另外的路由器。</em></p>
+<p><em>ICMP差错报告报文格式为：</em><br>把收到的需要进行差错报告的IP数据报的前8个字节提取出来（为了得到运输层的端口号），作为ICMP报文的数据字段。再加上相应的ICMP差错报告报文的前8个字节，就构成了ICMP差错报告报文。</p>
+<p><img src="/img/计算机网络/ICMP差错报告报文的数据字段的内容.png" alt="ICMP差错报告报文的数据字段的内容"></p>
+<p><strong><li>ICMP询问报文</li></strong></p>
+<p>常见的询问报文有以下两种：</p>
+<ol>
+<li><p>回送请求和回答<br>给特定主机或路由发送一个询问，对应主机必需做出一个应答，该询问报文用来测试目的站是否可达以及了解其有关状态。</p>
+</li>
+<li><p>时间戳请求和回答<br>让某台主机或路由器回答一个当前的日期和时间，该报文中有一个32字节的字段，其中写入的整数代表从1900年1月1日到当今时刻一共有多少秒。该报文用于时钟同步和时间测量。</p>
+</li>
+</ol>
+<h1 id="互联网的路由选择协议"><a href="#互联网的路由选择协议" class="headerlink" title="互联网的路由选择协议"></a>互联网的路由选择协议</h1><p>从路由算法能否随网络的通信量或拓扑自适应地进行调整变化来划分，则有<strong>静态路由选择策略（非自适应路由选择）</strong>与<strong>动态路由选择策略（自适应路由选择）</strong></p>
+<p>自治系统（AS）是在单一技术管理下的一组路由器，而这些路由器使用<strong>一种</strong>自治系统内部的路由选择协议和<strong>共同的</strong>度量。一个AS对其它AS表现出的是一个<strong>单一的</strong>和<strong>一致的</strong>路由选择策略。</p>
+<p>互联网将路由选择协议分为两大类：</p>
+<ol>
+<li>内部网关协议（IGP）：RIP和OSPF</li>
+<li>外部网关协议（EGP）：EGP和BGP（边界网关协议）</li>
+</ol>
+<p><img src="/img/计算机网络/自治系统和内部网关协议和外部网关协议.png" alt="自治系统和内部网关协议和外部网关协议"></p>
+<h2 id="内部网关协议RIP"><a href="#内部网关协议RIP" class="headerlink" title="内部网关协议RIP"></a>内部网关协议RIP</h2><p>RIP叫做路由信息协议，是一种分布式的基于距离向量的路由选择协议。</p>
+<p>RIP协议要求网络中的每一个路由器都要维护从它自己到其它目的网络的距离记录，故该距离为一组距离即距离向量。</p>
+<p>RIP协议将距离称作为<strong>跳数</strong>，每经过一个路由器跳数就加1，只允许一条路径最多只能有15个路由器，即距离为15以上时则将该路径看作不通，因此该协议仅仅适用于小型互联网。</p>
+<p>RIP不能使用多条路由线路，只会先择一条距离最短的线路。</p>
+<p><em>RIP协议的特点是：</em></p>
+<ol>
+<li>仅和相邻路由器交换信息</li>
+<li>路由器交换的信息是当前本路由器所知道的全部信息，即自己现在的路由表</li>
+<li>按固定的时间间隔交换路由信息</li>
+</ol>
+<h3 id="距离向量算法"><a href="#距离向量算法" class="headerlink" title="距离向量算法"></a>距离向量算法</h3><p><em>对每一个相邻路由器发送过来的RIP报文，进行以下步骤：</em></p>
+<ol>
+<li>对地址为X的相邻路由器发来的RIP报文，先修改此报文中的所有项目：把下一跳字段中的地址都改为X，并把所有的距离都加1，每一个项目都有三个数据：到目的网络N，距离为d，下一跳路由器为X。</li>
+<li>对修改后的RIP报文进行以下步骤：若原路由表没有目的网络N，则把该项目添加到路由表中，<em>否则</em>：若下一跳地址为X则把收到的项目替换原路由表中的项目，<em>否则</em>：若收到的项目中的距离d小于路由表中的距离，则进行更新，<em>否则</em>：什么也不做。</li>
+<li>若3分钟还没收到相邻路由器的更新路由表，则把此相邻路由器记为不可达的路由器，即把距离置为16。</li>
+<li>返回。</li>
+</ol>
+<p><em>eg:</em><br><img src="/img/计算机网络/距离向量算法.PNG" alt="距离向量算法"></p>
+<h3 id="RIP协议的报文格式"><a href="#RIP协议的报文格式" class="headerlink" title="RIP协议的报文格式"></a>RIP协议的报文格式</h3><p><img src="/img/计算机网络/RIP2的报文格式.png" alt="RIP2的报文格式"></p>
+<p>首部中的命令字段指出报文的意义，如1表示请求路由信息。</p>
+<p>路由部分由若干个路由信息组成，每个路由信息占20个字节，最多只能有25个路由信息，故RIP报文最大长度为：<strong>4+20*25=504</strong></p>
+<p>其中地址族标识符（地址类别）字段用来标志所使用的地址协议，如采用IP地址就将其置为2。路由标记填入自治系统号ASN，因为RIP有可能收到本自治系统以外的路由选择信息。</p>
+<p>RIP2鉴别功能：将原来写入第一个路由信息的位置用作鉴别，此时应将地址族标识符置为全1，而路由标记写入鉴别类型，剩下的16字节作为鉴别数据。</p>
+<p>RIP协议的特点：<strong>好消息传的快，坏消息传得慢</strong></p>
+<p><img src="/img/计算机网络/RIP协议的特点.png" alt="RIP协议的特点"></p>
+<p>当R1到网1的链路出现故障，则R1路由表相应的项目会变为1，16，直接（网络1，16跳，直接交付），此时可能需要30s才能把更新信息发送给R2，而此时R2传了1，2，R1（网络1，距离为2跳，下一跳为R1）给R1，R1就会以为到达网络1的距离为2+1=3，下一跳为R2，并把更新信息给R2，R2又会以为其到网络1的距离为4，下一跳为R1，这样的更新会持续下去直到距离达到16才会发现出错。</p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/05/26/Hexo博客搭建/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/06/02/贪心算法/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

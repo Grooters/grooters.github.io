@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Flutter初探 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="环境搭建Flutter是谷歌的移动UI框架，可以快速在iOS和Android上构建高质量的原生用户界面 Flutter具体信息可以参考以下文章： 初探Flutter，初步解析Flutter，可实现安卓ios统一开发。还有谷歌的Fuchsia系统 Flutter环境搭建原生搭建 镜像搭建 由于在编译工程的时候要下载一些必须的文件会很慢，所以google提供了代理镜像:  PUB_HOSTED_URL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter初探">
+<meta property="og:url" content="https://grooters.github.io/2018/12/05/Flutter初探/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="环境搭建Flutter是谷歌的移动UI框架，可以快速在iOS和Android上构建高质量的原生用户界面 Flutter具体信息可以参考以下文章： 初探Flutter，初步解析Flutter，可实现安卓ios统一开发。还有谷歌的Fuchsia系统 Flutter环境搭建原生搭建 镜像搭建 由于在编译工程的时候要下载一些必须的文件会很慢，所以google提供了代理镜像:  PUB_HOSTED_URL">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-08T06:29:21.382Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Flutter初探">
+<meta name="twitter:description" content="环境搭建Flutter是谷歌的移动UI框架，可以快速在iOS和Android上构建高质量的原生用户界面 Flutter具体信息可以参考以下文章： 初探Flutter，初步解析Flutter，可实现安卓ios统一开发。还有谷歌的Fuchsia系统 Flutter环境搭建原生搭建 镜像搭建 由于在编译工程的时候要下载一些必须的文件会很慢，所以google提供了代理镜像:  PUB_HOSTED_URL">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#环境搭建"><span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Flutter环境搭建"><span class="toc-text">Flutter环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原生搭建"><span class="toc-text">原生搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDE搭建"><span class="toc-text">IDE搭建</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Flutter实例"><span class="toc-text">Flutter实例</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Flutter初探" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Flutter初探</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.12.05</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><p><strong><a href="https://flutter.io/" target="_blank" rel="noopener">Flutter</a></strong>是谷歌的移动UI框架，可以快速在iOS和Android上构建高质量的原生用户界面</p>
+<p><em>Flutter具体信息可以参考以下文章：</em></p>
+<p><a href="https://blog.csdn.net/hytfly/article/details/81138393" target="_blank" rel="noopener">初探Flutter，初步解析Flutter，可实现安卓ios统一开发。还有谷歌的Fuchsia系统</a></p>
+<h1 id="Flutter环境搭建"><a href="#Flutter环境搭建" class="headerlink" title="Flutter环境搭建"></a>Flutter环境搭建</h1><h2 id="原生搭建"><a href="#原生搭建" class="headerlink" title="原生搭建"></a>原生搭建</h2><p><li> 镜像搭建</li></p>
+<p>由于在编译工程的时候要下载一些必须的文件会很慢，所以google提供了代理镜像:</p>
+<blockquote>
+<p>PUB_HOSTED_URL=<a href="https://pub.flutter-io.cn" target="_blank" rel="noopener">https://pub.flutter-io.cn</a><br> FLUTTER_STORAGE_BASE_URL=<a href="https://storage.flutter-io.cn" target="_blank" rel="noopener">https://storage.flutter-io.cn</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">此电脑 -&gt; 高级系统设置 -&gt; 环境变量 -&gt; 系统变量</span><br></pre></td></tr></table></figure>
+<p> 分别新建变量名为PUB_HOSTED_URL和FLUTTER_STORAGE_BASE_URL，值为<a href="https://pub.flutter-io.cn" target="_blank" rel="noopener">https://pub.flutter-io.cn</a>  和<a href="https://storage.flutter-io.cn的环境变量" target="_blank" rel="noopener">https://storage.flutter-io.cn的环境变量</a></p>
+<p><strong>还有一种方法是打开VPN开启全局代理。</strong></p>
+<p><li> 下载SDK</li></p>
+<p><a href="https://flutter.io/docs/development/tools/sdk/archive#windows" target="_blank" rel="noopener">SDK下载地址</a></p>
+<p>下载好后将压缩包内容解压到你想将Flutter存放的目录。</p>
+<p><li> 编译运行工程</li></p>
+<p>在根目录会看到一个叫<strong>flutter_console.bat</strong>文件，打开该文件。</p>
+<p>在根目录中会有一个examples的文件夹，里面存放有几个实例，将目录切换到对应实例工程的目录路径中：</p>
+<blockquote>
+<p>cd examples/hello_world</p>
+</blockquote>
+<p>然后执行命令编译并运行程序</p>
+<p><em>注意：需要连接手机设备并设置为开发者模式否则会提示No connected devices</em></p>
+<p>在运行完成后会有一句提示</p>
+<blockquote>
+<p>To hot reload changes while running, press “r”. To hot restart (and rebuild state), press “R”.</p>
+</blockquote>
+<p>即可以输入r可执行热加载，执行R可实现热重启</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flutter run</span><br></pre></td></tr></table></figure>
+<p>即可编译运行该工程</p>
+<h2 id="IDE搭建"><a href="#IDE搭建" class="headerlink" title="IDE搭建"></a>IDE搭建</h2><p>选用Android Studio</p>
+<p><li> 安装插件</li></p>
+<p>setting -&gt; plugins</p>
+<p>搜索flutter并安装，安装完成后需要配置flutter和dart的sdk path：</p>
+<p>File | Settings | Languages &amp; Frameworks</p>
+<p>只需选择flutter存放的根目录</p>
+<h1 id="Flutter实例"><a href="#Flutter实例" class="headerlink" title="Flutter实例"></a>Flutter实例</h1><p>以Android Studio作为编译工具</p>
+<p>新建Flutter工程，在新建窗口选择Flutter SDK Path同样是Flutter所在的根目录</p>
+<p><em>注意：工程名不能出现大写字母</em></p>
+<p><em>main.dart：</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'package:first_flutter/view/FirstPage.dart'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'package:flutter/material.dart'</span>;</span><br><span class="line"><span class="keyword">void</span> main() =&gt; runApp(MyApp());</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApp</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  @override</span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> MaterialApp(</span><br><span class="line">      title: <span class="string">'Flutter Demo'</span>,</span><br><span class="line">      theme: ThemeData(</span><br><span class="line">        primarySwatch: Colors.green,</span><br><span class="line">      ),</span><br><span class="line">      home: MyHomePage(title: <span class="string">'Flutter Demo Homer Page'</span>),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyHomePage</span> <span class="keyword">extends</span> <span class="title">StatefulWidget</span> </span>&#123;</span><br><span class="line">  MyHomePage(&#123;Key key, <span class="keyword">this</span>.title&#125;) : <span class="keyword">super</span>(key: key);</span><br><span class="line">  final <span class="built_in">String</span> title;</span><br><span class="line">  @override</span><br><span class="line">  _MyHomePageState createState() =&gt; _MyHomePageState();</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_MyHomePageState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">MyHomePage</span>&gt; </span>&#123;</span><br><span class="line">  int _counter = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">void</span> _incrementCounter() &#123;</span><br><span class="line">    setState(() &#123;</span><br><span class="line">      Navigator.push(context,</span><br><span class="line">          MaterialPageRoute(builder: <span class="function">(<span class="params">context</span>) =&gt;</span> FirstPage())</span><br><span class="line">      );</span><br><span class="line">      _counter++;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  @override</span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      appBar: AppBar(</span><br><span class="line">        title: Text(widget.title),</span><br><span class="line">      ),</span><br><span class="line">      body: Center(</span><br><span class="line">        child: Column(</span><br><span class="line">          mainAxisAlignment: MainAxisAlignment.center,</span><br><span class="line">          children: <span class="xml"><span class="tag">&lt;<span class="name">Widget</span>&gt;</span>[</span></span><br><span class="line"><span class="xml">            Text(</span></span><br><span class="line"><span class="xml">              'You have pushed the button this many times:',</span></span><br><span class="line"><span class="xml">            ),</span></span><br><span class="line"><span class="xml">            Text(</span></span><br><span class="line"><span class="xml">              '$_counter',</span></span><br><span class="line"><span class="xml">              style: Theme.of(context).textTheme.display1,</span></span><br><span class="line"><span class="xml">            ),</span></span><br><span class="line"><span class="xml">          ],</span></span><br><span class="line"><span class="xml">        ),</span></span><br><span class="line"><span class="xml">      ),</span></span><br><span class="line"><span class="xml">      floatingActionButton: FloatingActionButton(</span></span><br><span class="line"><span class="xml">        onPressed: _incrementCounter,</span></span><br><span class="line"><span class="xml">        tooltip: 'Increment',</span></span><br><span class="line"><span class="xml">        child: Icon(Icons.add),</span></span><br><span class="line"><span class="xml">      ),</span></span><br><span class="line"><span class="xml">    );</span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">&#125;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>void main() =&gt; runApp(MyApp());</p>
+</blockquote>
+<p>程序入口，第一个打开的页面</p>
+<p>以上dart首先在MyApp类中定义了主题色，标题等</p>
+<p>然后需要创建两个创建widget必须有的类：分别继承了<strong>StatefulWidget</strong>和<strong>State</strong>的两个类MyHomePage和_MyHomePageState</p>
+<p>在_MyHomePageState类的重写方法中定义了appBar，body和floatingActionButton三个Widget，当用户点击了floatingActionButton按钮会调用_incrementCounter方法实现_counter自增1且跳转到FirstPage页面</p>
+<p><em>FirstPage.dart：</em><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'package:english_words/english_words.dart'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'package:flutter/material.dart'</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FirstPage</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span></span>&#123;</span><br><span class="line">  BuildContext context;</span><br><span class="line">  @override</span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">this</span>.context=context;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MaterialApp(</span><br><span class="line">      title: <span class="string">"my first_page"</span>,</span><br><span class="line">      home: <span class="keyword">new</span> Scaffold(</span><br><span class="line">        appBar: <span class="keyword">new</span> AppBar(</span><br><span class="line">          title: <span class="keyword">new</span> Text(<span class="string">"first_page"</span>),</span><br><span class="line">        ),</span><br><span class="line">        body: <span class="keyword">new</span> Center(</span><br><span class="line">            child: <span class="keyword">new</span> RandomWords(),</span><br><span class="line">        ),</span><br><span class="line">          floatingActionButton: FloatingActionButton(</span><br><span class="line">            onPressed: _popMainPage,</span><br><span class="line">            tooltip: <span class="string">"Increment"</span>,</span><br><span class="line">            child: Icon(Icons.ac_unit),</span><br><span class="line">          )</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">  _popMainPage()&#123;</span><br><span class="line">    Navigator.pop(context);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RandomWords</span> <span class="keyword">extends</span> <span class="title">StatefulWidget</span></span>&#123;</span><br><span class="line">  @override</span><br><span class="line">  createState()=&gt;<span class="keyword">new</span> RandomWordsState();</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RandomWordsState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">RandomWords</span>&gt; </span>&#123;</span><br><span class="line">  final _suggestions = <span class="xml"><span class="tag">&lt;<span class="name">WordPair</span>&gt;</span>[];</span></span><br><span class="line"><span class="xml">  final TextStyle _biggerFont = new TextStyle(fontSize: 18.0);</span></span><br><span class="line"><span class="xml">  @override</span></span><br><span class="line"><span class="xml">  Widget build(BuildContext context) &#123;</span></span><br><span class="line"><span class="xml">    return new Scaffold(</span></span><br><span class="line"><span class="xml">      body: _buildSuggestions(),</span></span><br><span class="line"><span class="xml">    );</span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">  Widget _buildSuggestions() &#123;</span></span><br><span class="line"><span class="xml">    return new ListView.builder(</span></span><br><span class="line"><span class="xml">      padding: const EdgeInsets.all(16.0),</span></span><br><span class="line"><span class="xml">      itemBuilder: (context, i) &#123;</span></span><br><span class="line"><span class="xml">        if (i.isOdd) return new Divider();</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">        final index = i ~/ 2;</span></span><br><span class="line"><span class="xml">        if (index &gt;= _suggestions.length) &#123;</span></span><br><span class="line"><span class="xml">          _suggestions.addAll(generateWordPairs().take(10));</span></span><br><span class="line"><span class="xml">        &#125;</span></span><br><span class="line"><span class="xml">        return _buildRow(_suggestions[index]);</span></span><br><span class="line"><span class="xml">      &#125;,</span></span><br><span class="line"><span class="xml">    );</span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">  Widget _buildRow(WordPair pair) &#123;</span></span><br><span class="line"><span class="xml">    return new ListTile(</span></span><br><span class="line"><span class="xml">      title: new Text(</span></span><br><span class="line"><span class="xml">        pair.asPascalCase,</span></span><br><span class="line"><span class="xml">        style: _biggerFont,</span></span><br><span class="line"><span class="xml">      ),</span></span><br><span class="line"><span class="xml">    );</span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>FirstPage创建了一个内容为随机字母（通过开源包<strong>english_words</strong>）的无限ListView。</p>
+<p>同上，在本页面中RandomWords继承了StatefulWidget通过重写createState方法实例化继承了State的RandomWordsState类，在该类重写方法build中调用_buildSuggestions方法创建Widget。</p>
+<p>开源包引入方法为：</p>
+<p>打开project目录下的pubspeck.yaml文件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">dependencies:</span><br><span class="line">  flutter:</span><br><span class="line">    sdk: flutter</span><br><span class="line">  # The following adds the Cupertino Icons font to your application.</span><br><span class="line">  # Use with the CupertinoIcons class for iOS style icons.</span><br><span class="line">  cupertino_icons: ^0.1.2</span><br><span class="line"></span><br><span class="line">  english_words: ^3.1.0</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/12/01/Java多线程/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/12/05/View的工作原理/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

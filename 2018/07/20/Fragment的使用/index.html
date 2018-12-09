@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Fragment的使用 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="我们坚持AUF（Always Use Fragments）原则 Fragemnt的生命周期  onAttach() 当碎片和活动建立关联的时候调用。  onCreateView() 为碎片创建视图（加载布局）时调用。  onActivityCreated() 确保与碎片相关联的活动一定已经创建完毕的时候调用。  onDestroyView() 当与碎片关联的视图被移除的时候调用。  onDetac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fragment的使用">
+<meta property="og:url" content="https://grooters.github.io/2018/07/20/Fragment的使用/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="我们坚持AUF（Always Use Fragments）原则 Fragemnt的生命周期  onAttach() 当碎片和活动建立关联的时候调用。  onCreateView() 为碎片创建视图（加载布局）时调用。  onActivityCreated() 确保与碎片相关联的活动一定已经创建完毕的时候调用。  onDestroyView() 当与碎片关联的视图被移除的时候调用。  onDetac">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://grooters.github.io/img/Android/FragmentLife.jpg">
+<meta property="og:updated_time" content="2018-10-09T10:40:46.776Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fragment的使用">
+<meta name="twitter:description" content="我们坚持AUF（Always Use Fragments）原则 Fragemnt的生命周期  onAttach() 当碎片和活动建立关联的时候调用。  onCreateView() 为碎片创建视图（加载布局）时调用。  onActivityCreated() 确保与碎片相关联的活动一定已经创建完毕的时候调用。  onDestroyView() 当与碎片关联的视图被移除的时候调用。  onDetac">
+<meta name="twitter:image" content="https://grooters.github.io/img/Android/FragmentLife.jpg">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Fragemnt的生命周期"><span class="toc-text">Fragemnt的生命周期</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#源码实现"><span class="toc-text">源码实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Fragment与Activity之间的通信"><span class="toc-text">Fragment与Activity之间的通信</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Fragment数据的保留"><span class="toc-text">Fragment数据的保留</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Fragment的封装与解耦"><span class="toc-text">Fragment的封装与解耦</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Fragment的使用" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Fragment的使用</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.07.20</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><strong><font size="4sp">我们坚持AUF（Always Use Fragments）原则</font></strong></p>
+<h1 id="Fragemnt的生命周期"><a href="#Fragemnt的生命周期" class="headerlink" title="Fragemnt的生命周期"></a>Fragemnt的生命周期</h1><p><img src="/img/Android/FragmentLife.jpg" alt="Fragment的生命周期"></p>
+<p><li> onAttach()</li></p>
+<p>当碎片和活动建立关联的时候调用。</p>
+<p><li> onCreateView()</li></p>
+<p>为碎片创建视图（加载布局）时调用。</p>
+<p><li> onActivityCreated()</li></p>
+<p>确保与碎片相关联的活动一定已经创建完毕的时候调用。</p>
+<p><li> onDestroyView()</li></p>
+<p>当与碎片关联的视图被移除的时候调用。</p>
+<p><li> onDetach()</li></p>
+<p>当碎片和活动解除关联的时候调用。</p>
+<h1 id="源码实现"><a href="#源码实现" class="headerlink" title="源码实现"></a>源码实现</h1><p><strong>静态加载：</strong></p>
+<p><em>主布局文件：</em><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">fragment</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/first_fragment"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">"io.github.grooters.FirstFragment"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"0dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_weight</span>=<span class="string">"1"</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>android:name指明Fragment类</p>
+</blockquote>
+<p><em>FirstFragment.class：</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> inflater.inflate(R.layout.fragment_first, container, <span class="keyword">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>动态加载：</strong></p>
+<p><em>MainActivity，activity_main：</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">FragmentManager manager=getSupportFragmentManager();</span><br><span class="line">FragmentTransaction transaction=manager.beginTransaction();</span><br><span class="line">FragmentOne fragmentOne=<span class="keyword">new</span> FragmentOne();</span><br><span class="line">transaction.replace(R.id.fragment_container,fragmentOne,<span class="string">"one"</span>);</span><br><span class="line">transaction.commit();</span><br><span class="line"></span><br><span class="line">&lt;FrameLayout</span><br><span class="line">    android:id=<span class="string">"@+id/fragment_container"</span></span><br><span class="line">    android:layout_marginTop=<span class="string">"10dp"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span>/&gt;</span><br></pre></td></tr></table></figure></p>
+<p><em>FragmentOne：</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> String TAG=FragmentOne.class.getSimpleName();</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    View v=inflater.inflate(R.layout.fragment_one,container,<span class="keyword">false</span>);</span><br><span class="line">    Button button=v.findViewById(R.id.create_fragment);</span><br><span class="line">    button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">            FragmentManager manager=getFragmentManager();</span><br><span class="line">            FragmentTransaction transaction=manager.beginTransaction();</span><br><span class="line">            transaction.replace(R.id.fragment_container,<span class="keyword">new</span> FragmentTwo(),<span class="string">"two"</span>);</span><br><span class="line">            transaction.addToBackStack(<span class="string">"one"</span>);</span><br><span class="line">            transaction.commit();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> v;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroyView</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onDestroyView();</span><br><span class="line"></span><br><span class="line">    Log.i(TAG,<span class="string">"onDestroyView"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onDestroy();</span><br><span class="line"></span><br><span class="line">    Log.i(TAG,<span class="string">"onDestroy"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDetach</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onDetach();</span><br><span class="line"></span><br><span class="line">    Log.i(TAG,<span class="string">"onDetach"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>FragmentTwo：</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> String TAG=FragmentTwo.class.getSimpleName();</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    View v=inflater.inflate(R.layout.fragment_two,container,<span class="keyword">false</span>);</span><br><span class="line">    <span class="keyword">return</span> v;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroyView</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onDestroyView();</span><br><span class="line">    Log.i(TAG,<span class="string">"onDestroyView"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onDestroy();</span><br><span class="line">    Log.i(TAG,<span class="string">"onDestroy"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDetach</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onDetach();</span><br><span class="line">    Log.i(TAG,<span class="string">"onDetach"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>在FragmentOne中的transaction.addToBackStack(“one”)是将FragmentOne添加进回退栈中，在跳转到下一个Fragment时只会销毁FragmentView，即只执行DestroyView方法，当在下一个Fragment回退时会返回到该Fragment，若没有该行代码，在跳转到下一个Fragment时会销毁整个Fragment，即执行DestoryView，Destroy和Detach方法</p>
+</blockquote>
+<h1 id="Fragment与Activity之间的通信"><a href="#Fragment与Activity之间的通信" class="headerlink" title="Fragment与Activity之间的通信"></a>Fragment与Activity之间的通信</h1><p><strong>从属关系下的Fragment和Activity：</strong></p>
+<p>Activity拥有Fragment的引用，Fragment可调用getActivity获取Activity的上下文</p>
+<p><strong>要进行通信的Fragment不属于该Activity：</strong></p>
+<p>Activity可以通过FragmentManager对象中的findFragmentByTag或findFragmentById<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FragmentTwo fragment=(FragmentTwo) getSupportFragmentManager().findFragmentByTag(&quot;two&quot;);</span><br><span class="line">fragment.getInfo(&quot;give you ok?&quot;);</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>tag为之前replace或add传入的tag</p>
+</blockquote>
+<p>Fragment可以通过getActivity获取关联的Activity的上下文然后通过在该Activity中获取目标activity的相关方法，即通过关联Activity作为代理</p>
+<p><strong>通过setArgument传送数据：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//取出传过来的学生，再次封装到bundle中</span></span><br><span class="line">bundle.putSerializable(<span class="string">"Student"</span>,getIntent().getSerializableExtra(<span class="string">"Student"</span>));</span><br><span class="line"><span class="comment">//通过setArguments方法存入该fragment</span></span><br><span class="line">studentListFragment.setArguments(bundle);</span><br><span class="line"><span class="keyword">return</span> studentListFragment;</span><br><span class="line"></span><br><span class="line"><span class="comment">//通过getArguments方法取出对象，不能在构造方法取，因为实例化该Fragment时，还未setArgument</span></span><br><span class="line">Student student=(Student) getArguments().getSerializable(<span class="string">"Student"</span>);</span><br></pre></td></tr></table></figure>
+<h1 id="Fragment数据的保留"><a href="#Fragment数据的保留" class="headerlink" title="Fragment数据的保留"></a>Fragment数据的保留</h1><p>当遇到活动销毁时其托管的Fragment也会随之销毁，为了保留Fragment的数据，可以通过Fragment类中的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setRetainInstance(<span class="keyword">true</span>)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当调用了该方法，传入的参数为true时，在Activity销毁时，会立即销毁Fragment绑定的视图，即调用onDestroyView方法（为了适应屏幕旋转后视图的改变）</p>
+</blockquote>
+<h1 id="Fragment的封装与解耦"><a href="#Fragment的封装与解耦" class="headerlink" title="Fragment的封装与解耦"></a>Fragment的封装与解耦</h1><p><em>BaseFragment.class：</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContainer(R.layout.fragment_main);</span><br><span class="line">    Fragment fragment=createFragment();</span><br><span class="line">    FragmentManager fm=getFragmentManager();</span><br><span class="line">    fm.beginTransaction().replace(R.id.frame_container,fragment).commit();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Fragment <span class="title">createFragment</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/07/20/RecyclerView的使用/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/07/20/Context/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

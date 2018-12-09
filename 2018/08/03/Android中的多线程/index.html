@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Android中的多线程 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="AsyncTask官方例子： 123456789101112131415161718192021private class DownloadFilesTask extends AsyncTask&amp;lt;URL, Integer, Long&amp;gt; &amp;#123;    protected Long doInBackground(URL... urls) &amp;#123;        int count">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android中的多线程">
+<meta property="og:url" content="https://grooters.github.io/2018/08/03/Android中的多线程/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="AsyncTask官方例子： 123456789101112131415161718192021private class DownloadFilesTask extends AsyncTask&amp;lt;URL, Integer, Long&amp;gt; &amp;#123;    protected Long doInBackground(URL... urls) &amp;#123;        int count">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-10-12T05:58:27.090Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android中的多线程">
+<meta name="twitter:description" content="AsyncTask官方例子： 123456789101112131415161718192021private class DownloadFilesTask extends AsyncTask&amp;lt;URL, Integer, Long&amp;gt; &amp;#123;    protected Long doInBackground(URL... urls) &amp;#123;        int count">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#AsyncTask"><span class="toc-text">AsyncTask</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#AsyncTask的内存泄漏风险"><span class="toc-text">AsyncTask的内存泄漏风险</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#主要常量"><span class="toc-text">主要常量</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AsyncTaskLoader"><span class="toc-text">AsyncTaskLoader</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#下载网络图片实例"><span class="toc-text">下载网络图片实例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#预加载与缓存"><span class="toc-text">预加载与缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#LruCache"><span class="toc-text">LruCache</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#！"><span class="toc-text">！</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Android中的多线程" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Android中的多线程</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.08.03</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="AsyncTask"><a href="#AsyncTask" class="headerlink" title="AsyncTask"></a><a href="https://developer.android.google.cn/reference/android/os/AsyncTask" target="_blank" rel="noopener">AsyncTask</a></h1><p><em>官方例子：</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">DownloadFilesTask</span> <span class="keyword">extends</span> <span class="title">AsyncTask</span>&lt;<span class="title">URL</span>, <span class="title">Integer</span>, <span class="title">Long</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Long <span class="title">doInBackground</span><span class="params">(URL... urls)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = urls.length;</span><br><span class="line">        <span class="keyword">long</span> totalSize = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">            totalSize += Downloader.downloadFile(urls[i]);</span><br><span class="line">            publishProgress((<span class="keyword">int</span>) ((i / (<span class="keyword">float</span>) count) * <span class="number">100</span>));</span><br><span class="line">            <span class="comment">// Escape early if cancel() is called</span></span><br><span class="line">            <span class="keyword">if</span> (isCancelled()) <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> totalSize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onProgressUpdate</span><span class="params">(Integer... progress)</span> </span>&#123;</span><br><span class="line">        setProgressPercent(progress[<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPostExecute</span><span class="params">(Long result)</span> </span>&#123;</span><br><span class="line">        showDialog(<span class="string">"Downloaded "</span> + result + <span class="string">" bytes"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其可通过四个常用的方法实现开始前初始化控件（UI线程），开始后执行业务逻辑，同时可随时获取进度条所需的进度信息（UI线程），结束后可获取最终结果内容进行控件更新（UI线程），对应的四个方法为：</p>
+<blockquote>
+<p>onPreExecute()<br><br>doInBackground(Params… params)<br><br>onProgressUpdate<br><br>publishProgress(Progress… values)</p>
+</blockquote>
+<p>其中Params和Progress参数类型通过泛型控制，详见官方例子</p>
+<h2 id="AsyncTask的内存泄漏风险"><a href="#AsyncTask的内存泄漏风险" class="headerlink" title="AsyncTask的内存泄漏风险"></a>AsyncTask的内存泄漏风险</h2><blockquote>
+<p>由于AsyncTask在活动中实例化，为此其携由该活动的引用，但AsyncTask使异步执行，当该活动生命周期结束后，AsyncTask仍然有可能存活</p>
+</blockquote>
+<p><strong>&lt;font=”4sp”&gt;解决方法</strong></p>
+<p><em>在该活动销毁前（onStop,onDestroy）调用以下方法：</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">asyncTask.cancel(<span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>cancle方法的参数为布尔型，当为false会正常关闭异步线程，销毁AsyncTask，当为true时，会强制销毁</p>
+</blockquote>
+<h3 id="主要常量"><a href="#主要常量" class="headerlink" title="主要常量"></a>主要常量</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//此作业需要网络连接</span></span><br><span class="line">NETWORK_TYPE_ANY</span><br><span class="line"><span class="comment">//此作业需要网络连接，即蜂窝网络</span></span><br><span class="line">NETWORK_TYPE_CELLULAR</span><br></pre></td></tr></table></figure>
+<p><strong>交付信息启动服务：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">JobScheduler scheduler=(JobScheduler)getSystemService(Context.JOB_SCHEDULER_SERVICE);</span><br><span class="line">scheduler.schedule(jobInfo);</span><br></pre></td></tr></table></figure>
+<h1 id="AsyncTaskLoader"><a href="#AsyncTaskLoader" class="headerlink" title="AsyncTaskLoader"></a>AsyncTaskLoader</h1><p>详见：<br><a href="https://grooters.github.io/2018/08/05/AsyncTaskLoader%E8%A7%A3%E6%9E%90">AsyncTaskLoader解析</a></p>
+<h1 id="下载网络图片实例"><a href="#下载网络图片实例" class="headerlink" title="下载网络图片实例"></a>下载网络图片实例</h1><p><em>下载网络上的一张图片并显示到ImageView中：</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServicerActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG= ServicerActivity.class.getSimpleName();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_servicer);</span><br><span class="line">        Button button=findViewById(R.id.download);</span><br><span class="line">        button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">new</span> AsyncTasker().execute(<span class="string">""</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class AsyncTasker extends AsyncTask&lt;String,Integer,byte[]&gt; &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPreExecute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>.onPreExecute();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">protected</span> <span class="keyword">byte</span>[] doInBackground(String... strings) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                URL url=<span class="keyword">new</span> URL(strings[<span class="number">0</span>]);</span><br><span class="line">                HttpURLConnection connection=(HttpURLConnection)url.openConnection();</span><br><span class="line">                InputStream inputStream=connection.getInputStream();</span><br><span class="line">                <span class="keyword">byte</span>[] bytes=<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">                <span class="keyword">int</span> len=<span class="number">0</span>;</span><br><span class="line">                ByteArrayOutputStream outputStream=<span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">                <span class="keyword">while</span>((len=inputStream.read(bytes))!=-<span class="number">1</span>)&#123;</span><br><span class="line">                    Log.i(TAG,<span class="string">"bytes："</span>+bytes);</span><br><span class="line">                    outputStream.write(bytes,<span class="number">0</span>,len);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//将outputStream类型数据转换为byte数组</span></span><br><span class="line">                <span class="keyword">return</span> outputStream.toByteArray();</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onProgressUpdate</span><span class="params">(Integer... values)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>.onProgressUpdate(values);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPostExecute</span><span class="params">(<span class="keyword">byte</span>[] bytes)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>.onPostExecute(bytes);</span><br><span class="line">            ImageView imageView=findViewById(R.id.images);</span><br><span class="line">            Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,<span class="number">0</span>,bytes.length);</span><br><span class="line">            imageView.setImageBitmap(bitmap);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="预加载与缓存"><a href="#预加载与缓存" class="headerlink" title="预加载与缓存"></a>预加载与缓存</h1><h2 id="LruCache"><a href="#LruCache" class="headerlink" title="LruCache"></a><a href="https://developer.android.google.cn/reference/android/util/LruCache" target="_blank" rel="noopener">LruCache</a></h2><p><strong><li>创建对象</li></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> cacheSize = <span class="number">4</span> * <span class="number">1024</span> * <span class="number">1024</span>; <span class="comment">// 4MiB</span></span><br><span class="line">LruCache&lt;String, Bitmap&gt; bitmapCache = <span class="keyword">new</span> LruCache&lt;String, Bitmap&gt;(cacheSize) &#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">int</span> <span class="title">sizeOf</span><span class="params">(String key, Bitmap value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value.getByteCount();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> SIZE=<span class="number">4</span>*<span class="number">1024</span>*<span class="number">1024</span>;</span><br><span class="line">LruCache&lt;String, Bitmap&gt; lurCache=<span class="keyword">new</span> LruCache(SIZE);</span><br></pre></td></tr></table></figure>
+<p><strong><li>常用方法以及使用</li></strong></p>
+<blockquote>
+<p>final V put(K key,V value)</p>
+</blockquote>
+<blockquote>
+<p>final V get(K key)</p>
+</blockquote>
+<blockquote>
+<p>final V    remove(K key)</p>
+</blockquote>
+<blockquote>
+<p>final int    size()</p>
+</blockquote>
+<blockquote>
+<p>final void    evictAll()</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Bitmap cache=(Bitmap) lruCache.get(target)</span><br><span class="line"><span class="keyword">if</span>(cache==<span class="keyword">null</span>)&#123;</span><br><span class="line">    lruCache.put(key,bitmap);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    Bitmap bitmap=(Bitmap)lruCache.get(key);</span><br><span class="line">    lruCache.remove(key);</span><br><span class="line">    size=lruCache.size();</span><br><span class="line">    lurCache.evictAll();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="！"><a href="#！" class="headerlink" title="！"></a>！</h1><p><li> AsyncTasker</li></p>
+<p>当调用<strong>onCancelled</strong>方法时，<strong>onPostExecute</strong>将不会被调用</p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/08/03/Service详解/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/08/05/AsyncTaskLoader解析/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

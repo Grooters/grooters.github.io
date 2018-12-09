@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Context | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="android.Content.ContextInterface to global information about an application environment. This is an abstract class whose implementation is provided by the Android system. It allows access to applicati">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Context">
+<meta property="og:url" content="https://grooters.github.io/2018/07/20/Context/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="android.Content.ContextInterface to global information about an application environment. This is an abstract class whose implementation is provided by the Android system. It allows access to applicati">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://grooters.github.io/img/Android/Context.jpg">
+<meta property="og:updated_time" content="2018-07-20T02:29:59.754Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Context">
+<meta name="twitter:description" content="android.Content.ContextInterface to global information about an application environment. This is an abstract class whose implementation is provided by the Android system. It allows access to applicati">
+<meta name="twitter:image" content="https://grooters.github.io/img/Android/Context.jpg">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#android-Content-Context"><span class="toc-text">android.Content.Context</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Context分为以下几种类型："><span class="toc-text">Context分为以下几种类型：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Context功能表"><span class="toc-text">Context功能表</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Context导致的内存泄漏"><span class="toc-text">Context导致的内存泄漏</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Context" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Context</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.07.20</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="android-Content-Context"><a href="#android-Content-Context" class="headerlink" title="android.Content.Context"></a>android.Content.Context</h1><p>Interface to global information about an application environment.</p>
+<p>This is an abstract class whose implementation is provided by the Android system.</p>
+<p>It allows access to application-specific resources and classes, as well as up-calls for application-level operations such as launching activities, broadcasting and receiving intents, etc.</p>
+<h2 id="Context分为以下几种类型："><a href="#Context分为以下几种类型：" class="headerlink" title="Context分为以下几种类型："></a>Context分为以下几种类型：</h2><ol>
+<li><p><strong>Application</strong>:</p>
+<p>Application在应用程序中是单例运行.可以在Activity或者Service中通过getApplication()方法获取,或者在任何继承Context的类中通过getApplicationContext()方法获取.不过无论是通过哪种方法获取Application的实例,Application的实例都是唯一的,相同的.</p>
+</li>
+<li><p><strong>Activity/Service</strong>:</p>
+<p>Activity/Service都继承自ContextWrapper,因为具有相同的Context API.每当Framework创建一个新的Activity或者Service实例的时候,同时会创建一个新的ContextImpl对象,ContextImpl就是最终处理所有Context API方法的内部对象.不同的Activity或者Service的Context都是不一样的.</p>
+</li>
+<li><p><strong>BroadcastReceiver</strong>:</p>
+<p>BroadcastReceiver本身不是Context,但是Framework在每次发布它监听的broadcast event事件的时候,会给它的onReceive函数中传递了一个Context对象.这个Context对象是ReceiverRestrictedContext对象的实例,但是有两个方法是无法使用的:registerReceiver()和bindService().每次BroadcastReceiver通过onReceive()函数收到一个broadcast evnent时,传递过来的Context对象都是一个新的实例.</p>
+</li>
+<li><p><strong>ContentProvider</strong>:</p>
+<p>ContentProvider本身不是Context,但是内部可以通过getContext()方法获取Context对象.如果ContentProvider的调用者和ContentProvider处于同一进程中,通过getContext()获取的就是当前进程唯一的Application Context.如果不在同一进程中,通过getContext()方法就会创建一个ContentProvider所在包的一个Context实例.</p>
+</li>
+</ol>
+<h2 id="Context功能表"><a href="#Context功能表" class="headerlink" title="Context功能表"></a>Context功能表</h2><p><img src="/img/Android/Context.jpg" alt="Context功能表"></p>
+<h1 id="Context导致的内存泄漏"><a href="#Context导致的内存泄漏" class="headerlink" title="Context导致的内存泄漏"></a>Context导致的内存泄漏</h1><p><em>eg：</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class CustomManager &#123;</span><br><span class="line">    private static CustomManager sInstance;</span><br><span class="line"></span><br><span class="line">    public static CustomManager getInstance(Context context) &#123;</span><br><span class="line">        if (sInstance == null) &#123;</span><br><span class="line">            sInstance = new CustomManager(context);</span><br><span class="line">        &#125;</span><br><span class="line">        return sInstance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private Context mContext;</span><br><span class="line">    private CustomManager(Context context) &#123;</span><br><span class="line">        mContext = context;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>按照以上代码会通过静态方法getInstance传入一个Context给该类，但该Context对应的activity可能会被销毁，但此时传过去的Context会依然存在，最终导致内存泄漏。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class CustomManager &#123;</span><br><span class="line">    private static CustomManager sInstance;</span><br><span class="line"></span><br><span class="line">    public static CustomManager getInstance(Context context) &#123;</span><br><span class="line">        if (sInstance == null) &#123;</span><br><span class="line">            // Always pass in the Application Context</span><br><span class="line">            sInstance = new CustomManager(context.getApplicationContext());</span><br><span class="line">        &#125;</span><br><span class="line">        return sInstance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private Context mContext;</span><br><span class="line">    private CustomManager(Context context) &#123;</span><br><span class="line">        mContext = context;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在上面的例子中,由于我们使用保存的是Application Context,这样我们就不需要关心Context是谁的实例了.因为Application生命周期是跟当前应用进程一致的,也就不存在内存泄露的风险了</p>
+</blockquote>
+<p>但由于每个Context实例都不是相同的,它们的功能也是不同的,例如Application Context就没法startActivity，参考上面的Context功能表.</p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/07/20/Fragment的使用/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/07/22/泛型/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

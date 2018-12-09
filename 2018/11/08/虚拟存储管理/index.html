@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>虚拟存储管理 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="虚拟存储器的特征 离散性  作业不装入连续的存储空间，内存分配采用离散分配方   多次性  一个作业被分割，被多次调入内存   对换性  作业在运行过程中换进、换出内存   虚拟性  从逻辑上扩充了内存的容量  请求页式存储管理页号 | 存储块号 | 状态位P | 访问字段A | 修改位M | 外存地址  P  记录该页是否在内存。P=1该页在内存； P=0该页不在内存   A  记录该页在一段时">
+<meta property="og:type" content="article">
+<meta property="og:title" content="虚拟存储管理">
+<meta property="og:url" content="https://grooters.github.io/2018/11/08/虚拟存储管理/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="虚拟存储器的特征 离散性  作业不装入连续的存储空间，内存分配采用离散分配方   多次性  一个作业被分割，被多次调入内存   对换性  作业在运行过程中换进、换出内存   虚拟性  从逻辑上扩充了内存的容量  请求页式存储管理页号 | 存储块号 | 状态位P | 访问字段A | 修改位M | 外存地址  P  记录该页是否在内存。P=1该页在内存； P=0该页不在内存   A  记录该页在一段时">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://grooters.github.io/img/操作系统/虚拟存储管理/最佳置换算法.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/操作系统/虚拟存储管理/先进先出置换算法.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/操作系统/虚拟存储管理/最近最久未使用页面置换算法.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/操作系统/虚拟存储管理/驻留集.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/操作系统/虚拟存储管理/缺页率与物理块数的关系.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/操作系统/虚拟存储管理/CPU的利用率与多道程序数的关系.PNG">
+<meta property="og:updated_time" content="2018-11-09T11:34:24.379Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="虚拟存储管理">
+<meta name="twitter:description" content="虚拟存储器的特征 离散性  作业不装入连续的存储空间，内存分配采用离散分配方   多次性  一个作业被分割，被多次调入内存   对换性  作业在运行过程中换进、换出内存   虚拟性  从逻辑上扩充了内存的容量  请求页式存储管理页号 | 存储块号 | 状态位P | 访问字段A | 修改位M | 外存地址  P  记录该页是否在内存。P=1该页在内存； P=0该页不在内存   A  记录该页在一段时">
+<meta name="twitter:image" content="https://grooters.github.io/img/操作系统/虚拟存储管理/最佳置换算法.PNG">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#虚拟存储器的特征"><span class="toc-text">虚拟存储器的特征</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#请求页式存储管理"><span class="toc-text">请求页式存储管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#驻留集管理"><span class="toc-text">驻留集管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#请求页式存储管理的调用策略"><span class="toc-text">请求页式存储管理的调用策略</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#调入时间"><span class="toc-text">调入时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调入地点"><span class="toc-text">调入地点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#页面置换算法"><span class="toc-text">页面置换算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#最佳置换算法（OPT）"><span class="toc-text">最佳置换算法（OPT）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#先进先出页面置换算法（FIFO）"><span class="toc-text">先进先出页面置换算法（FIFO）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最近最久未使用页面置换算法（LRU）"><span class="toc-text">最近最久未使用页面置换算法（LRU）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CLOCK页面置换算法"><span class="toc-text">CLOCK页面置换算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#执行过程"><span class="toc-text">执行过程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#驻留集"><span class="toc-text">驻留集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#抖动"><span class="toc-text">抖动</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#请求段式存储管理"><span class="toc-text">请求段式存储管理</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-虚拟存储管理" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">虚拟存储管理</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.11.08</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/操作系统/">操作系统</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="虚拟存储器的特征"><a href="#虚拟存储器的特征" class="headerlink" title="虚拟存储器的特征"></a>虚拟存储器的特征</h1><p><li> 离散性</li></p>
+<blockquote>
+<p>作业不装入连续的存储空间，内存分配采用离散分配方</p>
+</blockquote>
+<p><li> 多次性</li></p>
+<blockquote>
+<p>一个作业被分割，被多次调入内存</p>
+</blockquote>
+<p><li> 对换性</li></p>
+<blockquote>
+<p>作业在运行过程中换进、换出内存</p>
+</blockquote>
+<p><li> 虚拟性</li></p>
+<blockquote>
+<p>从逻辑上扩充了内存的容量</p>
+</blockquote>
+<h1 id="请求页式存储管理"><a href="#请求页式存储管理" class="headerlink" title="请求页式存储管理"></a>请求页式存储管理</h1><p>页号 | 存储块号 | 状态位P | 访问字段A | 修改位M | 外存地址</p>
+<p><li> P</li></p>
+<blockquote>
+<p>记录该页是否在内存。P=1该页在内存； P=0该页不在内存</p>
+</blockquote>
+<p><li> A</li></p>
+<blockquote>
+<p>记录该页在一段时间内被访问的次数</p>
+</blockquote>
+<p><li> M</li></p>
+<blockquote>
+<p>记录该页在内存期间是否被修改过。M=1该页调入内存后被修改过； M=0该页调入内存后未被修改过</p>
+</blockquote>
+<h1 id="驻留集管理"><a href="#驻留集管理" class="headerlink" title="驻留集管理"></a>驻留集管理</h1><p><li> 固定分配、局部置换</li></p>
+<blockquote>
+<p>为每个进程分配固定页数的内存空间、且运行过程中不变。当进程缺页时，只能从该进程在内存的几个页面中选出一页换出，然后再调入一页，保证进程的页数不变</p>
+</blockquote>
+<p><li> 可变分配、全局置换</li></p>
+<blockquote>
+<p>系统开始先为每个进程分配一定数目的物理块。整个系统有一空闲物理块链，当某进程缺页时，系统从空闲链中选出一块分配给进程。空闲链为空时，OS从所有进程的页面中权衡选择一页换出</p>
+</blockquote>
+<p><li> 可变分配、局部置换</li></p>
+<blockquote>
+<p>分配同上，但进程缺页时，只能从该进程在内存的页面中选出一页换出</p>
+</blockquote>
+<h1 id="请求页式存储管理的调用策略"><a href="#请求页式存储管理的调用策略" class="headerlink" title="请求页式存储管理的调用策略"></a>请求页式存储管理的调用策略</h1><h2 id="调入时间"><a href="#调入时间" class="headerlink" title="调入时间"></a>调入时间</h2><p><li> 预调</li></p>
+<p><li> 请调</li></p>
+<h2 id="调入地点"><a href="#调入地点" class="headerlink" title="调入地点"></a>调入地点</h2><p><li> 进程的所有页面都放在对换区</li></p>
+<p><li> 只将修改过的页面放在对换区，未改的放在文件区</li></p>
+<p><li> UNIX系统方式，首次从文件区调入，换出时放在对换区，以后从对换区调入</li></p>
+<h1 id="页面置换算法"><a href="#页面置换算法" class="headerlink" title="页面置换算法"></a>页面置换算法</h1><h2 id="最佳置换算法（OPT）"><a href="#最佳置换算法（OPT）" class="headerlink" title="最佳置换算法（OPT）"></a>最佳置换算法（OPT）</h2><p><img src="/img/操作系统/虚拟存储管理/最佳置换算法.PNG" alt="最佳置换算法"></p>
+<blockquote>
+<p>页面换出6次，缺页9次</p>
+</blockquote>
+<h2 id="先进先出页面置换算法（FIFO）"><a href="#先进先出页面置换算法（FIFO）" class="headerlink" title="先进先出页面置换算法（FIFO）"></a>先进先出页面置换算法（FIFO）</h2><p><img src="/img/操作系统/虚拟存储管理/先进先出置换算法.PNG" alt="先进先出页面置换算法"></p>
+<blockquote>
+<p>页面换出12次，缺页15次</p>
+</blockquote>
+<h2 id="最近最久未使用页面置换算法（LRU）"><a href="#最近最久未使用页面置换算法（LRU）" class="headerlink" title="最近最久未使用页面置换算法（LRU）"></a>最近最久未使用页面置换算法（LRU）</h2><p><img src="/img/操作系统/虚拟存储管理/最近最久未使用页面置换算法.PNG" alt="最近最久未使用页面置换算法"></p>
+<blockquote>
+<p>页面换出9次，缺页12次</p>
+</blockquote>
+<h2 id="CLOCK页面置换算法"><a href="#CLOCK页面置换算法" class="headerlink" title="CLOCK页面置换算法"></a>CLOCK页面置换算法</h2><blockquote>
+<p>为每页设一访问位，再将内存中的所有页面链接成一循环队列</p>
+</blockquote>
+<p><li> 当某页被访问时，其访问位置1</li></p>
+<p><li> 置换算法在选择一页淘汰时，只需检查其访问位</li></p>
+<blockquote>
+<p>如果是0，就选择该页换出；如果是1，则重新将其置为0，暂不换出</p>
+</blockquote>
+<p>页面淘汰顺序为：</p>
+<ol>
+<li>A=0，M=0该页既未被访问过、又未被修改过，是最佳淘汰页</li>
+<li>A=0，M=1该页最近未被访问、但已被修改，可以被淘汰</li>
+<li>A=1，M=0最近已被访问，但未被修改，该页有可能再被访问</li>
+<li>A=1，M=1最近已被访问且被修改，该页可能再被访问</li>
+</ol>
+<p>A为访问位，M为修改位</p>
+<h3 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h3><ol>
+<li>从当前位置扫描循环队列，寻找1类页面</li>
+<li>若1失败，开始第二轮扫描，寻找<2>类页面，并将所经过的页面的访问位置0</2></li>
+<li>若2&gt;也失败，返回到开始位置</li>
+</ol>
+<h1 id="驻留集"><a href="#驻留集" class="headerlink" title="驻留集"></a>驻留集</h1><blockquote>
+<p>在某段事件间隔内，进程所要访问的页面集合</p>
+</blockquote>
+<p><img src="/img/操作系统/虚拟存储管理/驻留集.PNG" alt="驻留集"></p>
+<p>若驻留集窗口大小过小会频繁残生缺页中断影响CPU效率，但过大就失去了虚拟存储器的意义</p>
+<p><li> 缺页率与物理块数的关系</li></p>
+<p><img src="/img/操作系统/虚拟存储管理/缺页率与物理块数的关系.PNG" alt="缺页率与物理块数的关系"></p>
+<p><li> CPU的利用率与多道程序数的关系</li></p>
+<p><img src="/img/操作系统/虚拟存储管理/CPU的利用率与多道程序数的关系.PNG" alt="CPU的利用率与多道程序数的关系"></p>
+<h2 id="抖动"><a href="#抖动" class="headerlink" title="抖动"></a>抖动</h2><blockquote>
+<p>在请求分页系统中，若在内存引入过多的进程，会使进程的大部分时间都用于页面的换入/换出的操作，而几乎不能完成任何有效的工作。我们称这时的进程处于“抖动”状态。抖动产生的原因是在内存中引入过多的进程而产生的。</p>
+</blockquote>
+<p><strong>预防抖动的方法：</strong></p>
+<p><li> 加载控制</li></p>
+<p><li> L=S准则</li></p>
+<blockquote>
+<p>产生缺页的平均时间L等于系统处理缺页的平均时间 S</p>
+</blockquote>
+<p><li> 采用局部置换</li></p>
+<p><li> 挂起若干进程</li></p>
+<h1 id="请求段式存储管理"><a href="#请求段式存储管理" class="headerlink" title="请求段式存储管理"></a>请求段式存储管理</h1><blockquote>
+<p>段号 | 段长 | 段始址 | 存取方式 | 状态位 | 访问字段 | 修改位 | 增补位 | 外存地址</p>
+</blockquote>
+<p><li> 存取方式</li></p>
+<blockquote>
+<p>用于标识本段的存取属性是只执行、只读，还是允许读/写</p>
+</blockquote>
+<p><li> 状态位</li></p>
+<blockquote>
+<p>指示该段是否已进驻内存</p>
+</blockquote>
+<p><li> 访问字段</li></p>
+<blockquote>
+<p>用于记录本段有多长时间没有被访问</p>
+</blockquote>
+<p><li> 修改位</li></p>
+<blockquote>
+<p>表示该段调入内存后是否被修改过</p>
+</blockquote>
+<p><li> 增补位</li></p>
+<blockquote>
+<p>这是请求段式存储管理系统中特有的字段，用于表示本段在运行过程中是否进行过动态增长</p>
+</blockquote>
+<p><li> 外存地址</li></p>
+<blockquote>
+<p>用于指出该段在外存的地址，供调入该段时使用</p>
+</blockquote>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/11/01/View的事件体系/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/11/09/存储管理/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

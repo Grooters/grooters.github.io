@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Android动画 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="属性动画ObjectAnimator onFloat 12345//从sunStart移动到skyHeightObjectAnimator.ofFloat(sun,&quot;Y&quot;,sunStart,skyHeight);//从当前位置向下移动200，回到初始位置再向上移动100ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(sun, &quot;Y&quot;,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android动画">
+<meta property="og:url" content="https://grooters.github.io/2018/10/18/Android动画/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="属性动画ObjectAnimator onFloat 12345//从sunStart移动到skyHeightObjectAnimator.ofFloat(sun,&quot;Y&quot;,sunStart,skyHeight);//从当前位置向下移动200，回到初始位置再向上移动100ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(sun, &quot;Y&quot;,">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-10-18T11:39:17.292Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android动画">
+<meta name="twitter:description" content="属性动画ObjectAnimator onFloat 12345//从sunStart移动到skyHeightObjectAnimator.ofFloat(sun,&quot;Y&quot;,sunStart,skyHeight);//从当前位置向下移动200，回到初始位置再向上移动100ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(sun, &quot;Y&quot;,">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#属性动画"><span class="toc-text">属性动画</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ObjectAnimator"><span class="toc-text">ObjectAnimator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TimeInterpolator"><span class="toc-text">TimeInterpolator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#颜色渐变"><span class="toc-text">颜色渐变</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AnimatorSet"><span class="toc-text">AnimatorSet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#state-list-AnimatorSet"><span class="toc-text">state list AnimatorSet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#circular-revel"><span class="toc-text">circular revel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shared-element-transition"><span class="toc-text">shared element transition</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Android动画" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Android动画</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.10.18</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="属性动画"><a href="#属性动画" class="headerlink" title="属性动画"></a>属性动画</h1><h2 id="ObjectAnimator"><a href="#ObjectAnimator" class="headerlink" title="ObjectAnimator"></a><a href="https://developer.android.google.cn/reference/android/animation/ObjectAnimator" target="_blank" rel="noopener">ObjectAnimator</a></h2><p><strong><li> onFloat</li></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//从sunStart移动到skyHeight</span></span><br><span class="line">ObjectAnimator.ofFloat(sun,<span class="string">"Y"</span>,sunStart,skyHeight);</span><br><span class="line"></span><br><span class="line"><span class="comment">//从当前位置向下移动200，回到初始位置再向上移动100</span></span><br><span class="line">ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(sun, <span class="string">"Y"</span>, <span class="number">0</span>, <span class="number">200</span>, -<span class="number">100</span>,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p><strong><li> setDuration</li></strong></p>
+<p>设置动画时间</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objectAnimator.setDuration(<span class="number">5000</span>);</span><br></pre></td></tr></table></figure>
+<p><em>eg:</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ObjectAnimator objectAnimator=ObjectAnimator.ofFloat(sun,<span class="string">"y"</span>,sunStart,skyHeight).setDuration(<span class="number">2000</span>);</span><br><span class="line">objectAnimator.start();</span><br></pre></td></tr></table></figure>
+<p><strong><font size="4sp">注意：</font></strong></p>
+<blockquote>
+<p>在OnCreate()objectAnimator.start();是无效的，因为在OnCreate()中AnimationDrawable还没有完全的与ImageView绑定</p>
+</blockquote>
+<h2 id="TimeInterpolator"><a href="#TimeInterpolator" class="headerlink" title="TimeInterpolator"></a><a href="https://developer.android.google.cn/reference/android/animation/TimeInterpolator" target="_blank" rel="noopener">TimeInterpolator</a></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//由慢变快</span></span><br><span class="line">objectAnimator.setInterpolator(<span class="keyword">new</span>  AccelerateInterpolator());</span><br><span class="line"><span class="comment">//由快变慢</span></span><br><span class="line">objectAnimator.setInterpolator(<span class="keyword">new</span>  DecelerateInterpolator());</span><br></pre></td></tr></table></figure>
+<h2 id="颜色渐变"><a href="#颜色渐变" class="headerlink" title="颜色渐变"></a>颜色渐变</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> first=getResources().getColor(R.color.colorPrimary,getTheme());</span><br><span class="line"><span class="keyword">int</span> second=getResources().getColor(R.color.colorAccent,getTheme());</span><br><span class="line"><span class="keyword">int</span> last=getResources().getColor(R.color.black,getTheme());</span><br><span class="line">ObjectAnimator skyAnimation = ObjectAnimator.ofInt(sky,<span class="string">"backgroundColor"</span>,first,second,last);</span><br><span class="line">skyAnimation.setDuration(<span class="number">5000</span>);</span><br><span class="line">skyAnimation.setEvaluator(<span class="keyword">new</span> ArgbEvaluator());</span><br><span class="line">skyAnimation.start();</span><br></pre></td></tr></table></figure>
+<h2 id="AnimatorSet"><a href="#AnimatorSet" class="headerlink" title="AnimatorSet"></a><a href="https://developer.android.google.cn/reference/android/animation/AnimatorSet" target="_blank" rel="noopener">AnimatorSet</a></h2><p><strong>可将动画放在一起播放动画集</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AnimatorSet set=<span class="keyword">new</span> AnimatorSet();</span><br><span class="line">set.play(firstAnimation).with(nextAnimation).before(lastAnimation);</span><br><span class="line">set.start();</span><br></pre></td></tr></table></figure>
+<h2 id="state-list-AnimatorSet"><a href="#state-list-AnimatorSet" class="headerlink" title="state list AnimatorSet"></a>state list AnimatorSet</h2><p><strong>使按钮按下和松开具有浮动效果，改变z值</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_pressed</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">objectAnimator</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:propertyName</span>=<span class="string">"translationZ"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:duration</span>=<span class="string">"100"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:valueTo</span>=<span class="string">"10dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_pressed</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">objectAnimator</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:propertyName</span>=<span class="string">"translationZ"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:duration</span>=<span class="string">"100"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:valueTo</span>=<span class="string">"0dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>将以上xml文件放入animator文件夹</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;Button</span><br><span class="line">    android:id=<span class="string">"@+id/button_animation"</span></span><br><span class="line">    android:stateListAnimator=<span class="string">"@animator/button_animator"</span></span><br><span class="line">    android:elevation=<span class="string">"2dp"</span></span><br><span class="line">    android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">    android:layout_height=<span class="string">"wrap_content"</span>/&gt;</span><br></pre></td></tr></table></figure>
+<p>然后通过<strong>android:stateListAnimator</strong>为组件设置动画</p>
+<h2 id="circular-revel"><a href="#circular-revel" class="headerlink" title="circular revel"></a>circular revel</h2><p><strong>将View像墨滴一样舒展开来</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 获取FloatingActionButton的中心点的坐标</span></span><br><span class="line">    <span class="keyword">int</span> centerX = (view.getLeft() + view.getRight()) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">int</span> centerY = (view.getTop() + view.getBottom()) / <span class="number">2</span>;</span><br><span class="line">    Log.i(TAG,<span class="string">"centerX:"</span>+centerX);</span><br><span class="line">    <span class="comment">// 获取扩散的半径</span></span><br><span class="line">    <span class="keyword">float</span> finalRadius = (<span class="keyword">float</span>) Math.hypot((<span class="keyword">double</span>) centerX, (<span class="keyword">double</span>) centerY);</span><br><span class="line">    <span class="comment">// 定义揭露动画</span></span><br><span class="line">    Animator mCircularReveal = ViewAnimationUtils.createCircularReveal(revelView, centerX, centerY, <span class="number">0</span>, finalRadius);</span><br><span class="line">    <span class="comment">// 设置动画持续时间，并开始动画</span></span><br><span class="line">    mCircularReveal.setDuration(<span class="number">4000</span>).start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中<strong>view</strong>为触发组件，<strong>revelView</strong>为需要揭露出来地新地View，<strong>Math.hypot</strong>勾股定理求斜边</p>
+<h2 id="shared-element-transition"><a href="#shared-element-transition" class="headerlink" title="shared element transition"></a>shared element transition</h2><p><strong>共享元素交换，又称为hero transaction，可实现点击列表中的一张图片，令它以动画形式独立显示在一个新的activity/fragment中</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);</span><br><span class="line">    setContentView(R.layout.activity_animationer);</span><br><span class="line">    <span class="keyword">final</span> ImageView sun=findViewById(R.id.sunImage);</span><br><span class="line">    Button tranButton=findViewById(R.id.button_animation);</span><br><span class="line">    tranButton.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">            Intent intent=<span class="keyword">new</span> Intent(AnimatioNer.<span class="keyword">this</span>,ImagerActivity.class);</span><br><span class="line">            ViewCompat.setTransitionName(sun,<span class="string">"image"</span>);</span><br><span class="line">            ActivityOptionsCompat optionsCompat=ActivityOptionsCompat.makeSceneTransitionAnimation(AnimatioNer.<span class="keyword">this</span>,sun,<span class="string">"image"</span>);</span><br><span class="line">            AnimatioNer.<span class="keyword">this</span>.startActivity(intent,optionsCompat.toBundle());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)</p>
+</blockquote>
+<p>必须写在setContentView前</p>
+<blockquote>
+<p>ViewCompat.setTransitionName(View view, String transictionName )</p>
+</blockquote>
+<p>view为需要共享的资源，这里是图片sun，transictionName的字符串要和布局（原布局和共享布局）中组件transitionName属性值一样，eg：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/sunImage"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_gravity</span>=<span class="string">"center"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:background</span>=<span class="string">"@drawable/sun"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:transitionName</span>=<span class="string">"image"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"50dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>由于共享布局是共享主布局的sunImage图片，所以共享布局中也必须由图片控件，并带有<strong>transitionName=”image”</strong>属性</p>
+<blockquote>
+<p>optionsCompat=ActivityOptionsCompat.makeSceneTransitionAnimation(Activity activity,View view,String transictionName)</p>
+</blockquote>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/10/09/Android的主题与样式/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/10/18/Android中的意图/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

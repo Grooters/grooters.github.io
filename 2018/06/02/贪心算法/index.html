@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>贪心算法 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="埃及分数 把一个真分数表示为最少的埃及分数之和的形式 令真分数为A/B，A/B的整数部分为C，余数为D，埃及分数字母为E，有： 策略一  从最大的一个埃及分数即1/2开始试，当A/B &amp;gt; 1/E，则A/B-1/E，E++，继续判断尝试。  策略二  从最接近真分数的一个埃及分数开始，然后A/B = A/B - 1/E(离A/B最近的埃及分数)，然后再求最接近A/B的埃及分数。  123456">
+<meta property="og:type" content="article">
+<meta property="og:title" content="贪心算法">
+<meta property="og:url" content="https://grooters.github.io/2018/06/02/贪心算法/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="埃及分数 把一个真分数表示为最少的埃及分数之和的形式 令真分数为A/B，A/B的整数部分为C，余数为D，埃及分数字母为E，有： 策略一  从最大的一个埃及分数即1/2开始试，当A/B &amp;gt; 1/E，则A/B-1/E，E++，继续判断尝试。  策略二  从最接近真分数的一个埃及分数开始，然后A/B = A/B - 1/E(离A/B最近的埃及分数)，然后再求最接近A/B的埃及分数。  123456">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://grooters.github.io/img/数据结构与算法/贪心算法中的TSP问题.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/数据结构与算法/TSP问题贪心算法求解思路.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/数据结构与算法/TSP问题最短链接策略.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/数据结构与算法/TSP问题最短链接策略解题思路.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/数据结构与算法/贪心法中的图着色问题.png">
+<meta property="og:image" content="https://grooters.github.io/img/数据结构与算法/贪心算法背包问题.PNG">
+<meta property="og:updated_time" content="2018-07-01T11:20:10.595Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="贪心算法">
+<meta name="twitter:description" content="埃及分数 把一个真分数表示为最少的埃及分数之和的形式 令真分数为A/B，A/B的整数部分为C，余数为D，埃及分数字母为E，有： 策略一  从最大的一个埃及分数即1/2开始试，当A/B &amp;gt; 1/E，则A/B-1/E，E++，继续判断尝试。  策略二  从最接近真分数的一个埃及分数开始，然后A/B = A/B - 1/E(离A/B最近的埃及分数)，然后再求最接近A/B的埃及分数。  123456">
+<meta name="twitter:image" content="https://grooters.github.io/img/数据结构与算法/贪心算法中的TSP问题.PNG">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#图问题中的贪心法"><span class="toc-text">图问题中的贪心法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#TSP问题"><span class="toc-text">TSP问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图着色问题"><span class="toc-text">图着色问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最小生成树"><span class="toc-text">最小生成树</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#组合问题中的贪心法"><span class="toc-text">组合问题中的贪心法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#背包问题"><span class="toc-text">背包问题</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-贪心算法" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">贪心算法</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.06.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/数据结构与算法/">数据结构与算法</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><strong><font size="5sp">埃及分数</font></strong></p>
+<p><strong><font size="4sp">把一个真分数表示为最少的埃及分数之和的形式</font></strong></p>
+<p><em>令真分数为A/B，A/B的整数部分为C，余数为D，埃及分数字母为E，有：</em></p>
+<p><li>策略一</li></p>
+<blockquote>
+<p>从最大的一个埃及分数即1/2开始试，当A/B &gt; 1/E，则A/B-1/E，E++，继续判断尝试。</p>
+</blockquote>
+<p><li>策略二</li></p>
+<blockquote>
+<p>从最接近真分数的一个埃及分数开始，然后A/B = A/B - 1/E(离A/B最近的埃及分数)，然后再求最接近A/B的埃及分数。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">CommFactor</span><span class="params">(<span class="keyword">int</span> A, <span class="keyword">int</span> B)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">EgyptScore</span><span class="params">(<span class="keyword">int</span> A, <span class="keyword">int</span> B)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> A=<span class="number">9</span>;</span><br><span class="line">	<span class="keyword">int</span> B = <span class="number">10</span>;</span><br><span class="line">	EgyptScore(A, B);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">EgyptScore</span><span class="params">(<span class="keyword">int</span> A, <span class="keyword">int</span> B)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> E, F;</span><br><span class="line">	<span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">		E = B / A + <span class="number">1</span>;</span><br><span class="line">		A = A * E - B;</span><br><span class="line">		B = E * B;</span><br><span class="line">		F = CommFactor(A, B);</span><br><span class="line">		A = A / F;</span><br><span class="line">		B = B / F;</span><br><span class="line">		<span class="keyword">if</span> (A ==<span class="number">1</span>) &#123;</span><br><span class="line">      <span class="comment">//返回最后一个埃及分数的分母</span></span><br><span class="line">			<span class="keyword">return</span> E;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*求最大公约数*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">CommFactor</span><span class="params">(<span class="keyword">int</span> A,<span class="keyword">int</span> B)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a, b, temp;</span><br><span class="line">	a = A;</span><br><span class="line">	b = B;</span><br><span class="line">	<span class="keyword">if</span> (a &lt; b) &#123;</span><br><span class="line">		temp = a;</span><br><span class="line">		a = b;</span><br><span class="line">		b = temp;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span> (a%b != <span class="number">0</span>) &#123;</span><br><span class="line">		temp = a % b;</span><br><span class="line">		a = b;</span><br><span class="line">		b = temp;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">B=A*C+D =&gt; B/A=C+D/A&lt;C+1,则：</span><br><span class="line"></span><br><span class="line">A/B&gt;1/(C+1)，故：</span><br><span class="line"></span><br><span class="line">1/(C+1) = 1/E为A/B的最大埃及分数</span><br><span class="line"></span><br><span class="line">A/B=C,1/(C+1),则：</span><br><span class="line"></span><br><span class="line">E=B/A+1</span><br><span class="line"></span><br><span class="line">A/B-1/E=A/B-1/E : *AE/B*E-B/B*E=A*E-B/B*E,故:</span><br><span class="line"></span><br><span class="line">A=A*E-B ,B=B*E</span><br></pre></td></tr></table></figure>
+<h1 id="图问题中的贪心法"><a href="#图问题中的贪心法" class="headerlink" title="图问题中的贪心法"></a>图问题中的贪心法</h1><h2 id="TSP问题"><a href="#TSP问题" class="headerlink" title="TSP问题"></a>TSP问题</h2><p><strong><li>最近顶点策略</li></strong></p>
+<p><img src="/img/数据结构与算法/贪心算法中的TSP问题.PNG" alt="贪心算法中的TSP问题"></p>
+<p>如图，C矩阵中代表的是两点之间的距离，无穷代表对应的两点没有连线，如：C14=2就指第一行的第四列的值为2即点1到点4的距离为2。</p>
+<p><em>解题思路：</em></p>
+<p><img src="/img/数据结构与算法/TSP问题贪心算法求解思路.PNG" alt="TSP问题贪心算法求解思路"></p>
+<p>P表示要走的边的集合，故P=n-1，V表示所有点的集合，选定一个起点w，判断出一个与该点距离最近的v点，令u=w（此时第一个点是起点），故Cuv便是起点到下一个点的最短距离</p>
+<p><strong><li>最短链接策略</li></strong></p>
+<p><img src="/img/数据结构与算法/TSP问题最短链接策略.PNG" alt="TSP问题最短链接策略"></p>
+<p>连接距离最短的两点，注意要满足这两点没有被连过且出发点连接相应点后不再连接其它点</p>
+<p><em>解题思路：</em></p>
+<p><img src="/img/数据结构与算法/TSP问题最短链接策略解题思路.PNG" alt="TSP问题最短链接策略解题思路"></p>
+<p>u和v在P中不连通即u和v两点还未连接过，不产生分支指即u连接了v后u就不能连接过其它点的边</p>
+<p><em>时间复杂度：</em><br><strong>O(n^2)</strong><br><strong>O(nlog2n)</strong></p>
+<h2 id="图着色问题"><a href="#图着色问题" class="headerlink" title="图着色问题"></a>图着色问题</h2><p><img src="/img/数据结构与算法/贪心法中的图着色问题.png" alt="贪心法中的图着色问题"></p>
+<p><em>解题思路：</em></p>
+<ol>
+<li>用颜色1着色<br> (1) A着色1，无冲突<br> (2) BC着色1，与A冲突<br> (3) D着色1，无冲突<br> (4) E着色1，与D冲突</li>
+<li>用颜色2着色<br> (1) AD已着色<br> (2) B着色2，无冲突<br> (3) CE着色2，与B冲突</li>
+<li>用颜色3着色<br> (1) ABD已着色<br> (2) C着色3，无冲突<br> (3) E着色3，与C冲突</li>
+<li>E着色4，无冲突</li>
+</ol>
+<p><em>时间复杂度：</em><br><strong>O(k×n)</strong>，k为颜色数；n为结点数</p>
+<h2 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h2><p><strong><li> Prime算法</li></strong></p>
+<p><em>基本思路：</em><br>在带权连通图中V是包含所有顶点的集合， U已经在最小生成树中的节点，从图中任意某一顶点v开始，此时集合U={v}，重复执行下述操作：在所有u∈U,w∈V-U的边(u,w)∈E中找到一条权值最小的边，将(u,w)这条边加入到已找到边的集合，并且将点w加入到集合U中，当U=V时，就找到了这颗最小生成树。</p>
+<p><strong>适用于稠密图</strong></p>
+<p><strong><li> Kruskal算法</li></strong></p>
+<p><em>基本思路：</em><br>将每个顶点放入其自身的数据集合中。然后，按照权值的升序来选择边。当选择每条边时，判断定义边的顶点是否在不同的数据集中。如果是，将此边插入最小生成树的集合中，同时，将集合中包含每个顶点的联合体取出，如果不是，则产生回路，就移动到下一条边。重复这个过程直到所有的边都探查过。</p>
+<p><strong>适用于稀疏图</strong></p>
+<h1 id="组合问题中的贪心法"><a href="#组合问题中的贪心法" class="headerlink" title="组合问题中的贪心法"></a>组合问题中的贪心法</h1><h2 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h2><p>0/1背包：物品不可拆分</p>
+<p>部分背包：物品可以拆分</p>
+<p><li>策略一</li></p>
+<p>先放价值最高的物品</p>
+<p><li>策略二</li></p>
+<p>先放容量最小的物品</p>
+<p><li>策略三</li></p>
+<p>先放单位价值最高的物品</p>
+<p><em>eg:</em></p>
+<p>给定5个物品，其重量分别是（2,2,6,5,4），价值分别为（6, 3, 5, 4, 6），背包容量为10. 用贪心法求解该背包问题的最优解</p>
+<p><em>解题过程：</em></p>
+<p><img src="/img/数据结构与算法/贪心算法背包问题.PNG" alt="贪心算法背包问题"></p>
+<p><em>程序实现：</em><br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Bag</span><span class="params">(<span class="keyword">int</span> w[], <span class="keyword">int</span> v[], <span class="keyword">int</span> C, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="comment">//单位重量</span></span><br><span class="line">	<span class="keyword">double</span> x[<span class="number">50</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="keyword">int</span> maxValue = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (; x[i] &lt; C; i++) &#123;</span><br><span class="line">		<span class="comment">//整个物品</span></span><br><span class="line">		x[i] = <span class="number">1</span>;</span><br><span class="line">		maxValue += v[i];</span><br><span class="line">		C -= w[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//剩余不完整或没有物品</span></span><br><span class="line">	x[i] = (<span class="keyword">double</span>)C / w[i];</span><br><span class="line">	maxValue += x[i] * v[i];</span><br><span class="line">	<span class="keyword">return</span> maxValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>若为01背包这不考虑物品i装入一部分的情况</strong></p>
+<p><em>时间复杂度：</em></p>
+<p><strong>O(nlog2n)</strong></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/05/28/网络层/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/06/03/类型信息/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

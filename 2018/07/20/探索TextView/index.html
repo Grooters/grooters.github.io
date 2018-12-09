@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>探索TextView | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="TextWatcher TextView内容变化监听器  1234567891011121314textView.addTextChangedListener(new TextWatcher() &amp;#123;    @Override    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="探索TextView">
+<meta property="og:url" content="https://grooters.github.io/2018/07/20/探索TextView/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="TextWatcher TextView内容变化监听器  1234567891011121314textView.addTextChangedListener(new TextWatcher() &amp;#123;    @Override    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://grooters.github.io/img/Android/探索TextView/ExpandableTextView.gif">
+<meta property="og:updated_time" content="2018-08-24T07:14:27.658Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="探索TextView">
+<meta name="twitter:description" content="TextWatcher TextView内容变化监听器  1234567891011121314textView.addTextChangedListener(new TextWatcher() &amp;#123;    @Override    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)">
+<meta name="twitter:image" content="https://grooters.github.io/img/Android/探索TextView/ExpandableTextView.gif">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#TextWatcher"><span class="toc-text">TextWatcher</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#改变TextView中部分内容"><span class="toc-text">改变TextView中部分内容</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#xml实现省略号表示剩余内容"><span class="toc-text">xml实现省略号表示剩余内容</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#文本折叠"><span class="toc-text">文本折叠</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义实现"><span class="toc-text">自定义实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ExpandableTextView"><span class="toc-text">ExpandableTextView</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-探索TextView" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">探索TextView</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.07.20</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="TextWatcher"><a href="#TextWatcher" class="headerlink" title="TextWatcher"></a>TextWatcher</h1><blockquote>
+<p>TextView内容变化监听器</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">textView.addTextChangedListener(<span class="keyword">new</span> TextWatcher() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">beforeTextChanged</span><span class="params">(CharSequence charSequence, <span class="keyword">int</span> i, <span class="keyword">int</span> i1, <span class="keyword">int</span> i2)</span> </span>&#123;</span><br><span class="line">        Log.i(TAG,<span class="string">"c:"</span>+charSequence+<span class="string">" i:"</span>+i+<span class="string">" i1:"</span>+i1+<span class="string">" i2:"</span>+i2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTextChanged</span><span class="params">(CharSequence charSequence, <span class="keyword">int</span> i, <span class="keyword">int</span> i1, <span class="keyword">int</span> i2)</span> </span>&#123;</span><br><span class="line">        Log.i(TAG,<span class="string">"c:"</span>+charSequence+<span class="string">" i:"</span>+i+<span class="string">" i1:"</span>+i1+<span class="string">" i2"</span>+i2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterTextChanged</span><span class="params">(Editable editable)</span> </span>&#123;</span><br><span class="line">        Log.i(TAG,<span class="string">"editable:"</span>+editable.toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong><li> beforeTextChanged(CharSequence s, int start, int count, int after)</li></strong></p>
+<p>该方法在文本改变之前调用，传入了四个参数：</p>
+<ol>
+<li>CharSequence s：文本改变之前的内容</li>
+<li>int start：文本开始改变时的起点位置，从0开始计算</li>
+<li>int count：要被改变的文本字数，即将要被替代的选中文本字数</li>
+<li>int after：改变后添加的文本字数，即替代选中文本后的文本字数</li>
+</ol>
+<blockquote>
+<p>在当前文本s中，从start位置开始之后的count个字符（即将）要被after个字符替换掉</p>
+</blockquote>
+<p><strong><li>onTextChanged(CharSequence charSequence, int i, int i1, int i2)</li></strong></p>
+<p>该方法在文本改变时调用，传入了四个参数：</p>
+<ol>
+<li>CharSequence charSequence：文本改变之后的内容</li>
+<li>int i：文本改变的时的起点位置，从0开始计算</li>
+<li>int i1：要被改变的文本字数</li>
+<li>int i2：改变后添加的文本字数</li>
+</ol>
+<blockquote>
+<p>在当前文本charSequence中，从start位置开始之后的before个字符（已经）被count个字符替换掉了</p>
+</blockquote>
+<p><strong><li> public void afterTextChanged(Editable editable)</li></strong></p>
+<p>该方法在文本改变之后调用，传入了1个参数：</p>
+<ol>
+<li>Editable editable：改变后的最终文本</li>
+</ol>
+<blockquote>
+<p>该方法是在执行完beforeTextChanged、onTextChanged两个方法后才会被调用，此时的文本editable为最终显示给用户看到的文本。我们可以再对该文本进行下一步处理，比如把文本editable显示在UI界面上</p>
+</blockquote>
+<h1 id="改变TextView中部分内容"><a href="#改变TextView中部分内容" class="headerlink" title="改变TextView中部分内容"></a>改变TextView中部分内容</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ForegroundColorSpan foreground=<span class="keyword">new</span> ForegroundColorSpan(ContextCompat.getColor(context,R.color.colorAccent));</span><br><span class="line">BackgroundColorSpan background=<span class="keyword">new</span> BackgroundColorSpan(ContextCompat.getColor(context,R.color.colorPrimary));</span><br><span class="line">SpannableStringBuilder builder=<span class="keyword">new</span> SpannableStringBuilder(textView.getText().toString());</span><br><span class="line">builder.setSpan(foreground,<span class="number">0</span>,<span class="number">4</span>, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">builder.setSpan(background,<span class="number">6</span>,<span class="number">9</span>, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">builder.setSpan(<span class="keyword">new</span> AbsoluteSizeSpan(<span class="number">60</span>),<span class="number">6</span>,<span class="number">9</span>, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">textView.setText(builder);</span><br></pre></td></tr></table></figure>
+<p><em>注意：</em></p>
+<p><strong>0,4 指的是第一个值到第四个值，并不是第五个</strong></p>
+<blockquote>
+<p>Spannable.SPAN_EXCLUSIVE_EXCLUSIVE</p>
+</blockquote>
+<p>在改变部分的<strong>前后</strong>新增内容都不发生改变</p>
+<blockquote>
+<p>Spanned.SPAN_INCLUSIVE_EXCLUSIVE</p>
+</blockquote>
+<p>在改变部分的<strong>前面</strong>新增内容会改变在<strong>后面</strong>新增内容不发生改变</p>
+<h1 id="xml实现省略号表示剩余内容"><a href="#xml实现省略号表示剩余内容" class="headerlink" title="xml实现省略号表示剩余内容"></a>xml实现省略号表示剩余内容</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">android:lines="1"</span><br><span class="line">android:ellipsize="end"</span><br></pre></td></tr></table></figure>
+<h1 id="文本折叠"><a href="#文本折叠" class="headerlink" title="文本折叠"></a>文本折叠</h1><h2 id="自定义实现"><a href="#自定义实现" class="headerlink" title="自定义实现"></a>自定义实现</h2><p><a href="https://developer.android.google.cn/reference/android/view/ViewTreeObserver" target="_blank" rel="noopener">ViewTreeObserver</a></p>
+<blockquote>
+<p>视图树观察器</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TextVieWer</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG=TextVieWer.class.getSimpleName();</span><br><span class="line">    <span class="keyword">private</span> TextView textView;</span><br><span class="line">    <span class="keyword">private</span> String str;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_textviwer);</span><br><span class="line">        textView=findViewById(R.id.textView);</span><br><span class="line">        str=textView.getText().toString();</span><br><span class="line">        <span class="comment">//设置TextView可点击</span></span><br><span class="line">        textView.setMovementMethod(LinkMovementMethod.getInstance());</span><br><span class="line">        <span class="comment">//添加视图树观察器，以避免在布局控件还未完全初始化前操作控件而报错</span></span><br><span class="line">        ViewTreeObserver observer=textView.getViewTreeObserver();</span><br><span class="line">        observer.addOnGlobalLayoutListener(<span class="keyword">new</span> ViewTreeObserver.OnGlobalLayoutListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onGlobalLayout</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                ViewTreeObserver observer=textView.getViewTreeObserver();</span><br><span class="line">                observer.removeOnGlobalLayoutListener(<span class="keyword">this</span>);</span><br><span class="line">                Log.i(TAG,<span class="string">"textView.getLineCount(): "</span>+textView.getLineCount());</span><br><span class="line">                <span class="keyword">if</span>(textView.getLineCount()&gt;<span class="number">2</span>)&#123;</span><br><span class="line">                    <span class="comment">//获取前二行的字数</span></span><br><span class="line">                    <span class="keyword">int</span> lineEnd=textView.getLayout().getLineEnd(<span class="number">1</span>);</span><br><span class="line">                    Log.i(TAG,<span class="string">"lineEnd: "</span>+lineEnd);</span><br><span class="line">                    <span class="comment">//截取前两行字数个数-3的字，然后再添加省略号</span></span><br><span class="line">                    str=str.subSequence(<span class="number">0</span>,lineEnd-<span class="number">3</span>)+<span class="string">"..."</span>;</span><br><span class="line">                    Log.i(TAG,<span class="string">"str: "</span>+str);</span><br><span class="line">                    textView.setText(getClickableSpan(str,lineEnd));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//对省略号进行操作，添加点击事件监听，和改变省略号颜色与大小</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> SpannableString <span class="title">getClickableSpan</span><span class="params">(String str,<span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//指定部分字体监听器创建</span></span><br><span class="line">        <span class="class"><span class="keyword">class</span> <span class="title">Listener</span> <span class="keyword">extends</span> <span class="title">ClickableSpan</span> <span class="keyword">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span></span>&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                Toast.makeText(TextVieWer.<span class="keyword">this</span>, <span class="string">"Click Success"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateDrawState</span><span class="params">(TextPaint ds)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">super</span>.updateDrawState(ds);</span><br><span class="line">                ds.setUnderlineText(<span class="keyword">false</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        SpannableString spanableInfo = <span class="keyword">new</span> SpannableString(str);</span><br><span class="line">        BackgroundColorSpan colorSpan=<span class="keyword">new</span> BackgroundColorSpan(ContextCompat.getColor(<span class="keyword">this</span>,R.color.white));</span><br><span class="line">        ForegroundColorSpan colorSpan1=<span class="keyword">new</span> ForegroundColorSpan(ContextCompat.getColor(<span class="keyword">this</span>,R.color.colorPrimary));</span><br><span class="line">        spanableInfo.setSpan(<span class="keyword">new</span> AbsoluteSizeSpan(<span class="number">100</span>),count-<span class="number">3</span>, count,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">        spanableInfo.setSpan(<span class="keyword">new</span> Listener(), count-<span class="number">3</span>, count, Spanned.SPAN_MARK_MARK);</span><br><span class="line">        spanableInfo.setSpan(colorSpan,count-<span class="number">3</span>,count, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">        spanableInfo.setSpan(colorSpan1,count-<span class="number">3</span>,count, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">        <span class="keyword">return</span> spanableInfo;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>视图树观察器还可用于在onCreate方法中获取View的宽高：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> mHeaderViewHeight;</span><br><span class="line"><span class="keyword">private</span> View mHeaderView;</span><br><span class="line">mHeaderView.getViewTreeObserver().addOnGlobalLayoutListener(</span><br><span class="line">  <span class="keyword">new</span> OnGlobalLayoutListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onGlobalLayout</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            mHeaderViewHeight = mHeaderView.getHeight();</span><br><span class="line">            mHeaderView.getViewTreeObserver()</span><br><span class="line">                    .removeGlobalOnLayoutListener(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="ExpandableTextView"><a href="#ExpandableTextView" class="headerlink" title="ExpandableTextView"></a>ExpandableTextView</h2><blockquote>
+<p>Android提供的可折叠TextView</p>
+</blockquote>
+<p>以下代码来自于：</p>
+<p><a href="https://blog.csdn.net/u010356768/article/details/78114884" target="_blank" rel="noopener">可折叠TextView控件使用：ExpandableTextView</a></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">com.ms.square.android.expandabletextview.ExpandableTextView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">xmlns:expandableTextView</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/expand_text_view"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">expandableTextView:maxCollapsedLines</span>=<span class="string">"4"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">expandableTextView:animDuration</span>=<span class="string">"200"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@id/expandable_text"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">"10dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginRight</span>=<span class="string">"10dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:textSize</span>=<span class="string">"16sp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:textColor</span>=<span class="string">"#666666"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageButton</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@id/expand_collapse"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:padding</span>=<span class="string">"16dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_gravity</span>=<span class="string">"right|bottom"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:background</span>=<span class="string">"@android:color/transparent"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">com.ms.square.android.expandabletextview.ExpandableTextView</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ExpandableTextView expTv1 = (ExpandableTextView) findViewById(R.id.expand_text_view);</span><br><span class="line">expTv1.setText(getString(R.string.dummy_text1));</span><br></pre></td></tr></table></figure>
+<p><img src="/img/Android/探索TextView/ExpandableTextView.gif" alt="ExpandableTextView演示"></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/07/20/Dialog的使用/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/07/20/RecyclerView的使用/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

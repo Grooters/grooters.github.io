@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Handle消息机制 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="Handle主要方法  final Message obtainMessage() final Message obtainMessage(int what, Object obj) 从Message Pool获取一个Message实例 boolean sendMessage(Message msg) 将一个Message发送到MessaQueue boolean sendEmptyMessage">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Handle消息机制">
+<meta property="og:url" content="https://grooters.github.io/2018/08/06/Handler消息机制/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="Handle主要方法  final Message obtainMessage() final Message obtainMessage(int what, Object obj) 从Message Pool获取一个Message实例 boolean sendMessage(Message msg) 将一个Message发送到MessaQueue boolean sendEmptyMessage">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://grooters.github.io/img/Android/消息收发机制/关系图.jpg">
+<meta property="og:updated_time" content="2018-10-10T12:53:48.339Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Handle消息机制">
+<meta name="twitter:description" content="Handle主要方法  final Message obtainMessage() final Message obtainMessage(int what, Object obj) 从Message Pool获取一个Message实例 boolean sendMessage(Message msg) 将一个Message发送到MessaQueue boolean sendEmptyMessage">
+<meta name="twitter:image" content="https://grooters.github.io/img/Android/消息收发机制/关系图.jpg">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Handle"><span class="toc-text">Handle</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Message"><span class="toc-text">Message</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Looper"><span class="toc-text">Looper</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HandleThread"><span class="toc-text">HandleThread</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#消息机制"><span class="toc-text">消息机制</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Handler消息机制" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Handle消息机制</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.08.06</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="Handle"><a href="#Handle" class="headerlink" title="Handle"></a><a href="https://developer.android.google.cn/reference/android/os/Handler" target="_blank" rel="noopener">Handle</a></h1><p><strong><font size="4sp">主要方法</font></strong></p>
+<p><li> <a href="https://developer.android.google.cn/reference/android/os/Handler.html#obtainMessage" target="_blank" rel="noopener">final Message obtainMessage()</a></li></p>
+<p><li><a href="https://developer.android.google.cn/reference/android/os/Handler.html#obtainMessage(int,%20java.lang.Object" target="_blank" rel="noopener">final Message obtainMessage(int what, Object obj)</a></li></p>
+<p>从Message Pool获取一个Message实例</p>
+<p><li><a href="https://developer.android.google.cn/reference/android/os/Handler.html#sendMessage(android.os.Message" target="_blank" rel="noopener">boolean sendMessage(Message msg)</a></li></p>
+<p>将一个Message发送到MessaQueue</p>
+<p><li><a href="https://developer.android.google.cn/reference/android/os/Handler.html#sendEmptyMessage(int" target="_blank" rel="noopener">boolean sendEmptyMessage(int what)</a></li></p>
+<p>发送一个只有标记值的消息，通常用来激活handleMessage方法，而不是消息内容传递</p>
+<p><li><a href="https://developer.android.google.cn/reference/android/os/Handler.html#handleMessage(android.os.Message" target="_blank" rel="noopener">handleMessage(Message msg)</a></li></p>
+<p>重写该方法接受Message，eg：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Handler()&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.handleMessage(msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Handler作为Message的发送类，也作为Message的处理类</p>
+<h1 id="Message"><a href="#Message" class="headerlink" title="Message"></a><a href="https://developer.android.google.cn/reference/android/os/Message" target="_blank" rel="noopener">Message</a></h1><p><strong><font size="4sp">常用方法</font></strong></p>
+<p><li><a href="https://developer.android.google.cn/reference/android/os/Message.html#sendToTarget(" target="_blank" rel="noopener">void sendToTarget()</a></li></p>
+<p>将该Message消息发送至MessageQueue，eg:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">handler.obtainMessage(MESSAGE_DOWNLOAD,targetHolder).sendToTarget();</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>obtainMessage会从公共循环池里获取消息，比创建新实例效率更高</p>
+</blockquote>
+<p><strong><font size="4sp">常用变量</font></strong></p>
+<p><li>final Objetc Obj</li></p>
+<p>Message可携带的信息对象</p>
+<p><li>final int what</li></p>
+<p>Message的标识符</p>
+<p><em>运用方法如下：</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Handler()&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.handleMessage(msg);</span><br><span class="line">        <span class="keyword">switch</span>(msg.what)&#123;</span><br><span class="line">          <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            Object obj=msg.Obj;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="Looper"><a href="#Looper" class="headerlink" title="Looper"></a><a href="https://developer.android.google.cn/reference/android/os/Looper" target="_blank" rel="noopener">Looper</a></h1><p><strong>封装了消息循环和消息队列</strong></p>
+<p>常通过Handler与Looper进行交互，Handler为指定Looper提供了发送消息和处理消息的方法</p>
+<p>通常创建Handler需要指定一个Looper与其绑定，如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Looper.prepare()</span><br><span class="line">handler=<span class="keyword">new</span> Handler()&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">Looper.loop();</span><br></pre></td></tr></table></figure>
+<p><strong>Looper.prepare()</strong></p>
+<blockquote>
+<p>启动一个Looper</p>
+</blockquote>
+<p><strong>Looper.loop()</strong></p>
+<blockquote>
+<p>让Looper开始工作，在调用该方法后，会阻塞线程，导致该方法后面的代码无法执行，直到调用<strong>handler.getLooper().quit()</strong>才能解除阻塞</p>
+</blockquote>
+<p>但在主线程中创建Handler会默认与主线程中的Looper绑定，即：</p>
+<blockquote>
+<p>handler = new Handler()等价于new Handler（Looper.myLooper()）</p>
+</blockquote>
+<p><strong>Looper.myLooper()</strong></p>
+<blockquote>
+<p>获取当前进程的Looper</p>
+</blockquote>
+<h1 id="HandleThread"><a href="#HandleThread" class="headerlink" title="HandleThread"></a><a href="https://developer.android.google.cn/reference/android/os/HandlerThread" target="_blank" rel="noopener">HandleThread</a></h1><p><strong>用于启动具有looper的新线程的类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoaderThread</span> &lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">HandlerThread</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LoaderThread</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(TAG);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onLooperPrepared</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onLooperPrepared();</span><br><span class="line">        Log.i(TAG,<span class="string">"onLooperPrepared"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//通过以下方式启动线程，启动后会执行onLooperPrepared方法</span></span><br><span class="line">LoaderThread&lt;InnerHolder&gt; loaderThread=<span class="keyword">new</span> LoaderThread&lt;&gt;();</span><br><span class="line">loaderThread.start();</span><br><span class="line">loaderThread.getLooper();</span><br></pre></td></tr></table></figure>
+<h1 id="消息机制"><a href="#消息机制" class="headerlink" title="消息机制"></a>消息机制</h1><p><img src="/img/Android/消息收发机制/关系图.jpg" alt="关系图"></p>
+<blockquote>
+<p>一个Handler仅与一个Looper相关联，一个Message也仅与一个目标Handler相关联，多个Message可以引用统一目标Handler。多个Handler也可和一个Looper相关联</p>
+</blockquote>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/08/05/AsyncTaskLoader解析/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/08/09/Activity的生命周期和启动模式/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

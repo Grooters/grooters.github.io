@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>PagerView | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="步骤  在主activity布局添加android.support.v4.view.ViewPager控件   创建几个页面布局   将页面布局与Fragment绑定，将Fragment添加进容器   也可以不绑定，类似于以下PagerAdapter上编写方式，直接获取View   创建适配器，在容器中取出Fragment，然后将其显示在ViewPager中 适配器FragmentPagerAda">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PagerView">
+<meta property="og:url" content="https://grooters.github.io/2018/07/19/PagerView的使用/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="步骤  在主activity布局添加android.support.v4.view.ViewPager控件   创建几个页面布局   将页面布局与Fragment绑定，将Fragment添加进容器   也可以不绑定，类似于以下PagerAdapter上编写方式，直接获取View   创建适配器，在容器中取出Fragment，然后将其显示在ViewPager中 适配器FragmentPagerAda">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-10-09T11:39:01.003Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PagerView">
+<meta name="twitter:description" content="步骤  在主activity布局添加android.support.v4.view.ViewPager控件   创建几个页面布局   将页面布局与Fragment绑定，将Fragment添加进容器   也可以不绑定，类似于以下PagerAdapter上编写方式，直接获取View   创建适配器，在容器中取出Fragment，然后将其显示在ViewPager中 适配器FragmentPagerAda">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#步骤"><span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#适配器"><span class="toc-text">适配器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FragmentPagerAdapter"><span class="toc-text">FragmentPagerAdapter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FragmentStatePagerAdapter"><span class="toc-text">FragmentStatePagerAdapter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ViewPagerAdapter"><span class="toc-text">ViewPagerAdapter</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ViewPager的优化和封装"><span class="toc-text">ViewPager的优化和封装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-text">?</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-PagerView的使用" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">PagerView</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.07.19</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><p>  在主activity布局添加android.support.v4.view.ViewPager控件</p>
+<p>  创建几个页面布局</p>
+<p>  将页面布局与Fragment绑定，将Fragment添加进容器</p>
+<p>  也可以不绑定，类似于以下PagerAdapter上编写方式，直接获取View</p>
+<p>  创建适配器，在容器中取出Fragment，然后将其显示在ViewPager中</p>
+<h1 id="适配器"><a href="#适配器" class="headerlink" title="适配器"></a>适配器</h1><h2 id="FragmentPagerAdapter"><a href="#FragmentPagerAdapter" class="headerlink" title="FragmentPagerAdapter"></a>FragmentPagerAdapter</h2><p>  该适配器会将生成的每一个Fragment保存在内存中，因此适用于PagerView页面不多的情况</p>
+<p>  <em>eg：</em></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewPagerAdapter</span> <span class="keyword">extends</span> <span class="title">FragmentPagerAdapter</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">ViewPagerAdapter</span><span class="params">(FragmentManager fm)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">super</span>(fm);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> pagers.size();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Fragment <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> pagers.get(position);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  只需重写</p>
+<ol>
+<li><p>带FragmentManager参数的构造方法</p>
+</li>
+<li><p>getCount</p>
+</li>
+<li><p>getItem</p>
+</li>
+</ol>
+<p><strong>Fragment页面生命周期：</strong></p>
+<p><em>进入第一个页面：</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">PagerFragmentOne: onAttach</span><br><span class="line">    		      onCreate</span><br><span class="line">PagerFragmentTwo: onAttach</span><br><span class="line">PagerFragmentTwo: onCreate</span><br><span class="line">PagerFragmentOne: onCreateView</span><br><span class="line">PagerFragmentOne: onActivityCreated</span><br><span class="line">    		      onStart</span><br><span class="line">    	 	     onResume</span><br><span class="line">PagerFragmentTwo: onCreateView</span><br><span class="line">PagerFragmentTwo: onActivityCreated</span><br><span class="line">    		      onStart</span><br><span class="line">    		      onResume</span><br></pre></td></tr></table></figure>
+<p><em>进入第二个页面：</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PagerFragmentThird: onAttach</span><br><span class="line">                    onCreate</span><br><span class="line">PagerFragmentThird: onCreateView</span><br><span class="line">PagerFragmentThird: onActivityCreated</span><br><span class="line">PagerFragmentThird: onStart</span><br><span class="line">                    onResume</span><br></pre></td></tr></table></figure>
+<p><em>进入第三个页面：</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PagerFragmentOne: onPause</span><br><span class="line">PagerFragmentOne: onStop</span><br><span class="line">                  onDestroyView</span><br></pre></td></tr></table></figure>
+<p>由上可知ViewPagerAdapter会将左右两个页面预先加载（执行到<strong>onResume</strong>），当翻页到某页不在该页左右，则该页视图会被销毁（执行到<strong>onDestroyView</strong>），但不会销毁Fragment对象</p>
+<h2 id="FragmentStatePagerAdapter"><a href="#FragmentStatePagerAdapter" class="headerlink" title="FragmentStatePagerAdapter"></a>FragmentStatePagerAdapter</h2><p>  该适配器不会将Fragment保存在内存中，适合较多页面的PagerView</p>
+<p>  <em>eg:</em></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewPagerAdapterr</span> <span class="keyword">extends</span> <span class="title">android</span>.<span class="title">support</span>.<span class="title">v4</span>.<span class="title">app</span>.<span class="title">FragmentStatePagerAdapter</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">ViewPagerAdapterr</span><span class="params">(FragmentManager fm)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">super</span>(fm);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> pagers.size();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Fragment <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> pagers.get(position);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  与FragmentPagerAdapter一样需要重写三个方法</p>
+<p>  <strong>Fragment的生命周期：</strong></p>
+<p>  与FragmentPagerAdapter不同之处在于当翻页到某页不在该页左右，则该页Fragment销毁（执行到<strong>onDetch</strong>）</p>
+<h2 id="ViewPagerAdapter"><a href="#ViewPagerAdapter" class="headerlink" title="ViewPagerAdapter"></a>ViewPagerAdapter</h2><p>  至少需要重写</p>
+<ol>
+<li><p>instantiateItem</p>
+</li>
+<li><p>isViewFromObjec</p>
+</li>
+<li><p>getCount</p>
+<p><em>eg:</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">PagerAdapterr</span> <span class="keyword">extends</span> <span class="title">PagerAdapter</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PagerAdapterr</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> pagers.size();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">instantiateItem</span><span class="params">(@NonNull ViewGroup container, <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        container.addView(views.get(position));</span><br><span class="line">        Log.i(TAG,<span class="string">"instantiateItem"</span>+position);</span><br><span class="line">        <span class="keyword">return</span> views.get(position);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isViewFromObject</span><span class="params">(@NonNull View view, @NonNull Object object)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> view==object;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroyItem</span><span class="params">(@NonNull ViewGroup container, <span class="keyword">int</span> position, @NonNull Object object)</span> </span>&#123;</span><br><span class="line">        container.removeView(views.get(position));</span><br><span class="line">        Log.i(TAG,<span class="string">"destroyItem"</span>+position);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>instantiateItem创建显示的视图</p>
+<p>isViewFromObject判断当前视图是否与object对象相同</p>
+<p>destroyItem销毁指定视图</p>
+<p><em>生命周期：</em></p>
+<p><em>位于第一页：</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ViewPagerActivity: instantiateItem0</span><br><span class="line">                      instantiateItem1</span><br></pre></td></tr></table></figure>
+<p><em>滑向第二页：</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ViewPagerActivity: instantiateItem2</span><br></pre></td></tr></table></figure>
+<p><em>滑向第三页：</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ViewPagerActivity: destroyItem0</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="ViewPager的优化和封装"><a href="#ViewPager的优化和封装" class="headerlink" title="ViewPager的优化和封装"></a>ViewPager的优化和封装</h1><blockquote>
+<p>见<strong>lller库的使用</strong>文章中的<strong>ViewPageRer</strong>的使用</p>
+</blockquote>
+<h1 id=""><a href="#" class="headerlink" title="?"></a>?</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Fragment&gt; fragments=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">fragments.add(<span class="keyword">new</span> FirstFragment());</span><br><span class="line">fragments.add(<span class="keyword">new</span> SecondFragment());</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPages</span><span class="params">(List&lt;Fragment&gt; fragments, List&lt;View&gt; views)</span></span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.fragments=fragments;</span><br><span class="line">  <span class="keyword">this</span>.views=views;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">FragmentPagerAdapterr</span> <span class="keyword">extends</span> <span class="title">FragmentPagerAdapter</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">FragmentPagerAdapterr</span><span class="params">(FragmentManager fm)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">super</span>(fm);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      Log.i(TAG,<span class="string">"fragments.size()："</span>+fragments.size());</span><br><span class="line">      <span class="keyword">return</span> fragments.size();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Fragment <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">      Log.i(TAG,<span class="string">"position："</span>+position);</span><br><span class="line">      <span class="keyword">return</span> fragments.get(position);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//FirstFragment.class</span></span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">  Log.i(TAG,<span class="string">"onCreateView"</span>);</span><br><span class="line">  <span class="comment">//若传入container会出错</span></span><br><span class="line">  <span class="keyword">return</span> inflater.inflate(R.layout.fragment_first,<span class="keyword">null</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>07-31 15:00:13.732 13036-13036/? E/AndroidRuntime:     at android.view.ViewGroup.jumpDrawablesToCurrentState(ViewGroup.java:6505)<br>        at android.view.ViewGroup.jumpDrawablesToCurrentState(ViewGroup.java:6505)<br>        at android.view.ViewGroup.jumpDrawablesToCurrentState(ViewGroup.java:6505)<br>        at android.view.ViewGroup.jumpDrawablesToCurrentState(ViewGroup.java:6505)<br>        at android.view.ViewGroup.jumpDrawablesToCurrentState(ViewGroup.java:6505)<br>        at android.view.ViewGroup.jumpDrawablesToCurrentState(ViewGroup.java:6505)<br>        …………..</p>
+</blockquote>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/07/01/动态规划法/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/07/20/Dialog的使用/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

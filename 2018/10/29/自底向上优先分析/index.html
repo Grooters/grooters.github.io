@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>自底向上优先分析 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="短语直接短语与句柄的求法：  规范规约 最右推导，即最左规约  规范规约步骤，eg：  优先分析法包括 简单优先分析法  按一定原则定义文法中所有符号（终结符和非终结符）之间的优先关系，按照这种关系确定归约过程中的句柄并实行归约。是一种规范归约，但效率低。   算符优先分析法  只定义文法中终结符之间的优先关系（不考虑非终结符），并由这种关系指导分析过程。不是规范归约，但分析速度快。    通常">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自底向上优先分析">
+<meta property="og:url" content="https://grooters.github.io/2018/10/29/自底向上优先分析/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="短语直接短语与句柄的求法：  规范规约 最右推导，即最左规约  规范规约步骤，eg：  优先分析法包括 简单优先分析法  按一定原则定义文法中所有符号（终结符和非终结符）之间的优先关系，按照这种关系确定归约过程中的句柄并实行归约。是一种规范归约，但效率低。   算符优先分析法  只定义文法中终结符之间的优先关系（不考虑非终结符），并由这种关系指导分析过程。不是规范归约，但分析速度快。    通常">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://grooters.github.io/img/编译原理/自底向上优先分析/短语直接短语与句柄.jpg">
+<meta property="og:image" content="https://grooters.github.io/img/编译原理/自底向上优先分析/规范规约步骤.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/编译原理/自底向上优先分析/算符优先规约步骤.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/编译原理/自底向上优先分析/优先关系.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/编译原理/自底向上优先分析/规范规约与算符规约.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/编译原理/自底向上优先分析/FIRSTVT求法.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/编译原理/自底向上优先分析/LASTVT求法.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/编译原理/自底向上优先分析/通过FIRSTVT和LASTVT求优先关系.PNG">
+<meta property="og:updated_time" content="2018-11-12T11:20:44.633Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自底向上优先分析">
+<meta name="twitter:description" content="短语直接短语与句柄的求法：  规范规约 最右推导，即最左规约  规范规约步骤，eg：  优先分析法包括 简单优先分析法  按一定原则定义文法中所有符号（终结符和非终结符）之间的优先关系，按照这种关系确定归约过程中的句柄并实行归约。是一种规范归约，但效率低。   算符优先分析法  只定义文法中终结符之间的优先关系（不考虑非终结符），并由这种关系指导分析过程。不是规范归约，但分析速度快。    通常">
+<meta name="twitter:image" content="https://grooters.github.io/img/编译原理/自底向上优先分析/短语直接短语与句柄.jpg">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#规范规约"><span class="toc-text">规范规约</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#优先分析法包括"><span class="toc-text">优先分析法包括</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#优先关系"><span class="toc-text">优先关系</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FIRSTVT与LASTVY"><span class="toc-text">FIRSTVT与LASTVY</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-自底向上优先分析" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">自底向上优先分析</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.10.29</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/编译原理/">编译原理</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><strong><font size="4sp"> 短语直接短语与句柄的求法：</font></strong></p>
+<p><img src="/img/编译原理/自底向上优先分析/短语直接短语与句柄.jpg" alt="短语直接短语与句柄"></p>
+<h1 id="规范规约"><a href="#规范规约" class="headerlink" title="规范规约"></a>规范规约</h1><blockquote>
+<p>最右推导，即<strong>最左规约</strong></p>
+</blockquote>
+<p>规范规约步骤，eg：</p>
+<p><img src="/img/编译原理/自底向上优先分析/规范规约步骤.PNG" alt="规范规约步骤"></p>
+<h1 id="优先分析法包括"><a href="#优先分析法包括" class="headerlink" title="优先分析法包括"></a>优先分析法包括</h1><p><li> 简单优先分析法</li></p>
+<blockquote>
+<p>按一定原则定义文法中所有符号（终结符和非终结符）之间的优先关系，按照这种关系确定归约过程中的句柄并实行归约。是一种规范归约，但效率低。</p>
+</blockquote>
+<p><li> 算符优先分析法</li></p>
+<blockquote>
+<p>只定义文法中终结符之间的优先关系（不考虑非终结符），并由这种关系指导分析过程。不是规范归约，但分析速度快。</p>
+</blockquote>
+<p><img src="/img/编译原理/自底向上优先分析/算符优先规约步骤.PNG" alt="算符优先规约步骤"></p>
+<blockquote>
+<p>通常算术表达式的运算次序是先乘除后加减，同优先级相同时服从左结合</p>
+</blockquote>
+<h1 id="优先关系"><a href="#优先关系" class="headerlink" title="优先关系"></a>优先关系</h1><p><img src="/img/编译原理/自底向上优先分析/优先关系.PNG" alt="优先关系"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">在当前句柄中的符号优先于与其相邻的不在句柄中的符号</span><br><span class="line"></span><br><span class="line"># &lt; 任何与它相邻的运算符</span><br><span class="line"></span><br><span class="line">括号 &gt; 括号外的运算符 ， &lt; 括号内的运算符</span><br><span class="line"></span><br><span class="line">运算对象i（整数）最高</span><br></pre></td></tr></table></figure>
+<p><strong><font size="3sp"><li> 算符文法</li></font></strong></p>
+<blockquote>
+<p>上下文无关文法 G ，如果G中产生式的右部没有两个非终结符相连，则称G为算符文法</p>
+</blockquote>
+<p><strong><font size="3sp"><li> 算符优先文法</li></font></strong></p>
+<blockquote>
+<p>设有一不含ε产生式的算符文法G，如果对任意两个终结符对a,b之间至多只有一种优先关系成立，则称G是一个算符优先文法(Operater Precedence Grammar)，即OPG文法</p>
+</blockquote>
+<p><img src="/img/编译原理/自底向上优先分析/规范规约与算符规约.PNG" alt="规范规约与算符规约"></p>
+<h1 id="FIRSTVT与LASTVY"><a href="#FIRSTVT与LASTVY" class="headerlink" title="FIRSTVT与LASTVY"></a>FIRSTVT与LASTVY</h1><p><li> FIRSTVT的求法</li></p>
+<p><img src="/img/编译原理/自底向上优先分析/FIRSTVT求法.PNG" alt="FIRSTVT的求法"></p>
+<p><li> LASTVT的求法</li></p>
+<p><img src="/img/编译原理/自底向上优先分析/LASTVT求法.PNG" alt="LASTVT的求法"></p>
+<p><li> 通过FIRSTVT和LASTVT求优先关系</li></p>
+<p><img src="/img/编译原理/自底向上优先分析/通过FIRSTVT和LASTVT求优先关系.PNG" alt="通过FIRSTVT和LASTVT求优先关系"></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/10/18/Android的IPC机制/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/11/01/View的事件体系/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

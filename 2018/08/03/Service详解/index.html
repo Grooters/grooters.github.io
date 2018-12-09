@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Service详解 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="Service Service与Thread？ 两者毫无关系，Thread是一个子线程，而Service是运行在主线程中的，所以要在服务中进行耗时操作，需要另开一个Thread子线程，否则容易出现ARN异常 基本使用启动服务1234567891011121314151617181920212223import android.app.Service;import android.content.I">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Service详解">
+<meta property="og:url" content="https://grooters.github.io/2018/08/03/Service详解/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="Service Service与Thread？ 两者毫无关系，Thread是一个子线程，而Service是运行在主线程中的，所以要在服务中进行耗时操作，需要另开一个Thread子线程，否则容易出现ARN异常 基本使用启动服务1234567891011121314151617181920212223import android.app.Service;import android.content.I">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://grooters.github.io/img/Android/Service详解/Service生命周期.png">
+<meta property="og:updated_time" content="2018-10-12T05:03:45.138Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Service详解">
+<meta name="twitter:description" content="Service Service与Thread？ 两者毫无关系，Thread是一个子线程，而Service是运行在主线程中的，所以要在服务中进行耗时操作，需要另开一个Thread子线程，否则容易出现ARN异常 基本使用启动服务1234567891011121314151617181920212223import android.app.Service;import android.content.I">
+<meta name="twitter:image" content="https://grooters.github.io/img/Android/Service详解/Service生命周期.png">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本使用"><span class="toc-text">基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#启动服务"><span class="toc-text">启动服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Service与Activity的通信"><span class="toc-text">Service与Activity的通信</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Service生命周期"><span class="toc-text">Service生命周期</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#后台服务"><span class="toc-text">后台服务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IntentService"><span class="toc-text">IntentService</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JobScheduler"><span class="toc-text">JobScheduler</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JobService"><span class="toc-text">JobService</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JobInfo"><span class="toc-text">JobInfo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AlarmManager"><span class="toc-text">AlarmManager</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PedingIntent"><span class="toc-text">PedingIntent</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Service详解" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Service详解</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.08.03</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><strong><font size="5sp"><a href="https://developer.android.google.cn/reference/android/app/Service" target="_blank" rel="noopener">Service</a></font></strong></p>
+<p><strong>Service与Thread？</strong></p>
+<p>两者毫无关系，Thread是一个子线程，而Service是运行在<strong>主线程</strong>中的，所以要在服务中进行耗时操作，需要另开一个Thread子线程，否则容易出现ARN异常</p>
+<h1 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h1><h2 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.app.Service;</span><br><span class="line"><span class="keyword">import</span> android.content.Intent;</span><br><span class="line"><span class="keyword">import</span> android.os.IBinder;</span><br><span class="line"><span class="keyword">import</span> android.support.annotation.Nullable;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Servicer</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG=Servicer.class.getSimpleName();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Servicer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        Log.i(TAG,<span class="string">"Servicer"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">onStartCommand</span><span class="params">(Intent intent, <span class="keyword">int</span> flags, <span class="keyword">int</span> startId)</span> </span>&#123;</span><br><span class="line">        Log.i(TAG,<span class="string">"onStartCommand"</span>);</span><br><span class="line">        stopService(intent);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onStartCommand(intent, flags, startId);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Log.i(TAG,<span class="string">"onDestroy"</span>);</span><br><span class="line">        <span class="keyword">super</span>.onDestroy();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent intent=<span class="keyword">new</span> Intent(MainActivity.<span class="keyword">this</span>, Servicer.class);</span><br><span class="line">startService(intent);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Servicer: Servicer<br><br>Servicer: onStartCommand<br><br>Servicer: onDestroy</p>
+</blockquote>
+<h2 id="Service与Activity的通信"><a href="#Service与Activity的通信" class="headerlink" title="Service与Activity的通信"></a>Service与Activity的通信</h2><p>用Service而不用Thread的一大原因就是Activity能方便地与Service联系，可以操控管理Service</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">bindServiceer</span><span class="params">()</span></span>&#123;</span><br><span class="line">     serviceConnection=<span class="keyword">new</span> ServiceConnection() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName componentName, IBinder iBinder)</span> </span>&#123;</span><br><span class="line">            Servicer.Binderer binderer=(Servicer.Binderer)iBinder;</span><br><span class="line">            binderer.connect();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName componentName)</span> </span>&#123;</span><br><span class="line">            Log.i(TAG,<span class="string">"onServiceDisconnected"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(serviceConnection==<span class="keyword">null</span>)&#123;</span><br><span class="line">    bindServiceer();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(binderFlag)&#123;</span><br><span class="line">    bindService(servicerIntent,serviceConnection,BIND_AUTO_CREATE);</span><br><span class="line">    binderFlag=<span class="keyword">false</span>;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    unbindService(serviceConnection);</span><br><span class="line">    binderFlag=<span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Servicer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>();</span><br><span class="line">    Log.i(TAG,<span class="string">"Servicer"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">onStartCommand</span><span class="params">(Intent intent, <span class="keyword">int</span> flags, <span class="keyword">int</span> startId)</span> </span>&#123;</span><br><span class="line">    Log.i(TAG,<span class="string">"onStartCommand"</span>);</span><br><span class="line">    stopService(intent);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.onStartCommand(intent, flags, startId);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onUnbind</span><span class="params">(Intent intent)</span> </span>&#123;</span><br><span class="line">    Log.i(TAG,<span class="string">"onUnbind"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.onUnbind(intent);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Log.i(TAG,<span class="string">"onDestroy"</span>);</span><br><span class="line">    <span class="keyword">super</span>.onDestroy();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Binderer</span> <span class="keyword">extends</span> <span class="title">Binder</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Binderer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connect</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Log.i(TAG,<span class="string">"connect"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>分别触发启动服务，绑定服务和解绑服务：</p>
+<blockquote>
+<p>Servicer: Servicer<br><br>Servicer: onStartCommand<br><br>Servicer: onBind<br><br>Servicer: connect<br><br>Servicer: onUnbind</p>
+</blockquote>
+<p><em>值得注意的是：</em></p>
+<ol>
+<li><p>第一次启动服务会创建一个服务，即调用Binder的<strong>构造方法</strong>，当再次启动服务，则不会调用该构造方法，而是直接调用<strong>onStartCommand</strong>。</p>
+</li>
+<li><p>当绑定了一个服务，然后stop该服务，在没有解绑该服务前，是不会调用onDestory方法，需要解绑后才会调用。</p>
+</li>
+<li><p>当在启动服务前，就直接绑定服务，由于绑定服务方法第三个参数为<strong>BIND_AUTO_CREATE</strong>，所以会自动创建一个服务，如下：</p>
+<blockquote>
+<p>Servicer: Servicer<br><br>Servicer: onBind<br><br>Servicer: onUnbind<br><br>Servicer: onDestroy</p>
+</blockquote>
+</li>
+</ol>
+<h1 id="Service生命周期"><a href="#Service生命周期" class="headerlink" title="Service生命周期"></a>Service生命周期</h1><p><img src="/img/Android/Service详解/Service生命周期.png" alt="Service生命周期"></p>
+<p><em>参考：</em></p>
+<p><a href="https://www.cnblogs.com/smyhvae/p/4070518.html" target="_blank" rel="noopener">Android组件系列—-Android Service组件深入解析</a></p>
+<h1 id="后台服务"><a href="#后台服务" class="headerlink" title="后台服务"></a>后台服务</h1><h2 id="IntentService"><a href="#IntentService" class="headerlink" title="IntentService"></a><a href="https://developer.android.google.cn/reference/android/app/IntentService" target="_blank" rel="noopener">IntentService</a></h2><p><em>IntentService是Service的基类，可根据需要处理异步请求。客户端通过Context.startService(Intent)呼叫发送请求</em></p>
+<p>需重写两个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//此处注意，Android studio导出的默认构造器为public ServiceIntent(String name),这会报错</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ServiceIntent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(<span class="string">"ServiceIntent"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onHandleIntent</span><span class="params">(@Nullable Intent intent)</span> </span>&#123;</span><br><span class="line">    Log.i(TAG,<span class="string">"onHandleIntent"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该类是通过HandleThread和Handler进行异步操作，具有较高的优先级，其每次进行异步操作都是将任务加入消息队列，通过HandleThread和Handler来进行异步操作</p>
+<p>使用实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceIntent</span> <span class="keyword">extends</span> <span class="title">IntentService</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG=ServiceIntent.class.getSimpleName();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ServiceIntent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(<span class="string">"ServiceIntent"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onHandleIntent</span><span class="params">(@Nullable Intent intent)</span> </span>&#123;</span><br><span class="line">        Log.i(TAG,<span class="string">"onHandleIntent"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Intent <span class="title">newInstance</span><span class="params">(Context context)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Intent(context,ServiceIntent.class);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isOn</span><span class="params">(Context context)</span></span>&#123;</span><br><span class="line">        Intent intent=ServiceIntent.newInstance(context);</span><br><span class="line">        PendingIntent pi=PendingIntent.getService(context,<span class="number">0</span>,intent,PendingIntent.FLAG_NO_CREATE);</span><br><span class="line">        <span class="keyword">return</span> pi!=<span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//启动服务</span></span><br><span class="line">Intent intent=ServiceIntent.newInstance(<span class="keyword">this</span>);</span><br><span class="line">startService(intent);</span><br></pre></td></tr></table></figure>
+<h1 id="JobScheduler"><a href="#JobScheduler" class="headerlink" title="JobScheduler"></a><a href="https://developer.android.google.cn/reference/android/app/job/JobScheduler" target="_blank" rel="noopener">JobScheduler</a></h1><p><strong>用于根据将在应用程序自己的进程中执行的框架来安排各种类型的作业</strong></p>
+<h2 id="JobService"><a href="#JobService" class="headerlink" title="JobService"></a><a href="https://developer.android.google.cn/reference/android/app/job/JobService" target="_blank" rel="noopener">JobService</a></h2><p><strong>需要手动开线程</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JobSchedulerService</span> <span class="keyword">extends</span> <span class="title">JobService</span> </span>&#123;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onStartJob</span><span class="params">(JobParameters params)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onStopJob</span><span class="params">(JobParameters params)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong><li>onStartJob</li></strong></p>
+<p>当任务开始时调用，如果返回false的话，系统会自动结束本job</p>
+<p><strong><li>onStopJob</li></strong></p>
+<p>当任务被取消时调用，<strong>jobFinished方法导致的任务结束不算在内</strong></p>
+<blockquote>
+<p>当返回值为<strong>true</strong>表示任务应该计划在下次继续即可在被强制停止后再度启动起来，返回<strong>false</strong>表示不管怎样，到此结束，不要计划下次</p>
+</blockquote>
+<p><strong><li>jobFinished</li></strong></p>
+<blockquote>
+<p>final void    jobFinished(JobParameters params, boolean wantsReschedule)</p>
+</blockquote>
+<p>当完成任务时调用该方法通知系统，该方法执行完后不会回调<strong>onStopJob()</strong>,但是会回调<strong>onDestroy()</strong></p>
+<blockquote>
+<p>若<strong>wantsReschedule</strong>为<strong>true</strong>则表示这次事情做不完了，请计划下次继续</p>
+</blockquote>
+<h2 id="JobInfo"><a href="#JobInfo" class="headerlink" title="JobInfo"></a><a href="https://developer.android.google.cn/reference/android/app/job/JobInfo" target="_blank" rel="noopener">JobInfo</a></h2><p>由<a href="https://developer.android.google.cn/reference/android/app/job/JobInfo.Builder" target="_blank" rel="noopener">JobInfo.Builder</a>构建一个JobInfo对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">JobInfo jobInfo = <span class="keyword">new</span> JobInfo.Builder(i, mServiceComponent)</span><br><span class="line">      <span class="comment">//设置任务允许最少延迟时间</span></span><br><span class="line">     .setMinimumLatency(<span class="number">2000</span>)</span><br><span class="line">      <span class="comment">//设置deadline,若到期还没有到达规定的条件也会执行</span></span><br><span class="line">     .setOverrideDeadline(<span class="number">50000</span>)</span><br><span class="line">      <span class="comment">//设置网络条件，非蜂窝数据的</span></span><br><span class="line">     .setRequireNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)</span><br><span class="line">      <span class="comment">//设置充电条件</span></span><br><span class="line">     .setRequiresCharging(<span class="keyword">true</span>)</span><br><span class="line">      <span class="comment">//设置手机是否idle状态</span></span><br><span class="line">     .setRequiresDeviceIdle(<span class="keyword">false</span>)</span><br><span class="line">     .build();</span><br></pre></td></tr></table></figure>
+<p><em>启动一个JobService：</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> JobScheduler scheduler = context.getSystemService(JobScheduler.class);</span><br><span class="line"><span class="keyword">final</span> JobInfo.Builder builder = <span class="keyword">new</span> JobInfo.Builder(MyJobService.ELLISONS_JOB_ID,<span class="keyword">new</span> ComponentName(context, MyJobService.class));</span><br><span class="line">builder.setOverrideDeadline(<span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><a href="The endpoint that you implement that will receive the callback from the JobScheduler.">JobInfo.Builder(int jobId, ComponentName jobService)</a></p>
+</blockquote>
+<p><strong><font size="4sp"><a href="https://blog.csdn.net/allisonchen/article/details/79282651" target="_blank" rel="noopener">JobService和Service的多角度对比</a></font></strong></p>
+<h2 id="AlarmManager"><a href="#AlarmManager" class="headerlink" title="AlarmManager"></a><a href="https://developer.android.google.cn/reference/android/app/AlarmManager.html#setRepeating(int,%20long,%20long,%20android.app.PendingIntent" target="_blank" rel="noopener">AlarmManager</a></h2><p>参考：</p>
+<p><a href="https://www.cnblogs.com/ProtectedDream/p/6351447.html" target="_blank" rel="noopener">AlarmManager使用</a></p>
+<h2 id="PedingIntent"><a href="#PedingIntent" class="headerlink" title="PedingIntent"></a><a href="https://developer.android.google.cn/reference/android/app/PendingIntent" target="_blank" rel="noopener">PedingIntent</a></h2><p>一种特殊的，携带有Intent和Context，不会立即执行的意图</p>
+<p>常通过以下静态方法获取实例：</p>
+<p><strong><li> getActivity</li></strong></p>
+<p><strong><li> getBroadcast</li></strong></p>
+<p><strong><li> getService</li></strong></p>
+<p>方法参数均为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Context context, int requestCode, Intent intent, int flags</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>第一个为上下文，第二个为请求码，第三个为具体意图，第四个为内部属性</p>
+</blockquote>
+<p>常用属性为：</p>
+<blockquote>
+<p>FLAG_NO_CREATE,即使不存在也不创建，运用如下：</p>
+</blockquote>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//判断PendingIntent是否存在，若不存在pi=null</span></span><br><span class="line">PendingIntent pi=getService(content,<span class="number">0</span>,intent,FLAG_NO_CREATE);</span><br><span class="line"><span class="keyword">boolean</span> isOn=(pi!=<span class="keyword">null</span>);</span><br></pre></td></tr></table></figure>
+<p><strong><font size="4sp">该类常用于状态栏通知，定时器设置</font></strong></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/08/01/Android的IO操作/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/08/03/Android中的多线程/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

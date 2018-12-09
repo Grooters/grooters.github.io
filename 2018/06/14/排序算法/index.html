@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>排序算法 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="选择排序基本思想 1) 将序列划分成有序区（左边）和无序区（右边）2) 初始时，有序区为空，无序区为序列全部3) 每一次选择出无序区中最小元素，与无序区中第1个元素交换，成为有序区的最后一个元素 如：对数据48,70,8,30,23,11,15进行选择排序，写出每趟的结果  时间复杂度：O(n2) 冒泡排序基本思想 1) 将序列划分成有序区（右边）和无序区（左边）2) 初始时，有序区为空，无序区为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="排序算法">
+<meta property="og:url" content="https://grooters.github.io/2018/06/14/排序算法/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="选择排序基本思想 1) 将序列划分成有序区（左边）和无序区（右边）2) 初始时，有序区为空，无序区为序列全部3) 每一次选择出无序区中最小元素，与无序区中第1个元素交换，成为有序区的最后一个元素 如：对数据48,70,8,30,23,11,15进行选择排序，写出每趟的结果  时间复杂度：O(n2) 冒泡排序基本思想 1) 将序列划分成有序区（右边）和无序区（左边）2) 初始时，有序区为空，无序区为">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://grooters.github.io/img/数据结构与算法/选择排序.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/数据结构与算法/冒泡排序.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/数据结构与算法/归并排序例题.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/数据结构与算法/快速排序过程.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/数据结构与算法/插入排序例题.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/数据结构与算法/堆排序解题思路.PNG">
+<meta property="og:image" content="https://grooters.github.io/img/数据结构与算法/排序算法时间复杂度.PNG">
+<meta property="og:updated_time" content="2018-07-02T11:39:21.161Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="排序算法">
+<meta name="twitter:description" content="选择排序基本思想 1) 将序列划分成有序区（左边）和无序区（右边）2) 初始时，有序区为空，无序区为序列全部3) 每一次选择出无序区中最小元素，与无序区中第1个元素交换，成为有序区的最后一个元素 如：对数据48,70,8,30,23,11,15进行选择排序，写出每趟的结果  时间复杂度：O(n2) 冒泡排序基本思想 1) 将序列划分成有序区（右边）和无序区（左边）2) 初始时，有序区为空，无序区为">
+<meta name="twitter:image" content="https://grooters.github.io/img/数据结构与算法/选择排序.PNG">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#选择排序"><span class="toc-text">选择排序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#冒泡排序"><span class="toc-text">冒泡排序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#归并排序"><span class="toc-text">归并排序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#快速排序"><span class="toc-text">快速排序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#插入排序"><span class="toc-text">插入排序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#堆排序"><span class="toc-text">堆排序</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-排序算法" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">排序算法</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.06.14</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/数据结构与算法/">数据结构与算法</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h1><p><strong>基本思想</strong></p>
+<p>1) 将序列划分成有序区（左边）和无序区（右边）<br>2) 初始时，有序区为空，无序区为序列全部<br>3) 每一次选择出无序区中最小元素，与无序区中第1个元素交换，成为有序区的最后一个元素</p>
+<p><em>如：对数据48,70,8,30,23,11,15进行选择排序，写出每趟的结果</em></p>
+<p><img src="/img/数据结构与算法/选择排序.PNG" alt="选择排序"></p>
+<p><strong>时间复杂度：</strong><br><strong>O(n2)</strong></p>
+<h1 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h1><p><strong>基本思想</strong></p>
+<p>1) 将序列划分成有序区（右边）和无序区（左边）<br>2) 初始时，有序区为空，无序区为序列全部<br>3) 每一次“起泡”相邻元素依次两两比较，将较大/小者交换到后面，成为有序区的第一个元素</p>
+<p><em>如：对48，70，8，30，23，11，15进行冒泡排序</em></p>
+<p><img src="/img/数据结构与算法/冒泡排序.PNG" alt="冒泡排序"><br>第二趟：<br>8,30,23,11,15,（48, 70）<br>第三趟：<br>8,23,11,15,（30,48, 70）<br>第四躺：<br>8,11,15,（23,30,48, 70）<br>第五躺：<br>8,11,（15,23,30,48, 70）<br>第六趟：<br>8,（11,15,23,30,48, 70）</p>
+<p><strong>时间复杂度：</strong><br>最好O(n)；最坏O(n^2)；平均O(n^2)</p>
+<h1 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h1><p><strong>基本思想：</strong><br>将序列划分成两个长度相等的子序列，分别进行排序，最后将两个有序序列合并</p>
+<p><em>如：对数据48,70,8,30,23,11,15,28进行归并排序</em></p>
+<p><img src="/img/数据结构与算法/归并排序例题.PNG" alt="归并排序例题"></p>
+<p><strong>时间复杂度：</strong><br>O(nlog2n)</p>
+<h1 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h1><p><strong>基本思想：</strong></p>
+<p>1) 划分：选定一个数做为轴值，把序列分成比轴值小（左边）和比轴值大（右边）两个子序列<br>2) 求解子问题：分别对两个子序列进行轴值划分</p>
+<p><strong>划分步骤：</strong></p>
+<p>1) 选择区域内第一个元素为轴值；<br>2) 设立i，j分别指向区域第一和最后一个元素；<br>3) 重复以下步骤：</p>
+<ol>
+<li>j往前走，寻找比轴值小的元素与轴值交换</li>
+<li>i住后走，寻找比轴值大的元素与轴值交换</li>
+</ol>
+<p><em>如：快速排序 34,20,71,26,23,9,44,35，求解思路为：</em></p>
+<p><img src="/img/数据结构与算法/快速排序过程.PNG" alt="快速排序过程"></p>
+<p><strong>时间复杂度：</strong><br>最好（子序列等长）O(nlog2n)、最坏（基本有序）O(n^2)、平均O(nlog2n)</p>
+<p><strong>快速排序的特点为：</strong></p>
+<ol>
+<li>快速排序对已有序（不管是正序还是逆序）的序列，效率最差。</li>
+<li>每次划分实质上是找出轴值在排序后的位置，即每次划分是对轴值进行排序</li>
+<li>假如某次划分后，轴值所在位置为i，实质上表明该轴值在序列中是第i小的值（注意，这里说的序列是参与划分的序列），因此可借助快速排序的划分操作实现“求序列第i小数”</li>
+</ol>
+<h1 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h1><p><strong>基本思想：</strong></p>
+<p>1) 将序列划分为有序区和无序区。有序区为序列第一个元素，无序区为剩下的元素。<br>2) 每一次操作都将无序区的第一个元素ri与有序区里从第一个元素开始比较，直到找到一个元素rj比ri大；如果找不到元素比ri大，则ri要插入的位置为序列尾部<br>3) 将ri插到rj前面，调整有序区中其它元素位置</p>
+<p><em>如：对数据34,20,71,26,23,9,44进行插入排序</em></p>
+<p><img src="/img/数据结构与算法/插入排序例题.PNG" alt="插入排序例题"></p>
+<p><strong>时间复杂度：</strong></p>
+<p>最好（基本有序）：O(n)，最坏（逆序）：O(n^2)，一般情况O(n^2)</p>
+<h1 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h1><p><strong>基本思想：</strong></p>
+<p>1) 根据待排序序列，建立堆。升序排序采用大根堆；降底排序采用小根堆<br>2) 堆顶元素为最大值（大根堆）或最小值（小根堆），将该元素与最后一个元素交换并移入有序区<br>3) 调整无序区为一个堆结构<br>4) 重复（2）和（3）直到无序区剩一个元素</p>
+<ol>
+<li>构建初始堆</li>
+<li>调整为大根堆（升序）或小根堆（降序）</li>
+<li>将堆顶值与从尾部开始的值交换，每交换一次就需要调整一次堆</li>
+</ol>
+<p><em>如：4，6，8，5，9</em></p>
+<p><img src="/img/数据结构与算法/堆排序解题思路.PNG" alt="堆排序解题思路"></p>
+<p><img src="/img/数据结构与算法/排序算法时间复杂度.PNG" alt="排序算法时间复杂度"></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/06/03/类型信息/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/06/14/算法基础/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

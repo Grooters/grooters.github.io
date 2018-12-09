@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>WebView的使用 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="WebView的封装源码应用： WebBrower public WebViewWidget(Context context) 实例化WebViewWidget，自动完成setWebViewClient(new WebViewClient()和setWebChromeClient(new WebChromeClient()的基本方法重写工作 setWebView(WebViewWidget web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebView的使用">
+<meta property="og:url" content="https://grooters.github.io/2018/07/24/WebView的使用与封装/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="WebView的封装源码应用： WebBrower public WebViewWidget(Context context) 实例化WebViewWidget，自动完成setWebViewClient(new WebViewClient()和setWebChromeClient(new WebChromeClient()的基本方法重写工作 setWebView(WebViewWidget web">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-10-04T03:46:10.502Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WebView的使用">
+<meta name="twitter:description" content="WebView的封装源码应用： WebBrower public WebViewWidget(Context context) 实例化WebViewWidget，自动完成setWebViewClient(new WebViewClient()和setWebChromeClient(new WebChromeClient()的基本方法重写工作 setWebView(WebViewWidget web">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#WebView的封装"><span class="toc-text">WebView的封装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#！"><span class="toc-text">！</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#？"><span class="toc-text">？</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-WebView的使用与封装" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">WebView的使用</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.07.24</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="WebView的封装"><a href="#WebView的封装" class="headerlink" title="WebView的封装"></a>WebView的封装</h1><p><em>源码应用：</em></p>
+<p><strong><a href="https://github.com/Grooters/WebBrower" target="_blank" rel="noopener">WebBrower</a></strong></p>
+<p><strong><li>public WebViewWidget(Context context)</li></strong></p>
+<p>实例化WebViewWidget，自动完成setWebViewClient(new WebViewClient()和setWebChromeClient(new WebChromeClient()的基本方法重写工作</p>
+<p><strong><li>setWebView(WebViewWidget webView,RelativeLayout container)</li></strong></p>
+<p>初始化WebViewWidget，设置默认值，并把WebView添加到布局视图中</p>
+<blockquote>
+<p>WebViewWidget的对象</p>
+</blockquote>
+<blockquote>
+<p>WebView的布局容器</p>
+</blockquote>
+<p><strong><li>public void setHome(String[] urls)</li></strong></p>
+<p>设置主页，注意传入的参数为字符串数组，所以支持多个主页设定</p>
+<p><strong><li>public void setCache(int domOrData)</li></strong></p>
+<p>设置缓存方式</p>
+<blockquote>
+<p>缓存类型，有以下几种</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CACHE_DOM_STORAGE=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CACHE_DATABASE_STORAGE=<span class="number">2</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CACHE_DATABASE_DOM_STORAGE=<span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+<p><strong><li>public String getTitle()</li></strong></p>
+<p>获取当前页面标题</p>
+<p><strong><li>public void setFullView(View[] customView)</li></strong></p>
+<p>设置是否具备全屏功能</p>
+<blockquote>
+<p>若全屏需要隐藏的组件</p>
+</blockquote>
+<p><strong><li>public void load(String url)</li></strong></p>
+<p>加载网页</p>
+<p><strong><li>destroyWebView(WebViewWidget webViewWidget)</li></strong></p>
+<p>彻底销毁WebView，记得在不需要WebView的时候调用，该方法可以彻底销毁</p>
+<p><strong><li>setZoom(boolean isZoom,boolean controller)</li></strong></p>
+<p>设置是否支持缩放，是否存在缩放按钮</p>
+<p><strong><li>setAdapteScrean(boolean isAdapte)</li></strong></p>
+<p>是否支持屏幕适配</p>
+<p><strong><li>setJsEnable(boolean isEnable)</li></strong></p>
+<p>是否支持js</p>
+<p><strong><li>void useDefaultLoadingView(boolean useLoadingView)</li></strong></p>
+<p>是否使用封装好的默认加载动画</p>
+<p><strong>以上很多方法已在封装的时候默认设置的了，可不做设置</strong></p>
+<p><em>以下代码调用便可以得到一个可以直接使用的WebView：</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">webView=<span class="keyword">new</span> WebViewWidget(<span class="keyword">this</span>);</span><br><span class="line">webView.setWebView(webView,webViewContainer);</span><br><span class="line">webView.setHome(homeUrls);</span><br><span class="line">webView.useDefaultLoadingView(<span class="keyword">true</span>);</span><br><span class="line">webView.load(HOME_URL);</span><br></pre></td></tr></table></figure>
+<h1 id="！"><a href="#！" class="headerlink" title="！"></a>！</h1><p><li>Webview加载网页时出现NET::ERR_CACHE_MISS</li></p>
+<p>没有加网络访问权限：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;</span><br></pre></td></tr></table></figure></p>
+<p><li>android.view.InflateException: Binary XML file line #19: Binary XML file lin</li></p>
+<p>封装重写WebView时没有重写其默认构造方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public WebViewWidget(Context context, AttributeSet attrs) &#123;</span><br><span class="line">    super(context, attrs);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="？"><a href="#？" class="headerlink" title="？"></a>？</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> AbsoluteSizeSpan absoluteSizeSpan=<span class="keyword">new</span> AbsoluteSizeSpan(<span class="number">300</span>);</span><br><span class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">                builder.setSpan(absoluteSizeSpan,p,p+<span class="number">1</span>, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">                ++p;</span><br><span class="line">                <span class="keyword">if</span>(p==str.length())</span><br><span class="line">                    p=<span class="number">0</span>;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
+<p>这样写字体变大后会恢复原有大小,但：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">builder.setSpan(<span class="keyword">new</span> AbsoluteSizeSpan(<span class="number">300</span>),p,p+<span class="number">1</span>, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br></pre></td></tr></table></figure>
+<p>就不会恢复大小</p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/07/23/SQLite的使用/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/08/01/Android的IO操作/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

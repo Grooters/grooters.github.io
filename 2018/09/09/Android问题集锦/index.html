@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Android问题集锦 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="Unknown attribute android:layout_width…  Gradle版本问题  -&amp;gt;Sync project with gradle file …up-to-date check…  可能时继承了某个接口，但又没有重写里面的所有方法  重写继承了的接口的所有方法即可 查看源码时显示Sources for ‘android api … platform’ not fo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android问题集锦">
+<meta property="og:url" content="https://grooters.github.io/2018/09/09/Android问题集锦/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="Unknown attribute android:layout_width…  Gradle版本问题  -&amp;gt;Sync project with gradle file …up-to-date check…  可能时继承了某个接口，但又没有重写里面的所有方法  重写继承了的接口的所有方法即可 查看源码时显示Sources for ‘android api … platform’ not fo">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://grooters.github.io/img/Android/Android错误集锦/orggradleapiresourcesResourceExceptionCouldnotgetresource.PNG">
+<meta property="og:updated_time" content="2018-11-25T07:41:00.562Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android问题集锦">
+<meta name="twitter:description" content="Unknown attribute android:layout_width…  Gradle版本问题  -&amp;gt;Sync project with gradle file …up-to-date check…  可能时继承了某个接口，但又没有重写里面的所有方法  重写继承了的接口的所有方法即可 查看源码时显示Sources for ‘android api … platform’ not fo">
+<meta name="twitter:image" content="https://grooters.github.io/img/Android/Android错误集锦/orggradleapiresourcesResourceExceptionCouldnotgetresource.PNG">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Android问题集锦" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Android问题集锦</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.09.09</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><strong><li>Unknown attribute android:layout_width…</li></strong></p>
+<blockquote>
+<p>Gradle版本问题</p>
+</blockquote>
+<p><strong>-&gt;Sync project with gradle file</strong></p>
+<p><strong><li>…up-to-date check…</li></strong></p>
+<blockquote>
+<p>可能时继承了某个接口，但又没有重写里面的所有方法</p>
+</blockquote>
+<p><strong>重写继承了的接口的所有方法即可</strong></p>
+<p><strong><li>查看源码时显示Sources for ‘android api … platform’ not found</li></strong></p>
+<p>按照提示后下载完成仍然无法看源码</p>
+<blockquote>
+<p>未配置源码路径</p>
+</blockquote>
+<p>修改<strong>.AndroidStudio3.1\config\options</strong>目录下的<strong>jdk.table.xml</strong>文件</p>
+<p>加上<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">root</span> <span class="attr">url</span>=<span class="string">"file://F:/Soft/AndroidSDK/sources/android-28"</span> <span class="attr">type</span>=<span class="string">"simple"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="tag">&lt;<span class="name">sourcePath</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">root</span> <span class="attr">type</span>=<span class="string">"composite"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">root</span> <span class="attr">url</span>=<span class="string">"file://F:/Soft/AndroidSDK/sources/android-28"</span> <span class="attr">type</span>=<span class="string">"simple"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">sourcePath</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">roots</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">additional</span> <span class="attr">jdk</span>=<span class="string">"1.8"</span> <span class="attr">sdk</span>=<span class="string">"android-28"</span> /&gt;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p><strong><li>在AsyncTask中的doInBackground除非执行完毕否则无法进入onPostExecute</li></strong></p>
+<blockquote>
+<p>Calling this method guarantees that onPostExecute(Object) is never invoked.</p>
+</blockquote>
+<blockquote>
+<p>调用此方法可确保永远不会调用onPostExecute</p>
+</blockquote>
+<p>不要调用 <strong>cancle(true)</strong> 方法</p>
+<p><strong><li>Error:(11) No resource identifier found for attribute ‘roundIcon’ in package</li></strong></p>
+<blockquote>
+<p>删除AndroidManifest.xml里的 android:roundIcon=”@mipmap/ic_launcher_round”</p>
+</blockquote>
+<p><strong><li> OkHttp常见问题</li></strong></p>
+<blockquote>
+<p>.string不能用两次，否则报错，记得添加INTERNET权限</p>
+</blockquote>
+<p><strong><li> Installation failed with message Failed to finalize session</li></strong></p>
+<blockquote>
+<p>clean project 即可</p>
+</blockquote>
+<p><strong><li> java.lang.IllegalArgumentException: Service Intent must be explicit</li></strong></p>
+<blockquote>
+<p>在android 5.0版本以后，service intent必须为显式指出</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Intent intent=<span class="keyword">new</span> Intent(<span class="string">"ADD"</span>);</span><br><span class="line"><span class="comment">//if dismiss will error</span></span><br><span class="line">intent.setPackage(<span class="string">"io.github.grooters.practicer.BindeRer"</span>);</span><br><span class="line">bindService(intent,serviceConnection,BIND_AUTO_CREATE);</span><br></pre></td></tr></table></figure>
+<p><strong><li> android.view.InflateException: Binary XML file line #7: Binary XML file line #7: Error inflating class</li></strong></p>
+<blockquote>
+<p>自定义控件需要重写以下构造方法：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Viewer</span><span class="params">(Context context, @Nullable AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(context, attrs);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong><li> org.gradle.api.resources.ResourceException: Could not get resource</li></strong></p>
+<p><img src="/img/Android/Android错误集锦/orggradleapiresourcesResourceExceptionCouldnotgetresource.PNG" alt=""></p>
+<p><li> Unfortunately you can’t have non-Gradle Java modules and Android-Gradle modules in one project.</li></p>
+<blockquote>
+<p>Sync project with gradle file</p>
+</blockquote>
+<p><strong><li> 卸载后重新安装app提示签名不一致无法安装</li></strong></p>
+<blockquote>
+<p>未完全卸载app，只需要在应用商店的应用管理中的安装管理中卸载掉app</p>
+</blockquote>
+<p><strong><li> Error:Execution failed for task ‘:app:lintVitalRelease’</li></strong></p>
+<blockquote>
+<p>打包发布版apk时，你在错误或警告无法通过检测</p>
+</blockquote>
+<p>只需要在app中的build.gradle中添加：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">android&#123;</span><br><span class="line">    lintOptions &#123;</span><br><span class="line">        checkReleaseBuilds false</span><br><span class="line">        abortOnError false</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/09/06/操作系统的功能特征/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/09/09/Java中的细节问题/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

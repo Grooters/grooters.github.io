@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Android中的意图 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="IntentFilter的匹配 action  catogory  data data由mimeType和URI组成  mineType 1&amp;lt;data android:mimeType=&quot;image/*&quot;/&amp;gt; 1intent.setDataAndType(uri,&quot;image/png&quot;);  URI 1&amp;lt;scheme&amp;gt;://&amp;lt;host&amp;gt;:&amp;lt;port&amp;gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android中的意图">
+<meta property="og:url" content="https://grooters.github.io/2018/10/18/Android中的意图/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="IntentFilter的匹配 action  catogory  data data由mimeType和URI组成  mineType 1&amp;lt;data android:mimeType=&quot;image/*&quot;/&amp;gt; 1intent.setDataAndType(uri,&quot;image/png&quot;);  URI 1&amp;lt;scheme&amp;gt;://&amp;lt;host&amp;gt;:&amp;lt;port&amp;gt;">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-08T05:00:59.513Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android中的意图">
+<meta name="twitter:description" content="IntentFilter的匹配 action  catogory  data data由mimeType和URI组成  mineType 1&amp;lt;data android:mimeType=&quot;image/*&quot;/&amp;gt; 1intent.setDataAndType(uri,&quot;image/png&quot;);  URI 1&amp;lt;scheme&amp;gt;://&amp;lt;host&amp;gt;:&amp;lt;port&amp;gt;">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IntentFilter的匹配"><span class="toc-text">IntentFilter的匹配</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Intent使用集合"><span class="toc-text">Intent使用集合</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#打开网页"><span class="toc-text">打开网页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拨打电话"><span class="toc-text">拨打电话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发送短信"><span class="toc-text">发送短信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发送邮件"><span class="toc-text">发送邮件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#播放音频"><span class="toc-text">播放音频</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Android中的意图" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Android中的意图</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.10.18</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="IntentFilter的匹配"><a href="#IntentFilter的匹配" class="headerlink" title="IntentFilter的匹配"></a>IntentFilter的匹配</h1><p><li> action</li></p>
+<p><li> catogory</li></p>
+<p><strong><li> data</li></strong></p>
+<p>data由<strong>mimeType</strong>和<strong>URI</strong>组成</p>
+<p><li> mineType</li></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">data</span> <span class="attr">android:mimeType</span>=<span class="string">"image/*"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">intent.setDataAndType(uri,<span class="string">"image/png"</span>);</span><br></pre></td></tr></table></figure>
+<p><li> URI</li></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">scheme</span>&gt;</span>://<span class="tag">&lt;<span class="name">host</span>&gt;</span>:<span class="tag">&lt;<span class="name">port</span>&gt;</span>/[<span class="tag">&lt;<span class="name">path</span>&gt;</span>|<span class="tag">&lt;<span class="name">pathPrefix</span>&gt;</span>|<span class="tag">&lt;<span class="name">pathPattern</span>&gt;</span>]</span><br></pre></td></tr></table></figure>
+<p>eg:</p>
+<blockquote>
+<p>content://io.github.grooters.lller:200/folder/subfolder/etc <br><br><a href="http://grooters.github.io:80/category/Android">http://grooters.github.io:80/category/Android</a></p>
+</blockquote>
+<p>Path和pathPattern均表示完整的路径，但pathPattern可使用通配符“*”（表示0个或多个任意字符），pathPrefix表示路径的前缀信息</p>
+<p><em>注意：</em></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* = &gt;\\* ， \ =&gt; \\\\</span><br></pre></td></tr></table></figure>
+<p><strong><font size="4sp"><li> 注意</li></font></strong></p>
+<blockquote>
+<p>当通过隐式方式启动activity时需要将activity的category设置为<strong>“android.intent.category.DEFAULT”</strong></p>
+</blockquote>
+<p>eg:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".DownloadActivity"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"activity"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent intent=<span class="keyword">new</span> Intent(<span class="string">"activity"</span>);</span><br><span class="line">intent.addCategory(<span class="string">"android.intent.category.DEFAULT"</span>);</span><br><span class="line">startActivity(intent);</span><br></pre></td></tr></table></figure>
+<h1 id="Intent使用集合"><a href="#Intent使用集合" class="headerlink" title="Intent使用集合"></a>Intent使用集合</h1><h2 id="打开网页"><a href="#打开网页" class="headerlink" title="打开网页"></a>打开网页</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Uri uri = Uri.parse(<span class="string">"https://www.baidu.com"</span>);</span><br><span class="line">Intent it  = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW,uri);</span><br><span class="line">startActivity(it);</span><br></pre></td></tr></table></figure>
+<h2 id="拨打电话"><a href="#拨打电话" class="headerlink" title="拨打电话"></a>拨打电话</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Uri uri = Uri.parse(<span class="string">"tel:10086"</span>);  </span><br><span class="line">Intent it = <span class="keyword">new</span> Intent(Intent.ACTION_DIAL, uri);    </span><br><span class="line">startActivity(it);   </span><br><span class="line"></span><br><span class="line">Uri uri = Uri.parse(<span class="string">"tel.10086"</span>);  </span><br><span class="line">Intent it =<span class="keyword">new</span> Intent(Intent.ACTION_CALL,uri);  </span><br><span class="line">startActivity(it);   </span><br><span class="line"><span class="comment">//需要动态权限</span></span><br><span class="line">&lt;uses-permission android:name=<span class="string">"android.permission.CALL_PHONE"</span> /&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="发送短信"><a href="#发送短信" class="headerlink" title="发送短信"></a>发送短信</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Uri uri = Uri.parse(<span class="string">"smsto:10086"</span>);     </span><br><span class="line">Intent it = <span class="keyword">new</span> Intent(Intent.ACTION_SENDTO, uri);     </span><br><span class="line">it.putExtra(<span class="string">"sms_body"</span>, <span class="string">"cwj"</span>);     </span><br><span class="line">startActivity(it);</span><br></pre></td></tr></table></figure>
+<h2 id="发送邮件"><a href="#发送邮件" class="headerlink" title="发送邮件"></a>发送邮件</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Uri uri = Uri.parse(<span class="string">"lilinlang@hotmail.com"</span>);  </span><br><span class="line">Intent it = <span class="keyword">new</span> Intent(Intent.ACTION_SENDTO, uri);  </span><br><span class="line">startActivity(it);  </span><br><span class="line"></span><br><span class="line">Intent it = <span class="keyword">new</span> Intent(Intent.ACTION_SEND);     </span><br><span class="line">it.putExtra(Intent.EXTRA_EMAIL, <span class="string">"lilinlang@hotmail.com"</span>);     </span><br><span class="line">it.putExtra(Intent.EXTRA_TEXT, <span class="string">"The email body text"</span>);     </span><br><span class="line">it.setType(<span class="string">"text/plain"</span>);     </span><br><span class="line">startActivity(Intent.createChooser(it, <span class="string">"Choose Email Client"</span>));    </span><br><span class="line"></span><br><span class="line">Intent it=<span class="keyword">new</span> Intent(Intent.ACTION_SEND);       </span><br><span class="line">String[] tos=&#123;<span class="string">"figurers@163.com"</span>&#125;;       </span><br><span class="line">String[] ccs=&#123;<span class="string">"lilinlang@hotmail.com"</span>&#125;;       </span><br><span class="line">it.putExtra(Intent.EXTRA_EMAIL, tos);       </span><br><span class="line">it.putExtra(Intent.EXTRA_CC, ccs);       </span><br><span class="line">it.putExtra(Intent.EXTRA_TEXT, <span class="string">"The email body text"</span>);       </span><br><span class="line">it.putExtra(Intent.EXTRA_SUBJECT, <span class="string">"The email subject text"</span>);       </span><br><span class="line">it.setType(<span class="string">"message/rfc822"</span>);       </span><br><span class="line">startActivity(Intent.createChooser(it, <span class="string">"Choose Email Client"</span>));</span><br></pre></td></tr></table></figure>
+<h2 id="播放音频"><a href="#播放音频" class="headerlink" title="播放音频"></a>播放音频</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Intent it = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW);  </span><br><span class="line">Uri uri = Uri.parse(<span class="string">"file://sdcard/lll.mp3"</span>);  </span><br><span class="line">it.setDataAndType(uri, <span class="string">"audio/mp3"</span>);  </span><br><span class="line"></span><br><span class="line">Uri uri = Uri.parse(<span class="string">"file://sdcard/lll.mp4"</span>);  </span><br><span class="line">it.setDataAndType(uri, <span class="string">"video/mp4"</span>);  </span><br><span class="line">startActivity(it);</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/10/18/Android动画/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/10/18/Android的IPC机制/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

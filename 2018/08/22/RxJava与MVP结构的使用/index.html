@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>RxJava与MVP结构的使用 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="MVP有一种跟MVP相类似的开发结构MVC，该结构由三层组成：  M 模型层 该层也叫实体层，是存放数据的部分  V 视图层 该层用来构建UI界面  C 控制器层 该层对视图层和实体层起到连接作用 eg：  一个简单的登录层序，登录界面的构建由V层实现，数据存放（包括对数据库的操作）由M层实现，而C层功能为：当用户输入账号密码，C层便会从V层拿到用户数据后再从M层拿到原有数据进行比对，若一致再通知">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxJava与MVP结构的使用">
+<meta property="og:url" content="https://grooters.github.io/2018/08/22/RxJava与MVP结构的使用/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="MVP有一种跟MVP相类似的开发结构MVC，该结构由三层组成：  M 模型层 该层也叫实体层，是存放数据的部分  V 视图层 该层用来构建UI界面  C 控制器层 该层对视图层和实体层起到连接作用 eg：  一个简单的登录层序，登录界面的构建由V层实现，数据存放（包括对数据库的操作）由M层实现，而C层功能为：当用户输入账号密码，C层便会从V层拿到用户数据后再从M层拿到原有数据进行比对，若一致再通知">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://grooters.github.io/img/Android/RxJava与MVP结构的使用/MVP结构图.png">
+<meta property="og:updated_time" content="2018-08-23T03:15:47.718Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RxJava与MVP结构的使用">
+<meta name="twitter:description" content="MVP有一种跟MVP相类似的开发结构MVC，该结构由三层组成：  M 模型层 该层也叫实体层，是存放数据的部分  V 视图层 该层用来构建UI界面  C 控制器层 该层对视图层和实体层起到连接作用 eg：  一个简单的登录层序，登录界面的构建由V层实现，数据存放（包括对数据库的操作）由M层实现，而C层功能为：当用户输入账号密码，C层便会从V层拿到用户数据后再从M层拿到原有数据进行比对，若一致再通知">
+<meta name="twitter:image" content="https://grooters.github.io/img/Android/RxJava与MVP结构的使用/MVP结构图.png">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MVP"><span class="toc-text">MVP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MVP结构层次："><span class="toc-text">MVP结构层次：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结构图如下："><span class="toc-text">结构图如下：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MVP结构的优点"><span class="toc-text">MVP结构的优点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RxJava"><span class="toc-text">RxJava</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用步骤"><span class="toc-text">使用步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#链式调用"><span class="toc-text">链式调用</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-RxJava与MVP结构的使用" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">RxJava与MVP结构的使用</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.08.22</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="MVP"><a href="#MVP" class="headerlink" title="MVP"></a>MVP</h1><p>有一种跟MVP相类似的开发结构MVC，该结构由三层组成：</p>
+<p><li> M 模型层</li></p>
+<p>该层也叫实体层，是存放数据的部分</p>
+<p><li> V 视图层</li></p>
+<p>该层用来构建UI界面</p>
+<p><li> C 控制器层</li></p>
+<p>该层对视图层和实体层起到连接作用</p>
+<p>eg：</p>
+<blockquote>
+<p>一个简单的登录层序，登录界面的构建由V层实现，数据存放（包括对数据库的操作）由M层实现，而C层功能为：当用户输入账号密码，C层便会从V层拿到用户数据后再从M层拿到原有数据进行比对，若一致再通知V层进行登录成功的UI响应。</p>
+</blockquote>
+<p>在Android开发中，V层常再Activity/Fragment中完成，但逻辑事务处理大多也在Activity/Fragment中实现，为此V和C层就难免混在一起，逻辑处理与视图构建耦合度较高。</p>
+<p>而MVP模式可以较为有效地解决这个问题：</p>
+<h2 id="MVP结构层次："><a href="#MVP结构层次：" class="headerlink" title="MVP结构层次："></a>MVP结构层次：</h2><p><li> M 模型层</li></p>
+<p>与MVC一样，也是存放数据的部分</p>
+<p><li> V 视图层</li></p>
+<p>该层也用来构建UI界面，但不同的是在该层MVP结构会通过定义一个用来定义所有视图层所要用到的方法，然后由Activity/Fragment实现该接口</p>
+<p><li> P Presenter</li></p>
+<p>类似于MVC中的C层，该层由定义逻辑方法的接口和实现该接口的类组成，在实现接口的类中带有V接口的引用，可以对视图进行操作，而实现接口的引用由Actiity/Fragment携有，可可在View接口的重写方法中调用Presenter相应的方法</p>
+<h2 id="结构图如下："><a href="#结构图如下：" class="headerlink" title="结构图如下："></a>结构图如下：</h2><p><img src="/img/Android/RxJava与MVP结构的使用/MVP结构图.png" alt="MVP结构图.png"></p>
+<h2 id="MVP结构的优点"><a href="#MVP结构的优点" class="headerlink" title="MVP结构的优点"></a>MVP结构的优点</h2><ol>
+<li><p>将视图逻辑和业务逻辑从Activity/Fragment分离了出来，降低了耦合，便于维护：<br>由此也避免在异步处理业务逻辑时持续持有Activity引用导致OOM</p>
+</li>
+<li><p>将方法定义为接口，从而让代码更加简洁清晰</p>
+</li>
+</ol>
+<h1 id="RxJava"><a href="#RxJava" class="headerlink" title="RxJava"></a>RxJava</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">compile 'io.reactivex.rxjava2:rxjava:2.0.1'</span><br><span class="line">compile 'io.reactivex.rxjava2:rxandroid:2.0.1'</span><br></pre></td></tr></table></figure>
+<p>参照于：</p>
+<p><a href="https://www.jianshu.com/p/a406b94f3188" target="_blank" rel="noopener">Android Rxjava：这是一篇 清晰 &amp; 易懂的Rxjava 入门教程</a></p>
+<p><strong>RxJava是一个基于事件流，实现异步操作的库</strong></p>
+<blockquote>
+<p>其作用类似于Android原生的AsyncTask和Handle</p>
+</blockquote>
+<p>RxJava的处理过程是以<strong>观察者模式</strong>为设计模式通过<strong>链式调用</strong>由观察者（<strong>Observer</strong>）对被观察者（<strong>Observable</strong>）的响应事件（<strong>Event</strong>）进行监听处理，观察者与被观察者通过订阅（<strong>Subscribe</strong>）进行连接</p>
+<h2 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h2><p><strong><li>创建被观察者，生成事件</li></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Integer&gt; observable = Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Integer&gt;() &#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(ObservableEmitter&lt;Integer&gt; emitter)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    emitter.onNext(<span class="number">1</span>);</span><br><span class="line">    emitter.onNext(<span class="number">2</span>);</span><br><span class="line">    emitter.onNext(<span class="number">3</span>);</span><br><span class="line">    emitter.onComplete();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>通过Observable的create方法创建被观察者对象，在重写的subscribe方法中定义要发送的事件</p>
+</blockquote>
+<p>除此方法外，还可以通过以下两种方式创建：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方式1</span></span><br><span class="line">Observable observable = Observable.just(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line"><span class="keyword">int</span>[] is = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line"><span class="comment">//方式2</span></span><br><span class="line">Observable observable = Observable.from(is);</span><br></pre></td></tr></table></figure>
+<p>以上两种方式都会依次调用以下方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">onNext(<span class="number">1</span>);</span><br><span class="line">onNext(<span class="number">2</span>);</span><br><span class="line">onNext(<span class="number">3</span>);</span><br><span class="line">onCompleted();</span><br></pre></td></tr></table></figure>
+<p><strong><li>创建观察者，响应事件</li></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方式1</span></span><br><span class="line">Observer&lt;Integer&gt; observer = <span class="keyword">new</span> Observer&lt;Integer&gt;() &#123;</span><br><span class="line">    <span class="comment">//接受事件前调用</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSubscribe</span><span class="params">(Disposable d)</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"onSubscribe"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(Integer value)</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"onNext："</span> + value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"onError"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"onComplete"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//方式2</span></span><br><span class="line">Subscriber&lt;String&gt; subscriber = <span class="keyword">new</span> Subscriber&lt;Integer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSubscribe</span><span class="params">(Subscription s)</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"onSubscribe"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(Integer value)</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"onNext: "</span> + value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"onError"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"onComplete"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Observer与Subscriber不同之处在于Subscriber是Observer的扩展，当调用subscribe进行订阅时，Observer仍然会被转换成Subscriber</p>
+</blockquote>
+<p>Subscriber增加了以下两个方法：</p>
+<blockquote>
+<p>onStart()<br><br>unsubscribe()</p>
+</blockquote>
+<p>当不使用Subscriber对象时，可通过<strong>isUnsubscribed()</strong>方法判断状态然后调用<strong>unsubscribe()</strong>方法对该对象进行释放</p>
+<p><strong><li>进行订阅，连接观察者与被观察者</li></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">observable.subscribe(observer);</span><br><span class="line"><span class="comment">//observable.subscribe(subscriber);</span></span><br></pre></td></tr></table></figure>
+<h2 id="链式调用"><a href="#链式调用" class="headerlink" title="链式调用"></a>链式调用</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Integer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(ObservableEmitter&lt;Integer&gt; emitter)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        emitter.onNext(<span class="number">1</span>);</span><br><span class="line">        emitter.onNext(<span class="number">2</span>);</span><br><span class="line">        emitter.onNext(<span class="number">3</span>);</span><br><span class="line">        emitter.onComplete();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).subscribe(<span class="keyword">new</span> Observer&lt;Integer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSubscribe</span><span class="params">(Disposable d)</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"开始采用subscribe连接"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(Integer value)</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"对Next事件"</span>+ value +<span class="string">"作出响应"</span>  );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"对Error事件作出响应"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"对Complete事件作出响应"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>可通过Disposable对象d的dispose方法切断观察者与被观察者的连接：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d.dispose();</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/08/20/Java的IO系统/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/08/24/Broadcast的使用/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

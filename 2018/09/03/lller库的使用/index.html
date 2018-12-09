@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>lller库的使用 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+  
+
+  <meta name="description" content="功能模块 Okhttp框架集成  Glide框架集成  fastJson框架集成  RecyclerView的封装  ViewPager的封装  库的载入导入moudle：在setting.graddle中增加’:lller’,eg： 1include &apos;:app&apos;,&apos;:lller&apos; 以library使用需要添加moudle dependency，在build.gradle中添加依赖，eg： 1i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lller库的使用">
+<meta property="og:url" content="https://grooters.github.io/2018/09/03/lller库的使用/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="功能模块 Okhttp框架集成  Glide框架集成  fastJson框架集成  RecyclerView的封装  ViewPager的封装  库的载入导入moudle：在setting.graddle中增加’:lller’,eg： 1include &apos;:app&apos;,&apos;:lller&apos; 以library使用需要添加moudle dependency，在build.gradle中添加依赖，eg： 1i">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-29T13:46:40.506Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="lller库的使用">
+<meta name="twitter:description" content="功能模块 Okhttp框架集成  Glide框架集成  fastJson框架集成  RecyclerView的封装  ViewPager的封装  库的载入导入moudle：在setting.graddle中增加’:lller’,eg： 1include &apos;:app&apos;,&apos;:lller&apos; 以library使用需要添加moudle dependency，在build.gradle中添加依赖，eg： 1i">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#功能模块"><span class="toc-text">功能模块</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#库的载入"><span class="toc-text">库的载入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OkHttPer"><span class="toc-text">OkHttPer</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#glider"><span class="toc-text">glider</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RecyclerVieWer"><span class="toc-text">RecyclerVieWer</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RecyclerView通用适配器"><span class="toc-text">RecyclerView通用适配器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ViewPageRer"><span class="toc-text">ViewPageRer</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-lller库的使用" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">lller库的使用</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.09.03</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="功能模块"><a href="#功能模块" class="headerlink" title="功能模块"></a>功能模块</h1><p><li> Okhttp框架集成</li></p>
+<p><li> Glide框架集成</li></p>
+<p><li> fastJson框架集成</li></p>
+<p><li> RecyclerView的封装</li></p>
+<p><li> ViewPager的封装</li></p>
+<hr>
+<h1 id="库的载入"><a href="#库的载入" class="headerlink" title="库的载入"></a>库的载入</h1><p>导入moudle：在setting.graddle中增加’:lller’,eg：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">include ':app',':lller'</span><br></pre></td></tr></table></figure>
+<p>以library使用需要添加moudle dependency，在build.gradle中添加依赖，eg：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implemention project(':lller')</span><br></pre></td></tr></table></figure>
+<h1 id="OkHttPer"><a href="#OkHttPer" class="headerlink" title="OkHttPer"></a>OkHttPer</h1><blockquote>
+<p>集成OkHttp同步异步和post请求以及网页内容长度获取和下载功能</p>
+</blockquote>
+<p><strong><li> 异步get方法</li></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getByAsync</span><span class="params">(String url, <span class="keyword">final</span> CallBackOKInter callBackOKInter)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>url：请求地址</p>
+</blockquote>
+<p><em>example：</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//传入接口地址和Java Bean返回一个带数据的Java Bean</span></span><br><span class="line">OkHttPer.getOkHeePer().getByAsync(<span class="string">"localhost:8080/login?user=admin&amp;pass=admin"</span>, <span class="keyword">new</span> OkHttPer.CallBackOKInter() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(String json)</span> <span class="keyword">throws</span> IOException </span>&#123;&#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String errorInfo, IOException e)</span> </span>&#123;&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p><strong><li> 同步get请求</li></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getBySync</span><span class="params">(<span class="keyword">final</span> String url)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>url：请求地址</p>
+</blockquote>
+<p><em>exmple：</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OkHttPer.getOkHeePer().getBySync(<span class="string">"localhost:8080/login?user=admin&amp;pass=admin"</span>);</span><br></pre></td></tr></table></figure></p>
+<p><strong><li> post请求</li></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postByOk</span><span class="params">(String url, Map&lt;String,String&gt; map, <span class="keyword">final</span> CallBackOKInter callBackOKInter)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>url：请求地址</p>
+</blockquote>
+<blockquote>
+<p>map：请求参数</p>
+</blockquote>
+<p><em>exmple：</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Map map=<span class="keyword">new</span> HashMap();</span><br><span class="line">map.put(<span class="string">"user"</span>,<span class="string">"admin"</span>);</span><br><span class="line">map.put(<span class="string">"pass"</span>,<span class="string">"admin"</span>)</span><br><span class="line">OkHttPer.getOkHeePer().postByOk(<span class="string">"localhost:8080/login"</span>,map,<span class="keyword">new</span> OkHttPer.CallBackOKInter() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(String json)</span> <span class="keyword">throws</span> IOException </span>&#123;&#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String errorInfo, IOException e)</span> </span>&#123;&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong><li> 获取网页内容长度</li></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getContentLength</span><span class="params">(<span class="keyword">final</span> String url)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>utl：请求地址</p>
+</blockquote>
+<p><strong><li> 下载网页内容</li></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> InputStream <span class="title">downOk</span><span class="params">(String url, Map&lt;String,String&gt; header)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>header：请求头</p>
+</blockquote>
+<p><em>example：</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Map map=<span class="keyword">new</span> HashMap();</span><br><span class="line">map.put(<span class="string">"cookie"</span>,<span class="string">"123456"</span>)</span><br><span class="line">OkHttPer.getOkHeePer().downOk(<span class="string">"localhost:8080"</span>,map);</span><br></pre></td></tr></table></figure>
+<h1 id="glider"><a href="#glider" class="headerlink" title="glider"></a>glider</h1><blockquote>
+<p>集成图片加载框架Glide的功能内容</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadImg</span><span class="params">(Context context,String url, ImageView imageView)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadLocalImg</span><span class="params">(Context context,String filePath,ImageView imageView)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadUriImg</span><span class="params">(Context context,String filePath,ImageView imageView,String authority)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadResImg</span><span class="params">(Context context,<span class="keyword">int</span> resource,ImageView imageView)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadImg</span><span class="params">(Context context,String url,<span class="keyword">int</span> placeHolder, ImageView imageView)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadLocalImg</span><span class="params">(Context context,String filePath,<span class="keyword">int</span> placeHolder,ImageView imageView)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadUriImg</span><span class="params">(Context context,String filePath,<span class="keyword">int</span> placeHolder,ImageView imageView,String authority)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadResImg</span><span class="params">(Context context,<span class="keyword">int</span> resource,<span class="keyword">int</span> placeHolder,ImageView imageView)</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="RecyclerVieWer"><a href="#RecyclerVieWer" class="headerlink" title="RecyclerVieWer"></a>RecyclerVieWer</h1><p>该控件继承自RecyclerView，集成了三种适配器：GeneralAdapter（通用适配器），MultipleTypeAdapter（多布局适配器）和HeadAdapter（头布局适配器），提供了上拉加载更多的逻辑接口</p>
+<p><li> 通用适配器的绑定</li></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setGeneralAdapter</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> layoutId, <span class="keyword">final</span> List&lt;T&gt; datas, <span class="keyword">final</span> RecyclerHandler handler)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">(GeneralHolder viewHolder, T data)</span></span></span><br></pre></td></tr></table></figure>
+<p>通过调用该方法客户端在重写RecyclerHandler接口中的handle方法后直接绑定通用适配器</p>
+<p><li> 多布局适配器的绑定</li></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMultipleAdapter</span><span class="params">(<span class="keyword">final</span> List&lt;T&gt; datas, <span class="keyword">final</span> RecyclerMultiHandler&lt;T&gt; RecyclerMultiHandler)</span></span></span><br></pre></td></tr></table></figure>
+<p>通过调用该方法客户端在重写RecyclerMultiHandler接口中的handle，getItemType和getLayoutId方法后直接绑定多布局适配器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemType</span><span class="params">(<span class="keyword">int</span> position, List&lt;T&gt; datas)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>返回该Item所属的布局类型，为getLayoutId提供itemType参数</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getLayoutId</span><span class="params">(<span class="keyword">int</span> itemType)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>根据itemType返回对应的布局</p>
+</blockquote>
+<p><li> 上拉加载动画</li></p>
+<p><strong>Listener</strong>接口提供onScroll方法供客户端重写实现上拉加载的业务逻辑，在使用前必须调用setLoading方法传入progressBar圆形进度条和setOnListener方法设置监听器。</p>
+<h1 id="RecyclerView通用适配器"><a href="#RecyclerView通用适配器" class="headerlink" title="RecyclerView通用适配器"></a>RecyclerView通用适配器</h1><p><strong><li> GeneralAdapter</li></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">(GeneralHolder viewHolder,T data)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>viewHolder：可通过此参数获取布局控件</p>
+</blockquote>
+<p><em>example：</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">RecyclerView recyclerView=view.findViewById(R.id.recycler_oneFloor);</span><br><span class="line">GeneralAdapter&lt;Seat[]&gt; adapter=<span class="keyword">new</span> GeneralAdapter&lt;Seat[]&gt;(getContext(),R.layout.recycler_reserve_item,seats,seats) &#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">(GeneralHolder viewHolder, Seat[] data)</span> </span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">recyclerView.setLayoutManager(<span class="keyword">new</span> LinearLayoutManager(getContext());</span><br><span class="line">recyclerView.setAdapter(adapter);</span><br></pre></td></tr></table></figure>
+<p><strong><li> MultipleTypeAdapter</li></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getLayoutId</span><span class="params">(<span class="keyword">int</span> itemType)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>itemType：该item的布局类型</p>
+</blockquote>
+<blockquote>
+<p>返回值int：返回布局id，作为该item的布局</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemType</span><span class="params">(<span class="keyword">int</span> position, T datas)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>返回值int：该item的布局类型，提供给getLayoutId的itemType参数</p>
+</blockquote>
+<h1 id="ViewPageRer"><a href="#ViewPageRer" class="headerlink" title="ViewPageRer"></a>ViewPageRer</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(Context context,List&lt;Fragment&gt; fragments, List&lt;View&gt; views,FragmentManager fm,ViewPagerInterface viewPagerInterface)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>fragments：需要添加页面的Fragment集合</p>
+</blockquote>
+<blockquote>
+<p>views：需要添加的View集合</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">(<span class="keyword">int</span> position,<span class="keyword">int</span> state,<span class="keyword">float</span> positionOffset, <span class="keyword">int</span> positionOffsetPixels)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>viewPagerInterface中的重写方法，用于执行一些监听操作，如滑动，不需要的参数可留空</p>
+</blockquote>
+<p><em>example：</em></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ViewPageRer</span></span></span><br><span class="line"><span class="tag">  <span class="attr">android:id</span>=<span class="string">"@+id/viewPageRer"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">.....</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ViewPageRer viewPageRer=findViewById(R.id.viewPageRer);</span><br><span class="line">viewPageRer.init(<span class="keyword">this</span>,fragments,views,manager,<span class="keyword">new</span> ViewPagerInterface()&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">(<span class="keyword">int</span> position,<span class="keyword">int</span> state,<span class="keyword">float</span> positionOffset, <span class="keyword">int</span> positionOffsetPixels)</span></span>&#123;&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/09/02/Android动态申请权限/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/09/05/第一个接口/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment"></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
