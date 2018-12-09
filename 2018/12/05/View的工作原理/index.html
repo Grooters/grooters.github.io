@@ -22,12 +22,12 @@
 <meta property="og:site_name" content="Grooter&#39;s Home">
 <meta property="og:description" content="View的测量MeasureSpec  UNSPECIFIED  EXACTLY 父容器已经检测出View所需要的精确大小，此时View的最终大小即为SpecSize所指定的值。  对应于LayoutParam中的match_parent和具体的数值这两种模式   AT_MOST 父容器指定了一个可用大小即SpecSize，View的大小不能大于该值，而具体是什么值还需要看不同View的不同实现。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://grooters.github.io/img/Android/View的工作原理/jpg">
-<meta property="og:updated_time" content="2018-12-07T06:25:39.347Z">
+<meta property="og:image" content="https://grooters.github.io/img/Android/View的工作原理/普通View的MeasureSpec的创建规则.jpg">
+<meta property="og:updated_time" content="2018-12-09T09:06:53.810Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="View的工作原理">
 <meta name="twitter:description" content="View的测量MeasureSpec  UNSPECIFIED  EXACTLY 父容器已经检测出View所需要的精确大小，此时View的最终大小即为SpecSize所指定的值。  对应于LayoutParam中的match_parent和具体的数值这两种模式   AT_MOST 父容器指定了一个可用大小即SpecSize，View的大小不能大于该值，而具体是什么值还需要看不同View的不同实现。">
-<meta name="twitter:image" content="https://grooters.github.io/img/Android/View的工作原理/jpg">
+<meta name="twitter:image" content="https://grooters.github.io/img/Android/View的工作原理/普通View的MeasureSpec的创建规则.jpg">
 
   
 
@@ -217,7 +217,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//View.java</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</span><br><span class="line">    setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec),</span><br><span class="line">            getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getDefaultSize</span><span class="params">(<span class="keyword">int</span> size, <span class="keyword">int</span> measureSpec)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result = size;</span><br><span class="line">    <span class="keyword">int</span> specMode = MeasureSpec.getMode(measureSpec);</span><br><span class="line">    <span class="keyword">int</span> specSize = MeasureSpec.getSize(measureSpec);</span><br><span class="line">    <span class="keyword">switch</span> (specMode) &#123;</span><br><span class="line">    <span class="keyword">case</span> MeasureSpec.UNSPECIFIED:</span><br><span class="line">        result = size;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> MeasureSpec.AT_MOST:</span><br><span class="line">    <span class="keyword">case</span> MeasureSpec.EXACTLY:</span><br><span class="line">        result = specSize;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在onMeasure方法中设置了View的测量宽高，而宽高又通过getDefaultSize方法获得。</p>
 <p>根据如下图可得出结论：</p>
-<p><img src="/img/Android/View的工作原理/jpg" alt="普通View的MeasureSpec的创建规则"></p>
+<p><img src="/img/Android/View的工作原理/普通View的MeasureSpec的创建规则.jpg" alt="普通View的MeasureSpec的创建规则"></p>
 <blockquote>
 <p>直接继承View的自定义控件需要重写onMeasure并设置wrap_content时的自身大小，否则在布局中使用wrap_content就相当于使用match_content</p>
 </blockquote>

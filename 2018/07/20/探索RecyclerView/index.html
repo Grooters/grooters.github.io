@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>RecyclerView的使用 | Grooter&#39;s Home</title>
+  <title>探索RecyclerView | Grooter&#39;s Home</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -17,14 +17,14 @@
 
   <meta name="description" content="首先需要添加进来  com.android.support:recyclerview-v7:28.0.0-beta01  源码实现eg： LuffyRecycler：1234567891011@Overrideprotected void onCreate(@Nullable Bundle savedInstanceState) &amp;#123;    super.onCreate(savedInst">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RecyclerView的使用">
-<meta property="og:url" content="https://grooters.github.io/2018/07/20/RecyclerView的使用/index.html">
+<meta property="og:title" content="探索RecyclerView">
+<meta property="og:url" content="https://grooters.github.io/2018/07/20/探索RecyclerView/index.html">
 <meta property="og:site_name" content="Grooter&#39;s Home">
 <meta property="og:description" content="首先需要添加进来  com.android.support:recyclerview-v7:28.0.0-beta01  源码实现eg： LuffyRecycler：1234567891011@Overrideprotected void onCreate(@Nullable Bundle savedInstanceState) &amp;#123;    super.onCreate(savedInst">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-09T11:52:08.809Z">
+<meta property="og:updated_time" content="2018-12-09T09:18:54.582Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RecyclerView的使用">
+<meta name="twitter:title" content="探索RecyclerView">
 <meta name="twitter:description" content="首先需要添加进来  com.android.support:recyclerview-v7:28.0.0-beta01  源码实现eg： LuffyRecycler：1234567891011@Overrideprotected void onCreate(@Nullable Bundle savedInstanceState) &amp;#123;    super.onCreate(savedInst">
 
   
@@ -148,15 +148,15 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#源码实现"><span class="toc-text">源码实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RecyclerView的滚动事件"><span class="toc-text">RecyclerView的滚动事件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#点击事件"><span class="toc-text">点击事件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其它常用方法"><span class="toc-text">其它常用方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RecyclerView的封装"><span class="toc-text">RecyclerView的封装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一次拙劣-错误-的封装"><span class="toc-text">第一次拙劣(错误)的封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通用框架"><span class="toc-text">通用框架</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#！"><span class="toc-text">！</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#notifyDataSetChange不起作用"><span class="toc-text">notifyDataSetChange不起作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#只显示一条Item"><span class="toc-text">只显示一条Item</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#无法操作Item中的控件"><span class="toc-text">无法操作Item中的控件</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#源码实现"><span class="toc-text">源码实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RecyclerView的滚动事件"><span class="toc-text">RecyclerView的滚动事件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#点击事件"><span class="toc-text">点击事件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其它常用方法"><span class="toc-text">其它常用方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RecyclerView的封装"><span class="toc-text">RecyclerView的封装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一次拙劣-错误-的封装"><span class="toc-text">第一次拙劣(错误)的封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通用框架"><span class="toc-text">通用框架</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#坑"><span class="toc-text">坑</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#notifyDataSetChange不起作用"><span class="toc-text">notifyDataSetChange不起作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#只显示一条Item"><span class="toc-text">只显示一条Item</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#无法操作Item中的控件"><span class="toc-text">无法操作Item中的控件</span></a></li></ol></li></ol>
   </div>
 
 
 
 <div class="content content-post CENTER">
-   <article id="post-RecyclerView的使用" class="article article-type-post" itemprop="blogPost">
+   <article id="post-探索RecyclerView" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">RecyclerView的使用</h1>
+    <h1 class="post-title">探索RecyclerView</h1>
 
     <div class="article-meta">
       <span>
@@ -275,7 +275,7 @@
 <li><p>调用静态方法传入相应布局创建Holder</p>
 </li>
 </ol>
-<h1 id="！"><a href="#！" class="headerlink" title="！"></a>！</h1><h2 id="notifyDataSetChange不起作用"><a href="#notifyDataSetChange不起作用" class="headerlink" title="notifyDataSetChange不起作用"></a>notifyDataSetChange不起作用</h2><blockquote>
+<h1 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h1><h2 id="notifyDataSetChange不起作用"><a href="#notifyDataSetChange不起作用" class="headerlink" title="notifyDataSetChange不起作用"></a>notifyDataSetChange不起作用</h2><blockquote>
 <p>数据对象更新前和更新后必须是同一个对象，否则notifyDataSetChange将无效</p>
 </blockquote>
 <p><strong>因为其绑定的是第一个数据对象，更新数据时重新创建了一个数据对象，但原来那个数据对象并未改变，所以notifyDataSetChange后不会产生改变</strong></p>
@@ -329,10 +329,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2018/07/20/Dialog的使用/">
+    <a class="show pull-left" href="/2018/07/20/Context/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2018/07/20/探索TextView/">
+    <a class="show pull-right" href="/2018/07/22/泛型/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
