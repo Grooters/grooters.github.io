@@ -4,7 +4,7 @@
   <html class="light page-post">
 
 
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
   <meta charset="utf-8">
   
   <title>Hexo博客搭建 | Grooter&#39;s Home</title>
@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java," />
   
 
   <meta name="description" content="Hexo环境搭建安装Git Bash 安装Node.Js 安装hexocd到需要安装位置的目录，输入npm i -g hexo 初始化hexo在blog根目录下初始化blog，输入hexo init 搭桥到Github 在github上创建res，名称为grooters.github.io 在hexo根目录打开Git Bash上输入：  12git config --global user.nam">
@@ -55,7 +55,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
   
 </head>
-</html>
+
 <body>
 
 
@@ -74,37 +74,67 @@
     <ul class="list-toolbox">
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             归档
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             技术
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             生活
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             友链
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             关于
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             搜索
           </a>
         </li>
@@ -209,7 +239,7 @@
 </ol>
 <h2 id="Valine评论系统的使用"><a href="#Valine评论系统的使用" class="headerlink" title="Valine评论系统的使用"></a>Valine评论系统的使用</h2><p><em>在post.ejs的div中加入：</em></p>
 <p><a href="https://valine.js.org/quickstart.html" target="_blank" rel="noopener">Valine</a></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src="//unpkg.com/valine@latest/dist/Valine.min.js"&gt;&lt;/script&gt;</span><br><span class="line">&lt;div id="comment" class="vcomment" &gt;&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="keyword">var</span> notify = <span class="string">'&lt;%= theme.valine.notify %&gt;'</span> == <span class="keyword">true</span> ? <span class="keyword">true</span> : <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">var</span> verify = <span class="string">'&lt;%= theme.valine.verify %&gt;'</span> == <span class="keyword">true</span> ? <span class="keyword">true</span> : <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">var</span> GUEST_INFO = [<span class="string">'nick'</span>,<span class="string">'mail'</span>,<span class="string">'link'</span>];</span><br><span class="line">    <span class="keyword">var</span> guest_info = <span class="string">'&lt;%= theme.valine.guest_info %&gt;'</span>.split(<span class="string">','</span>).filter(function(item)&#123;</span><br><span class="line">        <span class="keyword">return</span> GUEST_INFO.indexOf(item) &gt; -<span class="number">1</span></span><br><span class="line">    &#125;);</span><br><span class="line">    guest_info = guest_info.length == <span class="number">0</span> ? GUEST_INFO :guest_info;</span><br><span class="line">    window.valine = <span class="keyword">new</span> Valine(&#123;</span><br><span class="line">        el: <span class="string">'.vcomment'</span>,</span><br><span class="line">        notify: notify,</span><br><span class="line">        verify: verify,</span><br><span class="line">        appId: <span class="string">"&lt;%= theme.valine.appid %&gt;"</span>,</span><br><span class="line">        appKey: <span class="string">"&lt;%= theme.valine.appkey %&gt;"</span>,</span><br><span class="line">        avatar:<span class="string">'&lt;%= theme.valine.avatar %&gt;'</span>,</span><br><span class="line">        placeholder: <span class="string">"&lt;%= theme.valine.placeholder %&gt;"</span>,</span><br><span class="line">        guest_info:guest_info,</span><br><span class="line">        pageSize:<span class="string">'&lt;%= theme.valine.pageSize %&gt;'</span></span><br><span class="line">    &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src="//unpkg.com/valine@latest/dist/Valine.min.js"&gt;&lt;/script&gt;</span><br><span class="line">&lt;div id="comment" class="vcomment" &gt;&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var notify = <span class="string">'&lt;%= theme.valine.notify %&gt;'</span> == <span class="keyword">true</span> ? <span class="keyword">true</span> : <span class="keyword">false</span>;</span><br><span class="line">    var verify = <span class="string">'&lt;%= theme.valine.verify %&gt;'</span> == <span class="keyword">true</span> ? <span class="keyword">true</span> : <span class="keyword">false</span>;</span><br><span class="line">    var GUEST_INFO = [<span class="string">'nick'</span>,<span class="string">'mail'</span>,<span class="string">'link'</span>];</span><br><span class="line">    var guest_info = <span class="string">'&lt;%= theme.valine.guest_info %&gt;'</span>.split(<span class="string">','</span>).filter(function(item)&#123;</span><br><span class="line">        <span class="keyword">return</span> GUEST_INFO.indexOf(item) &gt; -<span class="number">1</span></span><br><span class="line">    &#125;);</span><br><span class="line">    guest_info = guest_info.length == <span class="number">0</span> ? GUEST_INFO :guest_info;</span><br><span class="line">    window.valine = <span class="keyword">new</span> Valine(&#123;</span><br><span class="line">        el: <span class="string">'.vcomment'</span>,</span><br><span class="line">        notify: notify,</span><br><span class="line">        verify: verify,</span><br><span class="line">        appId: <span class="string">"&lt;%= theme.valine.appid %&gt;"</span>,</span><br><span class="line">        appKey: <span class="string">"&lt;%= theme.valine.appkey %&gt;"</span>,</span><br><span class="line">        avatar:<span class="string">'&lt;%= theme.valine.avatar %&gt;'</span>,</span><br><span class="line">        placeholder: <span class="string">"&lt;%= theme.valine.placeholder %&gt;"</span>,</span><br><span class="line">        guest_info:guest_info,</span><br><span class="line">        pageSize:<span class="string">'&lt;%= theme.valine.pageSize %&gt;'</span></span><br><span class="line">    &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 <h2 id="添加不蒜子"><a href="#添加不蒜子" class="headerlink" title="添加不蒜子"></a>添加不蒜子</h2><p>在<strong>D:\Blog\themes\fexoer\layout</strong>目录下的post.yml文件中添加安装脚本js代码：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script <span class="keyword">async</span> src=<span class="string">"//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
 <p>再修改<strong>D:\Blog\themes\fexoer\layout_partial</strong>目录下的article.ejs文件代码炜：</p>
@@ -274,7 +304,7 @@
 	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 	
 	
-    <div id="comment" class="vcomment"></div>
+    <div id="comment" class="vcomment" ></div>
     <script>
         var notify = 'false' == true ? true : false;
         var verify = 'false' == true ? true : false;
@@ -317,37 +347,67 @@
       <ul class="list-toolbox">
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               归档
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               技术
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               生活
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               友链
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               关于
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               搜索
             </a>
           </li>

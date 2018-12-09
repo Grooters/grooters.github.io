@@ -4,7 +4,7 @@
   <html class="light page-post">
 
 
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
   <meta charset="utf-8">
   
   <title>Android动画 | Grooter&#39;s Home</title>
@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java," />
   
 
   <meta name="description" content="属性动画ObjectAnimator onFloat 12345//从sunStart移动到skyHeightObjectAnimator.ofFloat(sun,&quot;Y&quot;,sunStart,skyHeight);//从当前位置向下移动200，回到初始位置再向上移动100ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(sun, &quot;Y&quot;,">
@@ -55,7 +55,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
   
 </head>
-</html>
+
 <body>
 
 
@@ -74,37 +74,67 @@
     <ul class="list-toolbox">
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             归档
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             技术
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             生活
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             友链
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             关于
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             搜索
           </a>
         </li>
@@ -180,7 +210,7 @@
 <h2 id="AnimatorSet"><a href="#AnimatorSet" class="headerlink" title="AnimatorSet"></a><a href="https://developer.android.google.cn/reference/android/animation/AnimatorSet" target="_blank" rel="noopener">AnimatorSet</a></h2><p><strong>可将动画放在一起播放动画集</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AnimatorSet set=<span class="keyword">new</span> AnimatorSet();</span><br><span class="line">set.play(firstAnimation).with(nextAnimation).before(lastAnimation);</span><br><span class="line">set.start();</span><br></pre></td></tr></table></figure>
 <h2 id="state-list-AnimatorSet"><a href="#state-list-AnimatorSet" class="headerlink" title="state list AnimatorSet"></a>state list AnimatorSet</h2><p><strong>使按钮按下和松开具有浮动效果，改变z值</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_pressed</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">objectAnimator</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:propertyName</span>=<span class="string">"translationZ"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:duration</span>=<span class="string">"100"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:valueTo</span>=<span class="string">"10dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_pressed</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">objectAnimator</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:propertyName</span>=<span class="string">"translationZ"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:duration</span>=<span class="string">"100"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:valueTo</span>=<span class="string">"0dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_pressed</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">objectAnimator</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:propertyName</span>=<span class="string">"translationZ"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:duration</span>=<span class="string">"100"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:valueTo</span>=<span class="string">"10dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_pressed</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">objectAnimator</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:propertyName</span>=<span class="string">"translationZ"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:duration</span>=<span class="string">"100"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:valueTo</span>=<span class="string">"0dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p><strong>将以上xml文件放入animator文件夹</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;Button</span><br><span class="line">    android:id=<span class="string">"@+id/button_animation"</span></span><br><span class="line">    android:stateListAnimator=<span class="string">"@animator/button_animator"</span></span><br><span class="line">    android:elevation=<span class="string">"2dp"</span></span><br><span class="line">    android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">    android:layout_height=<span class="string">"wrap_content"</span>/&gt;</span><br></pre></td></tr></table></figure>
 <p>然后通过<strong>android:stateListAnimator</strong>为组件设置动画</p>
@@ -262,7 +292,7 @@
 	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 	
 	
-    <div id="comment" class="vcomment"></div>
+    <div id="comment" class="vcomment" ></div>
     <script>
         var notify = 'false' == true ? true : false;
         var verify = 'false' == true ? true : false;
@@ -305,37 +335,67 @@
       <ul class="list-toolbox">
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               归档
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               技术
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               生活
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               友链
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               关于
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               搜索
             </a>
           </li>
