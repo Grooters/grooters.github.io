@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Retrofit的使用 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java," />
+  
+
+  <meta name="description" content="Retrofit是一个基于okhttp，通过注解配置请求参数，支持图片链接和上传，支持同步异步和RxJava的请求框架 Retrofit的使用步骤：  创建Retrofit实例 根据Retrofit对象获得接口请求类 调用对应的请求方法，获取返回的Call 通过call调用enqueue处理结果  1234implementation &apos;io.reactivex.rxjava2:rxjava:2.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Retrofit的使用">
+<meta property="og:url" content="https://grooters.github.io/2018/12/12/Retrofit的使用/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="Retrofit是一个基于okhttp，通过注解配置请求参数，支持图片链接和上传，支持同步异步和RxJava的请求框架 Retrofit的使用步骤：  创建Retrofit实例 根据Retrofit对象获得接口请求类 调用对应的请求方法，获取返回的Call 通过call调用enqueue处理结果  1234implementation &apos;io.reactivex.rxjava2:rxjava:2.">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://grooters.github.io/img/Android/Retrofit/Json解析器.PNG">
+<meta property="og:updated_time" content="2018-12-12T07:24:07.557Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Retrofit的使用">
+<meta name="twitter:description" content="Retrofit是一个基于okhttp，通过注解配置请求参数，支持图片链接和上传，支持同步异步和RxJava的请求框架 Retrofit的使用步骤：  创建Retrofit实例 根据Retrofit对象获得接口请求类 调用对应的请求方法，获取返回的Call 通过call调用enqueue处理结果  1234implementation &apos;io.reactivex.rxjava2:rxjava:2.">
+<meta name="twitter:image" content="https://grooters.github.io/img/Android/Retrofit/Json解析器.PNG">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GET"><span class="toc-text">GET</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#POST"><span class="toc-text">POST</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结合RxJava"><span class="toc-text">结合RxJava</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Retrofit的使用" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Retrofit的使用</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.12.12</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>Retrofit是一个基于okhttp，通过注解配置请求参数，支持图片链接和上传，支持同步异步和RxJava的请求框架</p>
+<p>Retrofit的使用步骤：</p>
+<ol>
+<li>创建Retrofit实例</li>
+<li>根据Retrofit对象获得接口请求类</li>
+<li>调用对应的请求方法，获取返回的Call</li>
+<li>通过call调用enqueue处理结果</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">implementation <span class="string">'io.reactivex.rxjava2:rxjava:2.1.0'</span></span><br><span class="line">implementation <span class="string">'io.reactivex.rxjava2:rxandroid:2.0.1'</span></span><br><span class="line">implementation <span class="string">'com.squareup.retrofit2:retrofit:2.4.0'</span></span><br><span class="line">implementation <span class="string">'com.squareup.okhttp3:okhttp:3.11.0'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Api</span> </span>&#123;</span><br><span class="line">    <span class="meta">@GET</span>(<span class="string">"top250"</span>)</span><br><span class="line">    <span class="function">Call&lt;ResponseBody&gt; <span class="title">getTop250</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Call&lt;ResponseBody&gt; call= <span class="keyword">new</span> Retrofit.Builder()</span><br><span class="line">         .baseUrl(<span class="string">"https://api.douban.com/v2/movie/"</span>)</span><br><span class="line">         .build()</span><br><span class="line">         .create(Api.class)</span><br><span class="line">         .getTop250();</span><br><span class="line">call.enqueue(<span class="keyword">new</span> Callback&lt;ResponseBody&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call&lt;ResponseBody&gt; call, Response&lt;ResponseBody&gt; response)</span> </span>&#123;</span><br><span class="line">      Log.d(TAG,<span class="string">"json:"</span>+reponse.body().string());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call&lt;ResponseBody&gt; call, Throwable t)</span> </span>&#123;</span><br><span class="line">      Log.d(TAG,<span class="string">"error"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><li> addConverterFactory</li></p>
+<p>添加Json解析器，可以将Json数据映射为Java对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Api</span> </span>&#123;</span><br><span class="line">    <span class="meta">@GET</span>(<span class="string">"top250"</span>)</span><br><span class="line">    <span class="function">Call&lt;MovieBean&gt; <span class="title">getTop250</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line">Call&lt;MovieBean&gt; call= <span class="keyword">new</span> Retrofit.Builder()</span><br><span class="line">         .baseUrl(<span class="string">"https://api.douban.com/v2/movie/"</span>)</span><br><span class="line">         .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">         .build()</span><br><span class="line">call.enqueue(<span class="keyword">new</span> Callback&lt;MovieBean&gt;() &#123;</span><br><span class="line">         <span class="meta">@Override</span></span><br><span class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call&lt;MovieBean&gt; call, Response&lt;MovieBean&gt; response)</span> </span>&#123;</span><br><span class="line">           Log.d(TAG,<span class="string">"json:"</span>+reponse.body().getName());</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="meta">@Override</span></span><br><span class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call&lt;ResponseBody&gt; call, Throwable t)</span> </span>&#123;</span><br><span class="line">           Log.d(TAG,<span class="string">"error"</span>);</span><br><span class="line">         &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>其中MovieBean是要解析成的java对象</p>
+<p>Gson解析器需要添加依赖</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation <span class="string">'com.squareup.retrofit2:converter-gson:2.4.0'</span></span><br></pre></td></tr></table></figure>
+<p><img src="/img/Android/Retrofit/Json解析器.PNG" alt="Json解析器"></p>
+<h1 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GET</span>(<span class="string">"top250"</span>)</span><br><span class="line"><span class="function">Call&lt;ResponseBody&gt; <span class="title">getTop250</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<p>将访问：</p>
+<blockquote>
+<p><a href="https://api.douban.com/v2/movie/top250" target="_blank" rel="noopener">https://api.douban.com/v2/movie/top250</a></p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GET</span>(<span class="string">"top250/&#123;action&#125;"</span>)</span><br><span class="line"><span class="function">Call&lt;ResponseBody&gt; <span class="title">getTop250</span><span class="params">(@path(<span class="string">"action"</span>)</span>String action)</span>;</span><br></pre></td></tr></table></figure>
+<p>url中的{action}将会被参数action代替</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GET</span>(<span class="string">"top250"</span>)</span><br><span class="line"><span class="function">Call&lt;ResponseBody&gt; <span class="title">getTop250</span><span class="params">(@Query(<span class="string">"start"</span>)</span>String start,<span class="params">(@Query(<span class="string">"count"</span>)</span>String count)</span>;</span><br></pre></td></tr></table></figure>
+<p>使用方法：</p>
+<p>getTop(1,30)</p>
+<blockquote>
+<p><a href="https://api.douban.com/v2/movie/top250?start=1&amp;count=30" target="_blank" rel="noopener">https://api.douban.com/v2/movie/top250?start=1&amp;count=30</a></p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GET</span>(<span class="string">"top250"</span>)</span><br><span class="line"><span class="function">Call&lt;ResponseBody&gt; <span class="title">getTop250</span><span class="params">(@QueryMap Map&lt;String,String&gt; map)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>使用方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">map.put(<span class="string">"start"</span>,<span class="string">"1"</span>);</span><br><span class="line">map.put(<span class="string">"count"</span>,<span class="string">"30"</span>);</span><br><span class="line">getTop250(map);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><a href="https://api.douban.com/v2/movie/top250?start=1&amp;count=30" target="_blank" rel="noopener">https://api.douban.com/v2/movie/top250?start=1&amp;count=30</a></p>
+</blockquote>
+<h1 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FormUrlEncoded</span></span><br><span class="line"><span class="meta">@POST</span>(<span class="string">"top250"</span>)</span><br><span class="line"><span class="function">Call&lt;ResponseBody&gt; <span class="title">getTop250</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<p>传参：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FormUrlEncoded</span></span><br><span class="line"><span class="meta">@POST</span>(<span class="string">"top250"</span>)</span><br><span class="line"><span class="function">Call&lt;ResponseBody&gt; <span class="title">getTop250</span><span class="params">(@Field(<span class="string">"start"</span>)</span>String start,@<span class="title">Field</span><span class="params">(<span class="string">"count"</span>)</span>String count)</span>;</span><br></pre></td></tr></table></figure>
+<p>其中Field类似于Query</p>
+<p>传一个body对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FormUrlEncoded</span></span><br><span class="line"><span class="meta">@POST</span>(<span class="string">"top250"</span>)</span><br><span class="line"><span class="function">Call&lt;ResponseBody&gt; <span class="title">getTop250</span><span class="params">(@Body MovieBean body)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>替换Url中的参数@path与GET请求相同</p>
+<h1 id="结合RxJava"><a href="#结合RxJava" class="headerlink" title="结合RxJava"></a>结合RxJava</h1><p>添加支持RxJava的依赖：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation <span class="string">'com.squareup.retrofit2:adapter-rxjava2:2.4.0'</span></span><br></pre></td></tr></table></figure>
+<p>添加该依赖后可获得RxJava2CallAdapterFactory类，通过addCallAdapterFactory方法可使Retrofit支持RxJava</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Retrofit.Builder()</span><br><span class="line">        .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">        .baseUrl(<span class="string">"https://api.douban.com/v2/movie/"</span>)</span><br><span class="line">        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())</span><br><span class="line">        .build()</span><br><span class="line">        .create(Api.class)</span><br><span class="line">        .getTop250()</span><br><span class="line">        .subscribeOn(Schedulers.io())</span><br><span class="line">        .observeOn(AndroidSchedulers.mainThread())</span><br><span class="line">        .subscribe(<span class="keyword">new</span> Observer&lt;ResponseBody&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSubscribe</span><span class="params">(Disposable d)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(ResponseBody responseBody)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/12/07/自定义View学习之路/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment" ></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
