@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>通知与自定义通知 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java," />
+  
+
+  <meta name="description" content="奥利奥添加通知渠道  系统默认通知 Notification  NotificationManager 1234567891011121314private final String CHANNEL_ID=&quot;channelId_1&quot;;private final String CHANNEL_NAME=&quot;channelName_1&quot;;NotificationCompat.Builder build">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通知与自定义通知">
+<meta property="og:url" content="https://grooters.github.io/2018/12/16/通知与自定义通知/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="奥利奥添加通知渠道  系统默认通知 Notification  NotificationManager 1234567891011121314private final String CHANNEL_ID=&quot;channelId_1&quot;;private final String CHANNEL_NAME=&quot;channelName_1&quot;;NotificationCompat.Builder build">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://grooters.github.io/img/Android/通知与自定义通知/通道.jpg">
+<meta property="og:updated_time" content="2018-12-16T11:19:53.758Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="通知与自定义通知">
+<meta name="twitter:description" content="奥利奥添加通知渠道  系统默认通知 Notification  NotificationManager 1234567891011121314private final String CHANNEL_ID=&quot;channelId_1&quot;;private final String CHANNEL_NAME=&quot;channelName_1&quot;;NotificationCompat.Builder build">
+<meta name="twitter:image" content="https://grooters.github.io/img/Android/通知与自定义通知/通道.jpg">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#系统默认通知"><span class="toc-text">系统默认通知</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#自定义通知"><span class="toc-text">自定义通知</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#坑"><span class="toc-text">坑</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-通知与自定义通知" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">通知与自定义通知</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.12.16</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <blockquote>
+<p>奥利奥添加通知渠道</p>
+</blockquote>
+<h1 id="系统默认通知"><a href="#系统默认通知" class="headerlink" title="系统默认通知"></a>系统默认通知</h1><p><li> <a href="https://developer.android.google.cn/reference/android/app/Notification" target="_blank" rel="noopener">Notification</a></li></p>
+<p><li> <a href="https://developer.android.google.cn/reference/android/app/NotificationManager" target="_blank" rel="noopener">NotificationManager</a></li></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> String CHANNEL_ID=<span class="string">"channelId_1"</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> String CHANNEL_NAME=<span class="string">"channelName_1"</span>;</span><br><span class="line">NotificationCompat.Builder builder=<span class="keyword">new</span> NotificationCompat.Builder(<span class="keyword">this</span>,channelId);</span><br><span class="line">Notification notification=builder</span><br><span class="line">                            .setSmallIcon(R.mipmap.ic_launcher)</span><br><span class="line">                            .setWhen(System.currentTimeMillis())</span><br><span class="line">                            .setContentTitle(<span class="string">"title"</span>)</span><br><span class="line">                            .setContentText(<span class="string">"content"</span>)</span><br><span class="line">                            .setCustomContentView(remoteViews)</span><br><span class="line">                            .setChannelId(channelId)</span><br><span class="line">                            .build();</span><br><span class="line">NotificationManager manager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);</span><br><span class="line">manager.createNotificationChannel(<span class="keyword">new</span> NotificationChannel(channelId,channelName,NotificationManager.IMPORTANCE_DEFAULT));</span><br><span class="line">manager.notify(<span class="number">0</span>,notification);</span><br></pre></td></tr></table></figure>
+<p>在Android Version &gt;= 26时需要加入渠道，否则无法弹出通知：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">manager.createNotificationChannel(<span class="keyword">new</span> NotificationChannel(channelId,channelName,NotificationManager.IMPORTANCE_DEFAULT));</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<blockquote>
+<p>NotificationChannel(String id, CharSequence name, int importance)</p>
+</blockquote>
+<p>id为渠道Id，name为渠道名称，importance为通知优先级，分为以下几个：</p>
+<ol>
+<li>IMPORTANCE_UNSPECIFIED</li>
+<li>IMPORTANCE_NONE</li>
+<li>IMPORTANCE_MIN</li>
+<li>IMPORTANCE_LOW</li>
+<li>IMPORTANCE_DEFAULT</li>
+<li>IMPORTANCE_HIGH</li>
+</ol>
+<p>当创建不同渠道的通知时会将通知如下分类：</p>
+<p><img src="/img/Android/通知与自定义通知/通道.jpg" alt="渠道"></p>
+<blockquote>
+<p>public void notify (int id, Notification notification)</p>
+</blockquote>
+<p>id为通知ID，是该app中该通知的唯一标识，即id相同则代表同一个通知，不弹出新通知</p>
+<p>对于其它丰富通知功能的方法，参照<a href="https://developer.android.google.cn/reference/android/app/Notification.Builder" target="_blank" rel="noopener">Notification.Builder</a>中的方法</p>
+<h1 id="自定义通知"><a href="#自定义通知" class="headerlink" title="自定义通知"></a>自定义通知</h1><p><li> <a href="https://developer.android.google.cn/reference/android/widget/RemoteViews" target="_blank" rel="noopener">RemoteViews</a></li></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">RemoteViews remoteViews=<span class="keyword">new</span> RemoteViews(getPackageName(),R.layout.view_notification);</span><br><span class="line">remoteViews.setTextColor(R.id.text_notify_custom,getResources().getColor(R.color.colorAccent,<span class="keyword">null</span>));</span><br><span class="line">PendingIntent pendingIntent=PendingIntent.getActivity(<span class="keyword">this</span>,<span class="number">0</span>,<span class="keyword">new</span> Intent(<span class="keyword">this</span>,TestActivity.class),PendingIntent.FLAG_UPDATE_CURRENT);</span><br><span class="line">remoteViews.setOnClickPendingIntent(R.id.butt_notify_custom,pendingIntent);</span><br><span class="line">Notification notification=builder</span><br><span class="line">                            .setSmallIcon(R.mipmap.ic_launcher)</span><br><span class="line">                            .setWhen(System.currentTimeMillis())</span><br><span class="line">                            .setContentTitle(<span class="string">"title"</span>)</span><br><span class="line">                            .setContentText(<span class="string">"content"</span>)</span><br><span class="line">                            .setCustomContentView(remoteViews)</span><br><span class="line">                            .setChannelId(channelId)</span><br><span class="line">                            .build();</span><br></pre></td></tr></table></figure>
+<p><strong>setCustomContentView(remoteViews)</strong></p>
+<p><em>view_notification.xml：</em><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">LinearLayout</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"80dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:orientation</span>=<span class="string">"horizontal"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/butt_notify_custom"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:background</span>=<span class="string">"@color/colorPrimary"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"跳转"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/text_notify_custom"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"自定义通知"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h1><p><li> 这里有一个大坑，那就是自定义通知视图的布局不能是<strong>约束布局</strong>，否则报错!!!</li></p>
+<p><li> Android 8.0及以上的操作系统需要添加通知渠道才能弹出通知否则无效！</li></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/12/12/Retrofit的使用/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/12/16/Android桌面小部件/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment" ></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

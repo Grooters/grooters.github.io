@@ -23,7 +23,7 @@
 <meta property="og:description" content="Unknown attribute android:layout_width…  Gradle版本问题  -&amp;gt;Sync project with gradle file …up-to-date check…  可能时继承了某个接口，但又没有重写里面的所有方法  重写继承了的接口的所有方法即可 查看源码时显示Sources for ‘android api … platform’ not fo">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://grooters.github.io/img/Android/Android错误集锦/orggradleapiresourcesResourceExceptionCouldnotgetresource.PNG">
-<meta property="og:updated_time" content="2018-11-25T07:41:00.562Z">
+<meta property="og:updated_time" content="2018-12-16T03:29:32.799Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android问题集锦">
 <meta name="twitter:description" content="Unknown attribute android:layout_width…  Gradle版本问题  -&amp;gt;Sync project with gradle file …up-to-date check…  可能时继承了某个接口，但又没有重写里面的所有方法  重写继承了的接口的所有方法即可 查看源码时显示Sources for ‘android api … platform’ not fo">
@@ -255,6 +255,10 @@
 </blockquote>
 <p>只需要在app中的build.gradle中添加：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">android&#123;</span><br><span class="line">    lintOptions &#123;</span><br><span class="line">        checkReleaseBuilds false</span><br><span class="line">        abortOnError false</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong><li> App is not indexable by Google Search; consider adding at least one Activity with an ACTION-VIEW intent filter. See issue explanation for more details. less… (Ctrl+F1)<br>Adds URLs to get your app into the Google index, to get installs and traffic to your app from Google Search.</li></strong></p>
+<p>在AndroidManefist.xml中添加<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.VIEW"</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>eg:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".MainActivity"</span> <span class="attr">android:launchMode</span>=<span class="string">"standard"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.VIEW"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
     
   </div>

@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Grooter&#39;s Home">
 <meta property="og:description" content="IntentFilter的匹配 action  catogory  data data由mimeType和URI组成  mineType 1&amp;lt;data android:mimeType=&quot;image/*&quot;/&amp;gt; 1intent.setDataAndType(uri,&quot;image/png&quot;);  URI 1&amp;lt;scheme&amp;gt;://&amp;lt;host&amp;gt;:&amp;lt;port&amp;gt;">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-08T05:00:59.513Z">
+<meta property="og:updated_time" content="2018-12-16T14:34:02.772Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android中的意图">
 <meta name="twitter:description" content="IntentFilter的匹配 action  catogory  data data由mimeType和URI组成  mineType 1&amp;lt;data android:mimeType=&quot;image/*&quot;/&amp;gt; 1intent.setDataAndType(uri,&quot;image/png&quot;);  URI 1&amp;lt;scheme&amp;gt;://&amp;lt;host&amp;gt;:&amp;lt;port&amp;gt;">
@@ -148,7 +148,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IntentFilter的匹配"><span class="toc-text">IntentFilter的匹配</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Intent使用集合"><span class="toc-text">Intent使用集合</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#打开网页"><span class="toc-text">打开网页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拨打电话"><span class="toc-text">拨打电话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发送短信"><span class="toc-text">发送短信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发送邮件"><span class="toc-text">发送邮件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#播放音频"><span class="toc-text">播放音频</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IntentFilter的匹配"><span class="toc-text">IntentFilter的匹配</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Intent使用集合"><span class="toc-text">Intent使用集合</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#打开网页"><span class="toc-text">打开网页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拨打电话"><span class="toc-text">拨打电话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发送短信"><span class="toc-text">发送短信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发送邮件"><span class="toc-text">发送邮件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#播放音频"><span class="toc-text">播放音频</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PendingIntent"><span class="toc-text">PendingIntent</span></a></li></ol>
   </div>
 
 
@@ -222,6 +222,42 @@
 <h2 id="发送短信"><a href="#发送短信" class="headerlink" title="发送短信"></a>发送短信</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Uri uri = Uri.parse(<span class="string">"smsto:10086"</span>);     </span><br><span class="line">Intent it = <span class="keyword">new</span> Intent(Intent.ACTION_SENDTO, uri);     </span><br><span class="line">it.putExtra(<span class="string">"sms_body"</span>, <span class="string">"cwj"</span>);     </span><br><span class="line">startActivity(it);</span><br></pre></td></tr></table></figure>
 <h2 id="发送邮件"><a href="#发送邮件" class="headerlink" title="发送邮件"></a>发送邮件</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Uri uri = Uri.parse(<span class="string">"lilinlang@hotmail.com"</span>);  </span><br><span class="line">Intent it = <span class="keyword">new</span> Intent(Intent.ACTION_SENDTO, uri);  </span><br><span class="line">startActivity(it);  </span><br><span class="line"></span><br><span class="line">Intent it = <span class="keyword">new</span> Intent(Intent.ACTION_SEND);     </span><br><span class="line">it.putExtra(Intent.EXTRA_EMAIL, <span class="string">"lilinlang@hotmail.com"</span>);     </span><br><span class="line">it.putExtra(Intent.EXTRA_TEXT, <span class="string">"The email body text"</span>);     </span><br><span class="line">it.setType(<span class="string">"text/plain"</span>);     </span><br><span class="line">startActivity(Intent.createChooser(it, <span class="string">"Choose Email Client"</span>));    </span><br><span class="line"></span><br><span class="line">Intent it=<span class="keyword">new</span> Intent(Intent.ACTION_SEND);       </span><br><span class="line">String[] tos=&#123;<span class="string">"figurers@163.com"</span>&#125;;       </span><br><span class="line">String[] ccs=&#123;<span class="string">"lilinlang@hotmail.com"</span>&#125;;       </span><br><span class="line">it.putExtra(Intent.EXTRA_EMAIL, tos);       </span><br><span class="line">it.putExtra(Intent.EXTRA_CC, ccs);       </span><br><span class="line">it.putExtra(Intent.EXTRA_TEXT, <span class="string">"The email body text"</span>);       </span><br><span class="line">it.putExtra(Intent.EXTRA_SUBJECT, <span class="string">"The email subject text"</span>);       </span><br><span class="line">it.setType(<span class="string">"message/rfc822"</span>);       </span><br><span class="line">startActivity(Intent.createChooser(it, <span class="string">"Choose Email Client"</span>));</span><br></pre></td></tr></table></figure>
 <h2 id="播放音频"><a href="#播放音频" class="headerlink" title="播放音频"></a>播放音频</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Intent it = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW);  </span><br><span class="line">Uri uri = Uri.parse(<span class="string">"file://sdcard/lll.mp3"</span>);  </span><br><span class="line">it.setDataAndType(uri, <span class="string">"audio/mp3"</span>);  </span><br><span class="line"></span><br><span class="line">Uri uri = Uri.parse(<span class="string">"file://sdcard/lll.mp4"</span>);  </span><br><span class="line">it.setDataAndType(uri, <span class="string">"video/mp4"</span>);  </span><br><span class="line">startActivity(it);</span><br></pre></td></tr></table></figure>
+<h1 id="PendingIntent"><a href="#PendingIntent" class="headerlink" title="PendingIntent"></a><a href="https://developer.android.google.cn/reference/android/app/PendingIntent" target="_blank" rel="noopener">PendingIntent</a></h1><p>通过以下三个方法创建实例对象：</p>
+<ol>
+<li>getActivity</li>
+<li>getService</li>
+<li>getBroadcast</li>
+</ol>
+<p>以上三个方法均有4个参数：</p>
+<p><li> Context context</li></p>
+<p><li> int requestCode</li></p>
+<p>表示PendingIntent发送方的请求码，通常设为0，也可以作为判断两个PendingIntent是否匹配的条件</p>
+<p><li> Intent intent</li></p>
+<p><li> int flag</li></p>
+<p>有以下三种取值：</p>
+<ol>
+<li>FLAG_ONE_SHOT<blockquote>
+<p>PendingIntent只能使用一次，使用完好便会被cancle，之后相同的PendingIntent无法再次被使用</p>
+</blockquote>
+</li>
+<li>FLAG_NO_CREATE<blockquote>
+<p>当前描述的PendingIntent不主动创建，若当前PendingIntent不存在则getActivity返回null</p>
+</blockquote>
+</li>
+<li>FLAG_CANCEL_CURRENT<blockquote>
+<p>当前描述的PendingIntent若已经存在，则会先cancle掉已存在的PendingIntent，然后重新创建</p>
+</blockquote>
+</li>
+<li>FLAG_UPDATE_CURRENT<blockquote>
+<p>当前描述的PendingIntent若已经存在，则会更新该PendingIntent，即将更新Intent的Extras</p>
+</blockquote>
+</li>
+</ol>
+<p>当PendingIntent的<strong>Intent</strong>和<strong>requestCode</strong>一致时则说明它们<strong>匹配</strong></p>
+<p>example：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PendingIntent pendingIntent=PendingIntent.getActivity(<span class="keyword">this</span>,<span class="number">0</span>,<span class="keyword">new</span> Intent(<span class="keyword">this</span>,TestActivity.class),PendingIntent.FLAG_UPDATE_CURRENT);</span><br><span class="line">remoteViews.setOnClickPendingIntent(R.id.butt_notify_custom,pendingIntent);</span><br></pre></td></tr></table></figure>
+<p>notify的id不同时，若PendingIntent能实现匹配，则可通过flag实现不同的效果，如：</p>
+<p>FLAG_ONE_SHOT：后续通知中的PendingIntent和第一天保持完全一致，单机任何一条后剩下的通知均无法正常打开</p>
 
     
   </div>
