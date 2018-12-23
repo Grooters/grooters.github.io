@@ -22,14 +22,14 @@
 <meta property="og:site_name" content="Grooter&#39;s Home">
 <meta property="og:description" content="Drawable Drawable的分类：  BitmapDrawable 12345678910&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&amp;gt;&amp;lt;bitmap    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;    android:antialias=&quot;true&quot;    and">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://grooters.github.io/img/Android/探索Drawable/drawable的分类.jpg">
+<meta property="og:image" content="https://grooters.github.io/img/Android/探索Drawable/Drawable类型.jpg">
 <meta property="og:image" content="https://grooters.github.io/img/Android/探索Drawable/gradient效果展示.PNG">
 <meta property="og:image" content="https://grooters.github.io/img/Android/探索Drawable/ClipDrawable的gravity属性值.PNG">
-<meta property="og:updated_time" content="2018-12-23T13:43:17.651Z">
+<meta property="og:updated_time" content="2018-12-23T13:49:33.332Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="探索Drawable">
 <meta name="twitter:description" content="Drawable Drawable的分类：  BitmapDrawable 12345678910&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&amp;gt;&amp;lt;bitmap    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;    android:antialias=&quot;true&quot;    and">
-<meta name="twitter:image" content="https://grooters.github.io/img/Android/探索Drawable/drawable的分类.jpg">
+<meta name="twitter:image" content="https://grooters.github.io/img/Android/探索Drawable/Drawable类型.jpg">
 
   
 
@@ -195,7 +195,7 @@
     
       <p><strong><font size="5sp"><a href="https://developer.android.google.cn/reference/android/graphics/drawable/Drawable" target="_blank" rel="noopener">Drawable</a></font></strong></p>
 <p>Drawable的分类：</p>
-<p><img src="/img/Android/探索Drawable/drawable的分类.jpg" alt="Drawable的分类"></p>
+<p><img src="/img/Android/探索Drawable/Drawable类型.jpg" alt="Drawable的分类"></p>
 <p><strong><font size="4sp"><li><a href="https://developer.android.google.cn/reference/android/graphics/drawable/BitmapDrawable" target="_blank" rel="noopener">BitmapDrawable</a></li></font></strong></p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">bitmap</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:antialias</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:dither</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:filter</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:gravity</span>=<span class="string">"center"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:mipMap</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:src</span>=<span class="string">"@drawable/drawable_test"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:tileMode</span>=<span class="string">"clamp"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
 <p><em>antialias:</em> 是否开启抗锯齿，若开启则会使图片更平滑，但图片清晰度会有所下降，建议开启</p>
@@ -268,14 +268,14 @@
 <p><em>需要在java代码中设置等级：</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TextView textView=findViewById(R.id.text_hello);</span><br><span class="line">ScaleDrawable drawable=(ScaleDrawable)textView.getBackground();</span><br><span class="line">drawable.setLevel(<span class="number">5000</span>);</span><br></pre></td></tr></table></figure></p>
 <p>在ScaleDrawabel方法中的onBoundChange方法中有以下代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MAX_LEVEL = 10000</span></span><br><span class="line"><span class="keyword">if</span> (mState.mScaleWidth &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> iw = min ? d.getIntrinsicWidth() : <span class="number">0</span>;</span><br><span class="line">    w -= (<span class="keyword">int</span>) ((w - iw) * (MAX_LEVEL - level) * mState.mScaleWidth / MAX_LEVEL);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> h = bounds.height();</span><br><span class="line"><span class="keyword">if</span> (mState.mScaleHeight &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> ih = min ? d.getIntrinsicHeight() : <span class="number">0</span>;</span><br><span class="line">    h -= (<span class="keyword">int</span>) ((h - ih) * (MAX_LEVEL - level) * mState.mScaleHeight / MAX_LEVEL);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>由此可见level越大缩放程度就越低，而scaleWidth/scaleHeight越大则缩放程度越大，当level为10000即最大值时则不缩放</p>
+<p>由此可见<strong>level越大缩放程度就越低</strong>，而<strong>scaleWidth/scaleHeight越大则缩放程度越大</strong>，当level为10000即最大值时则不缩放</p>
 <p><strong><font size="4sp"><li><a href="https://developer.android.com/reference/android/graphics/drawable/ClipDrawable" target="_blank" rel="noopener">ClipDrawable</a></li></font></strong></p>
 <p>实现对图片的裁剪，由level决定裁剪大小，以下为gravity的属性值：</p>
 <p><img src="/img/Android/探索Drawable/ClipDrawable的gravity属性值.PNG" alt="ClipDrawable的gravity属性值"></p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">clip</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:clipOrientation</span>=<span class="string">"vertical"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:gravity</span>=<span class="string">"bottom"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:drawable</span>=<span class="string">"@drawable/drawable_test"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
 <p><em>在java代码中设置level：</em></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TextView textView=findViewById(R.id.text_hello);</span><br><span class="line">ClipDrawable drawable=(ClipDrawable) textView.getBackground();</span><br><span class="line">Log.d(TAG,<span class="string">""</span>+drawable.getIntrinsicWidth());</span><br><span class="line">drawable.setLevel(<span class="number">9000</span>);</span><br></pre></td></tr></table></figure>
-<p>其中level越小裁剪范围越大，内部规定等级范围为0~10000</p>
+<p>其中<strong>level越小裁剪范围越大</strong>，内部规定等级范围为0~10000</p>
 
     
   </div>
