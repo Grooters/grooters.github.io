@@ -23,7 +23,7 @@
 <meta property="og:description" content="Unknown attribute android:layout_width…  Gradle版本问题  -&amp;gt;Sync project with gradle file …up-to-date check…  可能时继承了某个接口，但又没有重写里面的所有方法  重写继承了的接口的所有方法即可 查看源码时显示Sources for ‘android api … platform’ not fo">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://grooters.github.io/img/Android/Android错误集锦/orggradleapiresourcesResourceExceptionCouldnotgetresource.PNG">
-<meta property="og:updated_time" content="2018-12-16T03:29:32.799Z">
+<meta property="og:updated_time" content="2018-12-26T12:01:51.884Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android问题集锦">
 <meta name="twitter:description" content="Unknown attribute android:layout_width…  Gradle版本问题  -&amp;gt;Sync project with gradle file …up-to-date check…  可能时继承了某个接口，但又没有重写里面的所有方法  重写继承了的接口的所有方法即可 查看源码时显示Sources for ‘android api … platform’ not fo">
@@ -259,6 +259,9 @@
 <p>在AndroidManefist.xml中添加<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.VIEW"</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>eg:</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".MainActivity"</span> <span class="attr">android:launchMode</span>=<span class="string">"standard"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.VIEW"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong><li> Could not find com.android.tools.build:aapt2:3.2.0-alpha14-4748712.<br>Searched in the following locations:<br><br>    file:/D:/android_sdk/extras/m2repository/com/android/tools/build/aapt2/3.2.0-alpha14-4748712/aapt2-3.2.0-alpha14-4748712.pom</li></strong></p>
+<p>在project里的builde.gralde增加谷歌库</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">allprojects &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        google()//新增的</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     
   </div>
@@ -299,7 +302,7 @@
     <a class="show pull-left" href="/2018/09/06/操作系统的功能特征/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2018/09/09/Java中的细节问题/">
+    <a class="show pull-right" href="/2018/09/09/编译原理基础/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
