@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>进程与线程 | Grooter&#39;s Home</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java," />
+  
+
+  <meta name="description" content="进程的组成  进程控制块PCB 使程序能成为独立运行的单位，并可和其他进程并发执行   程序段 数据段 堆栈  操作系统内核  核心态 能执行一切命令，访问所有寄存器和存储区  用户态 只能执行规定的命令，访问指定的寄存器和存储区  原语 由若干条指令构成，是原子操作 内核在执行某些基本操作时，往往时利用原语操作实现的 创建原语要做的事情：  申请空白PCB 为进程分配资源 初始化PCB 初始化进">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进程与线程">
+<meta property="og:url" content="https://grooters.github.io/2019/01/06/进程与线程/index.html">
+<meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="进程的组成  进程控制块PCB 使程序能成为独立运行的单位，并可和其他进程并发执行   程序段 数据段 堆栈  操作系统内核  核心态 能执行一切命令，访问所有寄存器和存储区  用户态 只能执行规定的命令，访问指定的寄存器和存储区  原语 由若干条指令构成，是原子操作 内核在执行某些基本操作时，往往时利用原语操作实现的 创建原语要做的事情：  申请空白PCB 为进程分配资源 初始化PCB 初始化进">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://grooters.github.io/img/操作系统/进程与线程/进程模型.PNG">
+<meta property="og:updated_time" content="2019-01-06T13:35:46.532Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="进程与线程">
+<meta name="twitter:description" content="进程的组成  进程控制块PCB 使程序能成为独立运行的单位，并可和其他进程并发执行   程序段 数据段 堆栈  操作系统内核  核心态 能执行一切命令，访问所有寄存器和存储区  用户态 只能执行规定的命令，访问指定的寄存器和存储区  原语 由若干条指令构成，是原子操作 内核在执行某些基本操作时，往往时利用原语操作实现的 创建原语要做的事情：  申请空白PCB 为进程分配资源 初始化PCB 初始化进">
+<meta name="twitter:image" content="https://grooters.github.io/img/操作系统/进程与线程/进程模型.PNG">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            归档
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            技术
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            生活
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#进程的同步与通信"><span class="toc-text">进程的同步与通信</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#进程同步问题实例"><span class="toc-text">进程同步问题实例</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-进程与线程" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">进程与线程</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.01.06</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Grooter</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/操作系统/">操作系统</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>进程的组成</p>
+<ol>
+<li>进程控制块PCB<blockquote>
+<p>使程序能成为独立运行的单位，并可和其他进程并发执行</p>
+</blockquote>
+</li>
+<li>程序段</li>
+<li>数据段</li>
+<li>堆栈</li>
+</ol>
+<p>操作系统内核</p>
+<p><li> 核心态</li></p>
+<p>能执行一切命令，访问所有寄存器和存储区</p>
+<p><li> 用户态</li></p>
+<p>只能执行规定的命令，访问指定的寄存器和存储区</p>
+<p><li> 原语</li></p>
+<p>由若干条指令构成，是原子操作</p>
+<p><strong>内核在执行某些基本操作时，往往时利用原语操作实现的</strong></p>
+<p>创建原语要做的事情：</p>
+<ol>
+<li>申请空白PCB</li>
+<li>为进程分配资源</li>
+<li>初始化PCB<ol>
+<li>初始化进程描述信息</li>
+<li>初始化处理机状态信息</li>
+<li>初始化进程控制信息</li>
+</ol>
+</li>
+<li>将新进程插入就绪队列</li>
+</ol>
+<p>撤销原语要做的事情：</p>
+<ol>
+<li>查找撤销进程的PCB</li>
+<li>终止正在执行的进程，并进行进程调度</li>
+<li>终止子进程</li>
+<li>归还资源</li>
+<li>移除所在队列</li>
+</ol>
+<p>阻塞原语要做的事情：</p>
+<ol>
+<li>停止进程的执行</li>
+<li>将进程插入阻塞队列，改变进程在PCB的状元</li>
+<li>重新调度</li>
+</ol>
+<p>唤醒原语要做的事情：</p>
+<ol>
+<li>将进程从阻塞队列解下</li>
+<li>将进程插入就绪队列</li>
+<li>改变进程在PCB的状态</li>
+</ol>
+<p>挂起原语要做的工作：</p>
+<ol>
+<li>检查被挂起进程的状态</li>
+<li>若是就绪状态或正在运行则将其变为就绪挂起状态，若在阻塞则变为阻塞挂起状态</li>
+</ol>
+<p>激活原语要做的事情：</p>
+<ol>
+<li>检查被激活进程的状态</li>
+<li>若处于就绪挂起状态则变为就绪状态，若处于阻塞挂起状态则变为阻塞状态</li>
+<li>若系统为抢占式系统，则进行进程调度</li>
+</ol>
+<p><strong>进程</strong> 的两个基本属性:</p>
+<ol>
+<li>进程是拥有资源的独立单位</li>
+<li>进程是独立调度和分派的基本单位</li>
+</ol>
+<p><strong>线程</strong> 是系统独立调度和分派的基本单位，不拥有资源只有TCB及堆栈</p>
+<p><img src="/img/操作系统/进程与线程/进程模型.PNG" alt="进程模型"></p>
+<h1 id="进程的同步与通信"><a href="#进程的同步与通信" class="headerlink" title="进程的同步与通信"></a>进程的同步与通信</h1><p><font size="4sp">同步机制应遵循的准则</font></p>
+<p><li> 空闲让进</li></p>
+<p><li> 忙则等待</li></p>
+<p><li> 有限等待</li></p>
+<p><li> 让权等待</li></p>
+<p>互斥实现的硬件方法</p>
+<p><li> 禁止中断</li></p>
+<p><li> 专用机器指令</li></p>
+<ol>
+<li><p>TS指令</p>
+<blockquote>
+<p>无法实现让权等待</p>
+</blockquote>
+</li>
+<li><p>Swap指令</p>
+</li>
+</ol>
+<p>互斥实现的软件方法</p>
+<p><li> 单标志算法</li></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//进程0</span></span><br><span class="line"><span class="keyword">while</span> (turn!=<span class="number">0</span>)</span><br><span class="line">		<span class="comment">//...</span></span><br><span class="line"><span class="comment">//临界区</span></span><br><span class="line">turn = <span class="number">1</span>;</span><br><span class="line"><span class="comment">//剩余区</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//进程1</span></span><br><span class="line"><span class="keyword">while</span> (turn!=<span class="number">1</span>) <span class="keyword">do</span></span><br><span class="line">		<span class="comment">//...</span></span><br><span class="line"><span class="comment">//临界区</span></span><br><span class="line">turn = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//剩余区</span></span><br></pre></td></tr></table></figure>
+<p>无法保证空闲让进</p>
+<p><li> 双标志、先检查算法</li></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//进程0</span></span><br><span class="line"><span class="keyword">while</span> (flag[<span class="number">1</span>])</span><br><span class="line">	...</span><br><span class="line">flag[<span class="number">0</span>]=<span class="keyword">true</span>;</span><br><span class="line"><span class="comment">//临界区</span></span><br><span class="line">flag[<span class="number">0</span>] =<span class="keyword">false</span>;</span><br><span class="line"><span class="comment">//剩余区;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//进程1</span></span><br><span class="line"><span class="keyword">while</span> ( flag[<span class="number">0</span>])</span><br><span class="line">	...</span><br><span class="line">flag[<span class="number">1</span>]=<span class="keyword">true</span>;</span><br><span class="line"><span class="comment">//临界区</span></span><br><span class="line">flag[<span class="number">1</span>] =<span class="keyword">false</span>;</span><br><span class="line"><span class="comment">//剩余区</span></span><br></pre></td></tr></table></figure>
+<p>无法保证忙则等待</p>
+<p><li> 双标志、先修改后检查算法</li></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//进程0</span></span><br><span class="line">flag[<span class="number">0</span>]=<span class="keyword">true</span>;</span><br><span class="line"><span class="keyword">while</span> (flag[<span class="number">1</span>])</span><br><span class="line">  ...</span><br><span class="line"><span class="comment">//临界区</span></span><br><span class="line">flag[<span class="number">0</span>] =<span class="keyword">false</span>;</span><br><span class="line"><span class="comment">//剩余区</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//进程1</span></span><br><span class="line">flag[<span class="number">1</span>]=<span class="keyword">true</span>;</span><br><span class="line"><span class="keyword">while</span> (flag[<span class="number">0</span>])</span><br><span class="line">  ...</span><br><span class="line"><span class="comment">//临界区</span></span><br><span class="line">flag[<span class="number">1</span>] =<span class="keyword">false</span> ; 	</span><br><span class="line"><span class="comment">//剩余区</span></span><br></pre></td></tr></table></figure>
+<p>无法保证空闲让进</p>
+<p><li> 先修改、后检查、后修改算法</li></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//进程0</span></span><br><span class="line">flag[<span class="number">0</span>]=<span class="keyword">true</span>;</span><br><span class="line">turn=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span> (flag[<span class="number">1</span>]) &amp;&amp; (turn==<span class="number">1</span>)</span><br><span class="line">	...</span><br><span class="line"><span class="comment">//临界区</span></span><br><span class="line">flag[<span class="number">0</span>] =<span class="keyword">false</span> ;</span><br><span class="line"><span class="comment">//剩余区</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//进程1</span></span><br><span class="line">flag[<span class="number">1</span>]=<span class="keyword">true</span>;</span><br><span class="line">turn=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span> (flag[<span class="number">0</span>]) &amp;&amp; (turn==<span class="number">0</span>)</span><br><span class="line">	...</span><br><span class="line"><span class="comment">//临界区</span></span><br><span class="line">flag[<span class="number">1</span>] =<span class="keyword">false</span> ;</span><br><span class="line"><span class="comment">//剩余区</span></span><br></pre></td></tr></table></figure>
+<p>保证了空闲让进和忙则等待</p>
+<p><li> 信号量和PV操作</li></p>
+<h1 id="进程同步问题实例"><a href="#进程同步问题实例" class="headerlink" title="进程同步问题实例"></a>进程同步问题实例</h1><p><li> 生产者-消费者问题</li></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">semaphore mutex =<span class="number">1</span>;  </span><br><span class="line">semaphore empty = n;</span><br><span class="line">semaphore full = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//生产者进程</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>  <span class="title">producer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">     produce an item in data_p;</span><br><span class="line">     P(empty);</span><br><span class="line">     P(mutex);</span><br><span class="line">     buffer[i] = data_p;</span><br><span class="line">     i = (i + <span class="number">1</span>) % n;</span><br><span class="line">     V(mutex);</span><br><span class="line">     V(full);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//消费者进程</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">consumer</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">    P(full);</span><br><span class="line">    P(mutex);</span><br><span class="line">    data_c =  buffer[j];</span><br><span class="line">    j = (j + <span class="number">1</span>) % n;</span><br><span class="line">    V(mutex);</span><br><span class="line">    V(empty);</span><br><span class="line">    consume the item in data_c;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Grooter</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/01/04/调度与死锁/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+   
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+
+	
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	
+    <div id="comment" class="vcomment" ></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "z94FKekkwmLCeqJesceWQ6AM-gzGzoHsz",
+            appKey: "BQdjgiuAwTtUg3hiNA79DMi0",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              归档
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              技术
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              生活
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

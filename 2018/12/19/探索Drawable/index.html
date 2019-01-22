@@ -25,7 +25,7 @@
 <meta property="og:image" content="https://grooters.github.io/img/Android/探索Drawable/Drawable类型.jpg">
 <meta property="og:image" content="https://grooters.github.io/img/Android/探索Drawable/gradient效果展示.PNG">
 <meta property="og:image" content="https://grooters.github.io/img/Android/探索Drawable/ClipDrawable的gravity属性值.PNG">
-<meta property="og:updated_time" content="2018-12-23T13:49:33.332Z">
+<meta property="og:updated_time" content="2019-01-21T06:45:16.273Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="探索Drawable">
 <meta name="twitter:description" content="Drawable Drawable的分类：  BitmapDrawable 12345678910&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&amp;gt;&amp;lt;bitmap    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;    android:antialias=&quot;true&quot;    and">
@@ -149,6 +149,11 @@
 
 </div>
 
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ArgbEvaluator"><span class="toc-text">ArgbEvaluator</span></a></li></ol>
+  </div>
 
 
 
@@ -276,6 +281,9 @@
 <p><em>在java代码中设置level：</em></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TextView textView=findViewById(R.id.text_hello);</span><br><span class="line">ClipDrawable drawable=(ClipDrawable) textView.getBackground();</span><br><span class="line">Log.d(TAG,<span class="string">""</span>+drawable.getIntrinsicWidth());</span><br><span class="line">drawable.setLevel(<span class="number">9000</span>);</span><br></pre></td></tr></table></figure>
 <p>其中<strong>level越小裁剪范围越大</strong>，内部规定等级范围为0~10000</p>
+<h1 id="ArgbEvaluator"><a href="#ArgbEvaluator" class="headerlink" title="ArgbEvaluator"></a><a href="https://developer.android.com/reference/android/animation/ArgbEvaluator" target="_blank" rel="noopener">ArgbEvaluator</a></h1><p>用于计算颜色渐变值的类，使颜色更换不会太突兀</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ArgbEvaluator argbEvaluator=<span class="keyword">new</span> ArgbEvaluator();</span><br><span class="line"><span class="keyword">int</span> startColor=getColor(context,R.color.start);</span><br><span class="line"><span class="keyword">int</span> endColor=getColor(context,R.color.circle);</span><br><span class="line"><span class="keyword">int</span> colors=(<span class="keyword">int</span>)argbEvaluator.evaluate(<span class="number">0.5f</span>,startColor,endColor);</span><br></pre></td></tr></table></figure>
+<p>第一个参数取0-1f即可</p>
 
     
   </div>
@@ -316,7 +324,7 @@
     <a class="show pull-left" href="/2018/12/17/RemoteViews分析/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="hide pull-right" href="/">
+    <a class="show pull-right" href="/2019/01/04/调度与死锁/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>

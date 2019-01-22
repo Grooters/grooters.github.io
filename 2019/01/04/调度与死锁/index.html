@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>后台开发问题集锦 | Grooter&#39;s Home</title>
+  <title>调度与死锁 | Grooter&#39;s Home</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,17 +15,17 @@
     <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java," />
   
 
-  <meta name="description" content="SpringBoot：a different object with the same identifier value was already associated with the session 123456789101112131415@Entity@Table(name = &quot;seat&quot;)public class Seat &amp;#123;	@Id  @GeneratedValue(str">
+  <meta name="description" content="周转时间指一个用户作业被提交到完成的时间间隔 平均周转时间：T=1/n*ΣTi，Tiwei作业的周转时间，n式作业的个数 带权周转时间Wi指作业的周转时间Ti与它在处理及上实际执行时间Tsi之比，即Wi=Ti/Tsi 调度算法先来先服务 利于长作业不利于短作业 利于处理机繁忙的作业，不利已IO繁忙的作业  短作业时间片轮转优先权多级反馈队队列死锁满足互斥，请求保持，不可剥夺，环路 死锁的预防破解死">
 <meta property="og:type" content="article">
-<meta property="og:title" content="后台开发问题集锦">
-<meta property="og:url" content="https://grooters.github.io/2018/11/12/后台开发问题集锦/index.html">
+<meta property="og:title" content="调度与死锁">
+<meta property="og:url" content="https://grooters.github.io/2019/01/04/调度与死锁/index.html">
 <meta property="og:site_name" content="Grooter&#39;s Home">
-<meta property="og:description" content="SpringBoot：a different object with the same identifier value was already associated with the session 123456789101112131415@Entity@Table(name = &quot;seat&quot;)public class Seat &amp;#123;	@Id  @GeneratedValue(str">
+<meta property="og:description" content="周转时间指一个用户作业被提交到完成的时间间隔 平均周转时间：T=1/n*ΣTi，Tiwei作业的周转时间，n式作业的个数 带权周转时间Wi指作业的周转时间Ti与它在处理及上实际执行时间Tsi之比，即Wi=Ti/Tsi 调度算法先来先服务 利于长作业不利于短作业 利于处理机繁忙的作业，不利已IO繁忙的作业  短作业时间片轮转优先权多级反馈队队列死锁满足互斥，请求保持，不可剥夺，环路 死锁的预防破解死">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-12T12:42:20.898Z">
+<meta property="og:updated_time" content="2019-01-04T15:27:54.562Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="后台开发问题集锦">
-<meta name="twitter:description" content="SpringBoot：a different object with the same identifier value was already associated with the session 123456789101112131415@Entity@Table(name = &quot;seat&quot;)public class Seat &amp;#123;	@Id  @GeneratedValue(str">
+<meta name="twitter:title" content="调度与死锁">
+<meta name="twitter:description" content="周转时间指一个用户作业被提交到完成的时间间隔 平均周转时间：T=1/n*ΣTi，Tiwei作业的周转时间，n式作业的个数 带权周转时间Wi指作业的周转时间Ti与它在处理及上实际执行时间Tsi之比，即Wi=Ti/Tsi 调度算法先来先服务 利于长作业不利于短作业 利于处理机繁忙的作业，不利已IO繁忙的作业  短作业时间片轮转优先权多级反馈队队列死锁满足互斥，请求保持，不可剥夺，环路 死锁的预防破解死">
 
   
 
@@ -146,17 +146,22 @@
 </div>
 
 
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#调度算法"><span class="toc-text">调度算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#先来先服务"><span class="toc-text">先来先服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#短作业"><span class="toc-text">短作业</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时间片轮转"><span class="toc-text">时间片轮转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优先权"><span class="toc-text">优先权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多级反馈队队列"><span class="toc-text">多级反馈队队列</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#死锁的预防"><span class="toc-text">死锁的预防</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#死锁的避免"><span class="toc-text">死锁的避免</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#死锁的检验"><span class="toc-text">死锁的检验</span></a></li></ol>
+  </div>
+
 
 
 <div class="content content-post CENTER">
-   <article id="post-后台开发问题集锦" class="article article-type-post" itemprop="blogPost">
+   <article id="post-调度与死锁" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">后台开发问题集锦</h1>
+    <h1 class="post-title">调度与死锁</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2018.11.12</span>
+        <span>2019.01.04</span>
       </span>
 
       
@@ -167,6 +172,11 @@
       
 
       
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/操作系统/">操作系统</a>
+  </span>
+
 
 
       
@@ -184,11 +194,19 @@
 
   <div class="article-content">
     
-      <p><strong><li> SpringBoot：a different object with the same identifier value was already associated with the session</li></strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name = <span class="string">"seat"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Seat</span> </span>&#123;</span><br><span class="line">	<span class="meta">@Id</span></span><br><span class="line">  <span class="meta">@GeneratedValue</span>(strategy = GenerationType.AUTO)</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">	<span class="meta">@NotNull</span></span><br><span class="line">	<span class="comment">// 座位所在楼层</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> floor;</span><br><span class="line">	<span class="meta">@NotNull</span></span><br><span class="line">	<span class="comment">// 座位编号</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> number;</span><br><span class="line">	<span class="meta">@NotNull</span></span><br><span class="line">	<span class="comment">// 座位状态，0表示空闲，1表示占用</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> idle;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>只需将@GeneratedValue(strategy = GenerationType.AUTO)去掉</p>
-</blockquote>
+      <p>周转时间指一个用户作业被提交到完成的时间间隔</p>
+<p>平均周转时间：T=1/n*ΣTi，Tiwei作业的周转时间，n式作业的个数</p>
+<p>带权周转时间Wi指作业的周转时间Ti与它在处理及上实际执行时间Tsi之比，即Wi=Ti/Tsi</p>
+<h1 id="调度算法"><a href="#调度算法" class="headerlink" title="调度算法"></a>调度算法</h1><h2 id="先来先服务"><a href="#先来先服务" class="headerlink" title="先来先服务"></a>先来先服务</h2><ol>
+<li>利于长作业不利于短作业</li>
+<li>利于处理机繁忙的作业，不利已IO繁忙的作业</li>
+</ol>
+<h2 id="短作业"><a href="#短作业" class="headerlink" title="短作业"></a>短作业</h2><h2 id="时间片轮转"><a href="#时间片轮转" class="headerlink" title="时间片轮转"></a>时间片轮转</h2><h2 id="优先权"><a href="#优先权" class="headerlink" title="优先权"></a>优先权</h2><h2 id="多级反馈队队列"><a href="#多级反馈队队列" class="headerlink" title="多级反馈队队列"></a>多级反馈队队列</h2><p>死锁满足互斥，请求保持，不可剥夺，环路</p>
+<h1 id="死锁的预防"><a href="#死锁的预防" class="headerlink" title="死锁的预防"></a>死锁的预防</h1><p>破解死锁的四大必要条件中的任一条件</p>
+<h1 id="死锁的避免"><a href="#死锁的避免" class="headerlink" title="死锁的避免"></a>死锁的避免</h1><p>安全状态：</p>
+<p>通过一种资源分配顺序能满足所有进程需求</p>
+<p>银行家算法</p>
+<h1 id="死锁的检验"><a href="#死锁的检验" class="headerlink" title="死锁的检验"></a>死锁的检验</h1><p><a href="https://blog.csdn.net/coding1994/article/details/52474731" target="_blank" rel="noopener">资源分配图的简化</a></p>
 
     
   </div>
@@ -226,10 +244,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2018/11/08/虚拟存储管理/">
+    <a class="show pull-left" href="/2018/12/19/探索Drawable/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2018/11/16/SpringBoot使用WebSocket/">
+    <a class="show pull-right" href="/2019/01/06/进程与线程/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>

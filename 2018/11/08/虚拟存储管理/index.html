@@ -28,7 +28,7 @@
 <meta property="og:image" content="https://grooters.github.io/img/操作系统/虚拟存储管理/驻留集.PNG">
 <meta property="og:image" content="https://grooters.github.io/img/操作系统/虚拟存储管理/缺页率与物理块数的关系.PNG">
 <meta property="og:image" content="https://grooters.github.io/img/操作系统/虚拟存储管理/CPU的利用率与多道程序数的关系.PNG">
-<meta property="og:updated_time" content="2018-11-09T11:34:24.379Z">
+<meta property="og:updated_time" content="2019-01-09T13:12:01.104Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="虚拟存储管理">
 <meta name="twitter:description" content="虚拟存储器的特征 离散性  作业不装入连续的存储空间，内存分配采用离散分配方   多次性  一个作业被分割，被多次调入内存   对换性  作业在运行过程中换进、换出内存   虚拟性  从逻辑上扩充了内存的容量  请求页式存储管理页号 | 存储块号 | 状态位P | 访问字段A | 修改位M | 外存地址  P  记录该页是否在内存。P=1该页在内存； P=0该页不在内存   A  记录该页在一段时">
@@ -248,6 +248,7 @@
 <p><li> 只将修改过的页面放在对换区，未改的放在文件区</li></p>
 <p><li> UNIX系统方式，首次从文件区调入，换出时放在对换区，以后从对换区调入</li></p>
 <h1 id="页面置换算法"><a href="#页面置换算法" class="headerlink" title="页面置换算法"></a>页面置换算法</h1><h2 id="最佳置换算法（OPT）"><a href="#最佳置换算法（OPT）" class="headerlink" title="最佳置换算法（OPT）"></a>最佳置换算法（OPT）</h2><p><img src="/img/操作系统/虚拟存储管理/最佳置换算法.PNG" alt="最佳置换算法"></p>
+<p>置换哪些不再使用，或最长时间不使用的页</p>
 <blockquote>
 <p>页面换出6次，缺页9次</p>
 </blockquote>
@@ -287,6 +288,7 @@
 <p>若驻留集窗口大小过小会频繁残生缺页中断影响CPU效率，但过大就失去了虚拟存储器的意义</p>
 <p><li> 缺页率与物理块数的关系</li></p>
 <p><img src="/img/操作系统/虚拟存储管理/缺页率与物理块数的关系.PNG" alt="缺页率与物理块数的关系"></p>
+<p>将缺页率保持在上下限间</p>
 <p><li> CPU的利用率与多道程序数的关系</li></p>
 <p><img src="/img/操作系统/虚拟存储管理/CPU的利用率与多道程序数的关系.PNG" alt="CPU的利用率与多道程序数的关系"></p>
 <h2 id="抖动"><a href="#抖动" class="headerlink" title="抖动"></a>抖动</h2><blockquote>
@@ -367,7 +369,7 @@
     <a class="show pull-left" href="/2018/11/01/View的事件体系/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2018/11/09/存储管理/">
+    <a class="show pull-right" href="/2018/11/12/后台开发问题集锦/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>

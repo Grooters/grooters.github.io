@@ -23,7 +23,7 @@
 <meta property="og:description" content="创建线程的两种方法：  extends Thread 1234567class MyThread extends Thread&amp;#123;  @Override  public void run()&amp;#123;  &amp;#125;&amp;#125;new MyThread().start();  implements Runable 1234567class MyThread implements Runa">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://grooters.github.io/img/Java/Java多线程/多线程状态.PNG">
-<meta property="og:updated_time" content="2018-12-14T04:59:00.819Z">
+<meta property="og:updated_time" content="2019-01-16T06:11:39.771Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java多线程">
 <meta name="twitter:description" content="创建线程的两种方法：  extends Thread 1234567class MyThread extends Thread&amp;#123;  @Override  public void run()&amp;#123;  &amp;#125;&amp;#125;new MyThread().start();  implements Runable 1234567class MyThread implements Runa">
@@ -207,6 +207,8 @@
 <li>第一种是独享资源，第二种是共享资源</li>
 </ol>
 <p>当启动多个线程时，即使时同一个任务，每个任务的资源（成员变量）都是相互独立的，这会导致一些多线程不应该出现的问题，如：本来打算出售10张票，如果采用第一种方式开了3个线程，就会出售30张票，而第二种方式不会出现这种情况</p>
+<p><strong>run or start</strong></p>
+<p>当创建了线程实例调用start时会真正启动一个线程并执行run方法，但直接调用run方法知识单纯地执行run方法而已</p>
 <p><em>上锁无效：</em></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">createThread</span><span class="params">()</span></span>&#123;</span><br><span class="line">    lock=<span class="keyword">new</span> Object();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)</span><br><span class="line">      <span class="keyword">new</span> MyThread().start();</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span></span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span>(<span class="keyword">this</span>)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">500</span>;i++)</span><br><span class="line">            MainTool.log(Thread.currentThread().getName()+<span class="string">" i:"</span>+i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><em>上锁有效：</em></p>
