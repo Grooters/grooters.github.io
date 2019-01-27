@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>View的时间分发机制 | Grooter&#39;s Home</title>
+  <title>View的事件分发机制 | Grooter&#39;s Home</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -17,15 +17,15 @@
 
   <meta name="description" content="先从Activity源码开始分析，找到dispatchTouchEvent方法 123456789public boolean dispatchTouchEvent(MotionEvent ev) &amp;#123;    if (ev.getAction() == MotionEvent.ACTION_DOWN) &amp;#123;        onUserInteraction();    &amp;#125;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="View的时间分发机制">
+<meta property="og:title" content="View的事件分发机制">
 <meta property="og:url" content="https://grooters.github.io/2019/01/22/View的事件分发机制/index.html">
 <meta property="og:site_name" content="Grooter&#39;s Home">
 <meta property="og:description" content="先从Activity源码开始分析，找到dispatchTouchEvent方法 123456789public boolean dispatchTouchEvent(MotionEvent ev) &amp;#123;    if (ev.getAction() == MotionEvent.ACTION_DOWN) &amp;#123;        onUserInteraction();    &amp;#125;">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://grooters.github.io/img/Android/View的事件体系/View的事件分发机制.png">
-<meta property="og:updated_time" content="2019-01-27T06:10:32.793Z">
+<meta property="og:updated_time" content="2019-01-27T06:20:35.214Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="View的时间分发机制">
+<meta name="twitter:title" content="View的事件分发机制">
 <meta name="twitter:description" content="先从Activity源码开始分析，找到dispatchTouchEvent方法 123456789public boolean dispatchTouchEvent(MotionEvent ev) &amp;#123;    if (ev.getAction() == MotionEvent.ACTION_DOWN) &amp;#123;        onUserInteraction();    &amp;#125;">
 <meta name="twitter:image" content="https://grooters.github.io/img/Android/View的事件体系/View的事件分发机制.png">
 
@@ -158,7 +158,7 @@
 <div class="content content-post CENTER">
    <article id="post-View的事件分发机制" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">View的时间分发机制</h1>
+    <h1 class="post-title">View的事件分发机制</h1>
 
     <div class="article-meta">
       <span>
