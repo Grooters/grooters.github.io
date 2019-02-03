@@ -12,18 +12,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="未完待续," />
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java," />
   
 
-  <meta name="keywords" content="未完待续">
+  <meta name="description" content="View动画View动画包含四种动画效果，分别为平移，缩放，旋转和透明，分别对应以下Animation 的子类：  TranslateAnimation  android:fromXDelta 表示x的起始值，为float类型  android:toXDelta 表示x的结束值，为float类型  android:fromYDelta  android:toYDelta   1234567&amp;lt;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="探索Android动画">
 <meta property="og:url" content="https://grooters.github.io/2019/01/22/探索Android动画/index.html">
 <meta property="og:site_name" content="Grooter&#39;s Home">
+<meta property="og:description" content="View动画View动画包含四种动画效果，分别为平移，缩放，旋转和透明，分别对应以下Animation 的子类：  TranslateAnimation  android:fromXDelta 表示x的起始值，为float类型  android:toXDelta 表示x的结束值，为float类型  android:fromYDelta  android:toYDelta   1234567&amp;lt;">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-23T05:20:04.141Z">
+<meta property="og:updated_time" content="2019-02-03T09:44:12.763Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="探索Android动画">
+<meta name="twitter:description" content="View动画View动画包含四种动画效果，分别为平移，缩放，旋转和透明，分别对应以下Animation 的子类：  TranslateAnimation  android:fromXDelta 表示x的起始值，为float类型  android:toXDelta 表示x的结束值，为float类型  android:fromYDelta  android:toYDelta   1234567&amp;lt;">
 
   
 
@@ -144,6 +146,11 @@
 </div>
 
 
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#View动画"><span class="toc-text">View动画</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义View动画"><span class="toc-text">自定义View动画</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#逐帧动画"><span class="toc-text">逐帧动画</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#属性动画"><span class="toc-text">属性动画</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#插值器"><span class="toc-text">插值器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#估值器"><span class="toc-text">估值器</span></a></li></ol></li></ol>
+  </div>
+
 
 
 <div class="content content-post CENTER">
@@ -165,6 +172,11 @@
       
 
       
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </span>
+
 
 
       
@@ -182,7 +194,93 @@
 
   <div class="article-content">
     
-      
+      <h1 id="View动画"><a href="#View动画" class="headerlink" title="View动画"></a>View动画</h1><p>View动画包含四种动画效果，分别为平移，缩放，旋转和透明，分别对应以下<strong><a href="https://developer.android.google.cn/reference/android/view/animation/Animation" target="_blank" rel="noopener">Animation</a></strong> 的子类：</p>
+<p><strong><li> TranslateAnimation</li></strong></p>
+<ol>
+<li><p>android:fromXDelta</p>
+<p>表示x的起始值，为float类型</p>
+</li>
+<li><p>android:toXDelta</p>
+<p>表示x的结束值，为float类型</p>
+</li>
+<li><p>android:fromYDelta</p>
+</li>
+<li><p>android:toYDelta</p>
+</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">translate</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:fromXDelta</span>=<span class="string">"0dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:fromYDelta</span>=<span class="string">"0dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:toXDelta</span>=<span class="string">"100dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:toYDelta</span>=<span class="string">"100dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:duration</span>=<span class="string">"800"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:interpolator</span>=<span class="string">"@android:anim/linear_interpolator"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>interpolator为插值器</p>
+<p><strong><li> ScaleAnimation</li></strong></p>
+<p>该类用于缩放View</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">scale</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:fromXScale</span>=<span class="string">"0.5"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:fromYScale</span>=<span class="string">"0.5"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:toXScale</span>=<span class="string">"1.5"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:toYScale</span>=<span class="string">"1.5"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:pivotX</span>=<span class="string">"10"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:pivotY</span>=<span class="string">"10"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>pivotX：被缩放点的X坐标，为float类型</p>
+<p><strong><li> RotateAnimation</li></strong></p>
+<p>用于旋转View</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">rotate</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:fromDegrees</span>=<span class="string">"0"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:toDegrees</span>=<span class="string">"180"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:pivotX</span>=<span class="string">"10"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:pivotY</span>=<span class="string">"10"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>无论是旋转动画还是缩放动画，其轴点默认都在View的中心点</strong></p>
+<p><strong><li> AlphaAnimation</li></strong></p>
+<p>动态透明度动画</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">alpha</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:fromAlpha</span>=<span class="string">"0.1"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:toAlpha</span>=<span class="string">"1"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="自定义View动画"><a href="#自定义View动画" class="headerlink" title="自定义View动画"></a>自定义View动画</h2><p>Animation中有两个方法，分别是initaliz和applyTransformation，可在initaliz中完成初始化工作，而自定义动画步骤主要在applyTransformation完成</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">applyTransformation</span><span class="params">(<span class="keyword">float</span> interpolatedTime, Transformation t)</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p><a href="https://developer.android.google.cn/reference/android/view/animation/Transformation" target="_blank" rel="noopener">Transformation</a></p>
+<p>一个动画在某个时间点的变换，可通过getMatrix()方法获取该时间点的Matrix</p>
+</li>
+<li><p><a href="https://developer.android.google.cn/reference/android/graphics/Matrix" target="_blank" rel="noopener">Matrix</a></p>
+<p>Matrix类包含一个3x3矩阵，用于转换坐标</p>
+</li>
+<li><p><a href="https://developer.android.google.cn/reference/android/graphics/Camera" target="_blank" rel="noopener">Camara</a></p>
+<p>可用于计算3D变换并生成可用的的矩阵，如Canvas</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomViewAnimation</span> <span class="keyword">extends</span> <span class="title">Animation</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Camera camera;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">float</span> centerX;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">float</span> centerY;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">float</span> fromDegree;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">float</span> toDegree;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">float</span> depthZ;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> reserve;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG=<span class="string">"CustomViewAnimation_LOG"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CustomViewAnimation</span><span class="params">(<span class="keyword">float</span> centerX,<span class="keyword">float</span> centerY,<span class="keyword">float</span> fromDegree,<span class="keyword">float</span> toDegree,<span class="keyword">float</span> depthZ,<span class="keyword">boolean</span> reserve)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.centerX=centerX;</span><br><span class="line">        <span class="keyword">this</span>.centerY=centerY;</span><br><span class="line">        <span class="keyword">this</span>.fromDegree=fromDegree;</span><br><span class="line">        <span class="keyword">this</span>.toDegree=toDegree;</span><br><span class="line">        <span class="keyword">this</span>.depthZ=depthZ;</span><br><span class="line">        <span class="keyword">this</span>.reserve=reserve;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(<span class="keyword">int</span> width, <span class="keyword">int</span> height, <span class="keyword">int</span> parentWidth, <span class="keyword">int</span> parentHeight)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.initialize(width, height, parentWidth, parentHeight);</span><br><span class="line">        camera=<span class="keyword">new</span> Camera();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">applyTransformation</span><span class="params">(<span class="keyword">float</span> interpolatedTime, Transformation t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.applyTransformation(interpolatedTime, t);</span><br><span class="line">        <span class="keyword">float</span> degree=fromDegree+(toDegree-fromDegree)*interpolatedTime;</span><br><span class="line">        Matrix matrix=t.getMatrix();</span><br><span class="line">        camera.save();</span><br><span class="line">        Log.d(TAG,<span class="string">"interpolatedTime:"</span>+interpolatedTime);</span><br><span class="line">        <span class="keyword">if</span>(reserve)&#123;</span><br><span class="line">            camera.translate(<span class="number">0.0f</span>,<span class="number">0.0f</span>,depthZ*interpolatedTime);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            camera.translate(<span class="number">0.0f</span>,<span class="number">0.0f</span>,depthZ*(<span class="number">1.0f</span>-interpolatedTime));</span><br><span class="line">        &#125;</span><br><span class="line">        camera.rotateY(degree);</span><br><span class="line">        camera.getMatrix(matrix);</span><br><span class="line">        camera.restore();</span><br><span class="line">        matrix.preTranslate(centerY,-centerY);</span><br><span class="line">        matrix.postTranslate(centerY,centerY);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上自定义View动画是通过Camera和Matrix实现了3D旋转效果，通过Transformation对象获取每一个时间点的Matrix，再计算每个时间点的旋转距离，reserve决定了是想z的负方向移动还是正方向移动</p>
+<p>启动View动画：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Animation animation=AnimationUtils.loadAnimation(<span class="keyword">this</span>,R.anim.animation_test);</span><br><span class="line">view.startAnimation(animation);</span><br><span class="line"><span class="comment">//or</span></span><br><span class="line">AlphaAnimation alpha=<span class="keyword">new</span> AlphaAnimation(<span class="number">0.0f</span>,<span class="number">1.0f</span>);</span><br><span class="line">view.startAnimation(alpha);</span><br></pre></td></tr></table></figure>
+<p><strong><a href="https://developer.android.google.cn/reference/android/view/animation/AnimationUtils" target="_blank" rel="noopener">AnimationUtils</a></strong></p>
+<h1 id="逐帧动画"><a href="#逐帧动画" class="headerlink" title="逐帧动画"></a>逐帧动画</h1><p>通过Xml实现：</p>
+<p><em>res -&gt; drawable：</em></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">animation-list</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span>=<span class="string">"@drawable/test_first"</span> <span class="attr">android:duration</span>=<span class="string">"1000"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span>=<span class="string">"@drawable/test_second"</span> <span class="attr">android:duration</span>=<span class="string">"1000"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">animation-list</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>通过java代码实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AnimationDrawable animationDrawable=<span class="keyword">new</span> AnimationDrawable();</span><br><span class="line">  Drawable drawable=getResources().getDrawable(R.id.test_drawable,<span class="keyword">null</span>);</span><br><span class="line">  animationDrawable.addFrame(drawable,<span class="number">2000</span>);</span><br></pre></td></tr></table></figure>
+<h1 id="属性动画"><a href="#属性动画" class="headerlink" title="属性动画"></a>属性动画</h1><p>属性动画与View动画不同，其动画对象可以是任何物体，且是通过改变属性来实现动画效果，所以并不像View动画仅仅是视觉上的动画</p>
+<p>属性动画出现在 Android 3.0(API 11)，所以对于API 11以下的系统需要做适配</p>
+<p>属性动画主要有两个实现类：</p>
+<p><strong><font size="4sp"><li> <a href="https://developer.android.com/reference/android/animation/ObjectAnimator" target="_blank" rel="noopener">ObjectAnimatior</a></li></font></strong></p>
+<p><strong><font size="4sp"><li> <a href="https://developer.android.com/reference/android/animation/ValueAnimator" target="_blank" rel="noopener">ValueAnimator</a></li></font></strong></p>
+<p>这两个类的不同之处在于ValueAnimator在开启动画后，会以动画的形式产生新的属性值（但不会自动将更改的属性值赋值到对象上），所以需要用户调用监听方法，根据新产生的属性值进行手动赋值。而ObjectAnimatior是对ValueAnimator做了封装，可实现自动更新属性。</p>
+<p>除了以上两个类，还有以下常用的方法：</p>
+<p><li> ofInt</li></p>
+<p><li> ofObject</li></p>
+<p><li> setDuration</li></p>
+<p><li> setRepeatCount</li></p>
+<p><li> setRepeatMode</li></p>
+<p><li> setElivator</li></p>
+<p><li> setInterpolator</li></p>
+<p><li> start</li></p>
+<p>以上几个方法都可在前面介绍的两个类中找到。</p>
+<p>setDuration，setRepeatCount，setRepeatMode分别用于设置间隔时间，设置重复播放次数，设置重复播放模式</p>
+<p>而of…则创建了一个ValueAnimator（ObjectAnimator）对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ValueAnimator <span class="title">ofInt</span> <span class="params">(<span class="keyword">int</span>... values)</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ValueAnimator <span class="title">ofFloat</span> <span class="params">(<span class="keyword">float</span>... values)</span></span></span><br></pre></td></tr></table></figure>
+<p>setElivator，setInterpolator分别是用于设置估值器和插值器：</p>
+<h2 id="插值器"><a href="#插值器" class="headerlink" title="插值器"></a>插值器</h2><p><a href="https://developer.android.com/reference/android/animation/TimeInterpolator" target="_blank" rel="noopener">TimeInterpolator</a>可实现根据<strong>时间流逝的百分比</strong>计算<strong>对象属性改变的百分比</strong></p>
+<p>SDK自带的插值器有：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AccelerateDecelerateInterpolator, AccelerateInterpolator, AnticipateInterpolator, AnticipateOvershootInterpolator, BaseInterpolator, BounceInterpolator, CycleInterpolator, DecelerateInterpolator, Interpolator, LinearInterpolator, OvershootInterpolator, PathInterpolator</span><br></pre></td></tr></table></figure>
+<p>eg，AccelerateDecelerateInterpolator会在开始和结束时缓慢而在中间加速</p>
+<p>可通过实现TimeInterpolator类中的getInterpolation方法来自定义插值器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">abstract</span> <span class="keyword">float</span> <span class="title">getInterpolation</span><span class="params">(<span class="keyword">float</span> input)</span></span></span><br></pre></td></tr></table></figure>
+<p>例如AccelerateDecelerateInterpolato插值器中的源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">getInterpolation</span><span class="params">(<span class="keyword">float</span> input)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">float</span>)(Math.cos((input + <span class="number">1</span>) * Math.PI) / <span class="number">2.0f</span>) + <span class="number">0.5f</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="估值器"><a href="#估值器" class="headerlink" title="估值器"></a>估值器</h2><p><a href="https://developer.android.com/reference/android/animation/TypeEvaluator" target="_blank" rel="noopener">TypeElivator</a>指的是类型估值算法，它可实现根据动画对象<strong>当前属性改变的百分比</strong>来<strong>计算改变后的属性值</strong></p>
+<p>SDK默认的估值器有：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ArgbEvaluator, FloatArrayEvaluator, FloatEvaluator, IntArrayEvaluator, IntEvaluator, PointFEvaluator, RectEvaluator</span><br></pre></td></tr></table></figure>
+<p>可通过实现TypeElivator类中的抽象方法evaluate来自定义估值器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">abstract</span> T <span class="title">evaluate</span><span class="params">(<span class="keyword">float</span> fraction, T startValue, T endValue)</span></span></span><br></pre></td></tr></table></figure>
+<p>如IntEvaluator估值器：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Integer <span class="title">evaluate</span><span class="params">(<span class="keyword">float</span> fraction, Integer startValue, Integer endValue)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> startInt = startValue;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">int</span>)(startInt + fraction * (endValue - startInt));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过插值器计算出对象属性改变的百分比提供给估值器计算最新的属性值</p>
+
     
   </div>
 
@@ -219,10 +317,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2019/01/22/View的事件分发机制/">
+    <a class="show pull-left" href="/2019/01/06/进程与线程/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2019/01/27/探索自定义View/">
+    <a class="show pull-right" href="/2019/01/22/View的事件分发机制/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
