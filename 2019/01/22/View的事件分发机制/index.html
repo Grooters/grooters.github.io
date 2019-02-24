@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://grooters.github.io/img/Android/View的事件体系/Activity中dispatchTouch流程图.png">
 <meta property="og:image" content="https://grooters.github.io/img/Android/View的事件体系/ViewGroup中dispatchTouch流程图.png">
 <meta property="og:image" content="https://grooters.github.io/img/Android/View的事件体系/View中dispatchTouch流程图.png">
-<meta property="og:updated_time" content="2019-02-24T04:37:21.190Z">
+<meta property="og:updated_time" content="2019-02-24T04:51:36.589Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="View的事件分发机制">
 <meta name="twitter:description" content="先从Activity源码开始分析，找到dispatchTouchEvent方法 123456789public boolean dispatchTouchEvent(MotionEvent ev) &amp;#123;    if (ev.getAction() == MotionEvent.ACTION_DOWN) &amp;#123;        onUserInteraction();    &amp;#125;">
@@ -245,7 +245,16 @@
 </li>
 </ol>
 <p>注：当拦截down后面的事件如：move时第一个被拦截的时间不会直接交由该ViewGroup处理而是以cancle的身份正常传到子View，接下来的事件才会被该ViewGroup拦截</p>
-<p><li> 滑动冲突</li></p>
+<p><strong><font size="5sp"> 滑动冲突</font></strong></p>
+<p><li> 解决方法</li></p>
+<ol>
+<li><p>外部拦截法</p>
+<p>重写onInterceptTouchEvent</p>
+</li>
+<li><p>内部拦截法</p>
+<p>调用<strong>requestDisallowInterceptTouchEvent</strong>方法</p>
+</li>
+</ol>
 <p>当一个可滑动的布局里存在一个也可滑动的控件时会出现滑动冲突，即在控件视图内无法滑动布局，eg：</p>
 <p><strong><li> HorizontalScrollView和ListView</li></strong></p>
 <p>当HorizontalScrollView和ListView三个方法均返回super时，不存在滑动冲突都可正常滑动</p>
