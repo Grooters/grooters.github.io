@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>分支限界算法 | Grooter&#39;s Home</title>
+  <title>TCP-IP协议详解 | Grooter&#39;s Home</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,23 +15,17 @@
     <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java," />
   
 
-  <meta name="description" content="算法基本思想按广度优先的顺序搜索解空间树，若结点的限界值不在限界范围内则实行剪枝，否则压入待处理结点表。 基本步骤：1) 确定问题的上下界。通常采用贪心算法得到上界；用理想状态分析得到下界。2) 计算部分解的下界。即已确定部分解的情况下，估算能得到的最优解，通常分两部分计算：已确定部分直接计算；未确定部分采用理想状态计算。3) 按广度优先的顺序搜索解空间树，每次从PT表中选择最优结点进行展开。每搜">
+  <meta name="description" content="协议分层之OSI参考模型  应用层 负责各应用程序的通信，如QQ  表示层 负责将不规范的数据统一转换为国际标准，预防数据乱码，如utf-8  会话层 决定何时建立连接，以及数据的传播顺序  传输层 建立和断开数据传输连接，保证可靠传输，检查是否有数据丢失现象  网络层 寻找传播路径，如路由信息  数据链路层 数据帧与比特流之间的转换，负责某条链路的数据传输  物理层 高低电位与比特流之间的转换，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="分支限界算法">
-<meta property="og:url" content="https://grooters.github.io/2018/07/01/分支限界法/index.html">
+<meta property="og:title" content="TCP-IP协议详解">
+<meta property="og:url" content="https://grooters.github.io/2019/02/25/TCP-IP协议详解/index.html">
 <meta property="og:site_name" content="Grooter&#39;s Home">
-<meta property="og:description" content="算法基本思想按广度优先的顺序搜索解空间树，若结点的限界值不在限界范围内则实行剪枝，否则压入待处理结点表。 基本步骤：1) 确定问题的上下界。通常采用贪心算法得到上界；用理想状态分析得到下界。2) 计算部分解的下界。即已确定部分解的情况下，估算能得到的最优解，通常分两部分计算：已确定部分直接计算；未确定部分采用理想状态计算。3) 按广度优先的顺序搜索解空间树，每次从PT表中选择最优结点进行展开。每搜">
+<meta property="og:description" content="协议分层之OSI参考模型  应用层 负责各应用程序的通信，如QQ  表示层 负责将不规范的数据统一转换为国际标准，预防数据乱码，如utf-8  会话层 决定何时建立连接，以及数据的传播顺序  传输层 建立和断开数据传输连接，保证可靠传输，检查是否有数据丢失现象  网络层 寻找传播路径，如路由信息  数据链路层 数据帧与比特流之间的转换，负责某条链路的数据传输  物理层 高低电位与比特流之间的转换，">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://grooters.github.io/img/数据结构与算法/分支限界法/多段图最小路径问题.PNG">
-<meta property="og:image" content="https://grooters.github.io/img/数据结构与算法/分支限界法/01背包问题求上界.PNG">
-<meta property="og:image" content="https://grooters.github.io/img/数据结构与算法/分支限界法/01背包问题求下界.PNG">
-<meta property="og:image" content="https://grooters.github.io/img/数据结构与算法/分支限界法/01背包问题解题思路.PNG">
-<meta property="og:image" content="https://grooters.github.io/img/数据结构与算法/分支限界法/任务分配问题.PNG">
-<meta property="og:updated_time" content="2018-07-02T13:36:05.362Z">
+<meta property="og:updated_time" content="2019-02-26T03:32:52.561Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分支限界算法">
-<meta name="twitter:description" content="算法基本思想按广度优先的顺序搜索解空间树，若结点的限界值不在限界范围内则实行剪枝，否则压入待处理结点表。 基本步骤：1) 确定问题的上下界。通常采用贪心算法得到上界；用理想状态分析得到下界。2) 计算部分解的下界。即已确定部分解的情况下，估算能得到的最优解，通常分两部分计算：已确定部分直接计算；未确定部分采用理想状态计算。3) 按广度优先的顺序搜索解空间树，每次从PT表中选择最优结点进行展开。每搜">
-<meta name="twitter:image" content="https://grooters.github.io/img/数据结构与算法/分支限界法/多段图最小路径问题.PNG">
+<meta name="twitter:title" content="TCP-IP协议详解">
+<meta name="twitter:description" content="协议分层之OSI参考模型  应用层 负责各应用程序的通信，如QQ  表示层 负责将不规范的数据统一转换为国际标准，预防数据乱码，如utf-8  会话层 决定何时建立连接，以及数据的传播顺序  传输层 建立和断开数据传输连接，保证可靠传输，检查是否有数据丢失现象  网络层 寻找传播路径，如路由信息  数据链路层 数据帧与比特流之间的转换，负责某条链路的数据传输  物理层 高低电位与比特流之间的转换，">
 
   
 
@@ -152,22 +146,17 @@
 </div>
 
 
-  <div id="toc" class="toc-article">
-    <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#算法基本思想"><span class="toc-text">算法基本思想</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#多段图最短路径问题"><span class="toc-text">多段图最短路径问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0-1背包问题"><span class="toc-text">0/1背包问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#任务分配问题"><span class="toc-text">任务分配问题</span></a></li></ol>
-  </div>
-
 
 
 <div class="content content-post CENTER">
-   <article id="post-分支限界法" class="article article-type-post" itemprop="blogPost">
+   <article id="post-TCP-IP协议详解" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">分支限界算法</h1>
+    <h1 class="post-title">TCP-IP协议详解</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2018.07.01</span>
+        <span>2019.02.25</span>
       </span>
 
       
@@ -180,7 +169,7 @@
       
   <span class="article-category">
     <i class="icon-list"></i>
-    <a class="article-category-link" href="/categories/数据结构与算法/">数据结构与算法</a>
+    <a class="article-category-link" href="/categories/计算机网络/">计算机网络</a>
   </span>
 
 
@@ -200,30 +189,40 @@
 
   <div class="article-content">
     
-      <h1 id="算法基本思想"><a href="#算法基本思想" class="headerlink" title="算法基本思想"></a>算法基本思想</h1><p>按<strong>广度优先</strong>的顺序搜索解空间树，若结点的限界值不在限界范围内则实行剪枝，否则压入待处理结点表。</p>
-<p>基本步骤：<br>1) 确定问题的上下界。通常采用贪心算法得到上界；用理想状态分析得到下界。<br>2) 计算部分解的下界。即已确定部分解的情况下，估算能得到的最优解，通常分两部分计算：已确定部分直接计算；未确定部分采用理想状态计算。<br>3) 按广度优先的顺序搜索解空间树，每次从PT表中选择最优结点进行展开。每搜索一个结点，计算该结点的下界，若超出已确定的上下界，则实行剪枝；否则压入PT表等待展开。</p>
-<h1 id="多段图最短路径问题"><a href="#多段图最短路径问题" class="headerlink" title="多段图最短路径问题"></a>多段图最短路径问题</h1><p><em>基本思想：</em></p>
-<p><font size="4sp"><strong>确定问题的界</strong></font></p>
-<p>采用贪心算法得到问题的上界；<br>每段最短边之和作为下界</p>
-<p><font size="4sp"><strong>部分解的下界</strong></font></p>
-<p>L1部分为已确定部分路径长度；</p>
-<p>L2由两部分组成：<br>  1) 尾结点往下走一步的最短边<br>  2) 除已确定结点外，取各段最短边之和</p>
-<p><em>解题思路：</em></p>
-<p><img src="/img/数据结构与算法/分支限界法/多段图最小路径问题.PNG" alt="多段图最小路径问题"></p>
-<p>0 -&gt; 1 = 20 =》 4（已确定） + 8（下一步最短） + (5 + 3)（各段最短边） = 20</p>
-<h1 id="0-1背包问题"><a href="#0-1背包问题" class="headerlink" title="0/1背包问题"></a>0/1背包问题</h1><p><em>基本思想：</em></p>
-<p><font size="4sp"><strong>确定问题的界</strong></font></p>
-<p>采用贪心算法单位价值最大优先策略得到问题的下界；<br>剩余空间填满未确定物品中单位价值最高的物品所得到的价值作为问题上界</p>
-<p><font size="4sp"><strong>部分解的下界</strong></font></p>
-<p>L1部分为已确定放进包里的物品价值；<br>L2部分为剩余空间填满未确定物品中单位价值最高的物品所得到的价值</p>
-<p><img src="/img/数据结构与算法/分支限界法/01背包问题求上界.PNG" alt="01背包问题求上界"></p>
-<p><img src="/img/数据结构与算法/分支限界法/01背包问题求下界.PNG" alt="01背包问题求下界"></p>
-<p><img src="/img/数据结构与算法/分支限界法/01背包问题解题思路.PNG" alt="01背包问题解题思路"></p>
-<p>第一个结点什么都不放，ub = 0 +  (10 - 0) * V1+1/Wi+1 (10) = 100</p>
-<p>第二个结点放入物品1，ub = 40 + (10 - 4) * 6 = 76</p>
-<h1 id="任务分配问题"><a href="#任务分配问题" class="headerlink" title="任务分配问题"></a>任务分配问题</h1><p><img src="/img/数据结构与算法/分支限界法/任务分配问题.PNG" alt="任务分配问题"></p>
-<p>贪心法：2 + 6 + 1 + 4 = 14<br>最优解：2 + 3 + 1+  4 = 10</p>
-<p>故范围为：[10,14]</p>
+      <p><strong><font size="4sp">协议分层之OSI参考模型</font></strong></p>
+<ol>
+<li><p>应用层</p>
+<p>负责各应用程序的通信，如QQ</p>
+</li>
+<li><p>表示层</p>
+<p>负责将不规范的数据统一转换为国际标准，预防数据乱码，如utf-8</p>
+</li>
+<li><p>会话层</p>
+<p>决定何时建立连接，以及数据的传播顺序</p>
+</li>
+<li><p>传输层</p>
+<p>建立和断开数据传输连接，保证可靠传输，检查是否有数据丢失现象</p>
+</li>
+<li><p>网络层</p>
+<p>寻找传播路径，如路由信息</p>
+</li>
+<li><p>数据链路层</p>
+<p>数据帧与比特流之间的转换，负责某条链路的数据传输</p>
+</li>
+<li><p>物理层</p>
+<p>高低电位与比特流之间的转换，负责指定连接器与网线的规格</p>
+</li>
+</ol>
+<p><strong><font size="4sp">传输方式分类</font></strong></p>
+<p><li> 有连接</li></p>
+<p><li> 无连接</li></p>
+<p><li> 电流交换</li></p>
+<p><li> 分组交换</li></p>
+<p><li> 单播</li></p>
+<p><li> 广播</li></p>
+<p><li> 任播</li></p>
+<p><strong><font size="3sp">路由控制表存放目标主机的ip地址，地址转发表存放连接着该台交换机的主机的mac地址：</font></strong></p>
+<p>主机A发信息给主机B，通过该主机连接的交换机中的地址转发表找到路由器1，再通过路由1的路由控制表转发数据给路由2，路由2根据路由控制表将数据转发给主机B，到达主机B连接的交换机，在交换机地址转发表中发现主机B的mac地址，再将数据交由主机B</p>
 
     
   </div>
@@ -261,10 +260,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2018/06/28/回溯法/">
+    <a class="show pull-left" href="/2019/02/20/Java中的字符串/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2018/07/01/动态规划法/">
+    <a class="hide pull-right" href="/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
