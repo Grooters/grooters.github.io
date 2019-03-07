@@ -4,7 +4,7 @@
   <html class="light page-post">
 
 
-<head>
+<head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
   <title>Handle消息机制 | Grooter&#39;s Home</title>
@@ -12,21 +12,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java," />
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
   
 
-  <meta name="description" content="Handle的使用  主要方法   final Message obtainMessage() final Message obtainMessage(int what, Object obj) 从Message Pool获取一个Message实例 boolean sendMessage(Message msg) 将一个Message发送到MessaQueue boolean sendEmp">
+  <meta name="description" content="Handler的基本使用 子线程到主线程 12345678910//主线程private handler=new Handler()&amp;#123;    @Override    public void handleMessage(Message msg) &amp;#123;        super.handleMessage(msg);    &amp;#125;&amp;#125;;//子线程handler.sen">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Handle消息机制">
 <meta property="og:url" content="https://grooters.github.io/2018/08/06/Handler消息机制/index.html">
 <meta property="og:site_name" content="Grooter&#39;s Home">
-<meta property="og:description" content="Handle的使用  主要方法   final Message obtainMessage() final Message obtainMessage(int what, Object obj) 从Message Pool获取一个Message实例 boolean sendMessage(Message msg) 将一个Message发送到MessaQueue boolean sendEmp">
+<meta property="og:description" content="Handler的基本使用 子线程到主线程 12345678910//主线程private handler=new Handler()&amp;#123;    @Override    public void handleMessage(Message msg) &amp;#123;        super.handleMessage(msg);    &amp;#125;&amp;#125;;//子线程handler.sen">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://grooters.github.io/img/Android/消息收发机制/关系图.jpg">
-<meta property="og:updated_time" content="2019-02-18T05:52:52.446Z">
+<meta property="og:image" content="https://grooters.github.io/img/Android/消息收发机制/关系图.png">
+<meta property="og:updated_time" content="2019-03-07T11:37:38.565Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Handle消息机制">
-<meta name="twitter:description" content="Handle的使用  主要方法   final Message obtainMessage() final Message obtainMessage(int what, Object obj) 从Message Pool获取一个Message实例 boolean sendMessage(Message msg) 将一个Message发送到MessaQueue boolean sendEmp">
+<meta name="twitter:description" content="Handler的基本使用 子线程到主线程 12345678910//主线程private handler=new Handler()&amp;#123;    @Override    public void handleMessage(Message msg) &amp;#123;        super.handleMessage(msg);    &amp;#125;&amp;#125;;//子线程handler.sen">
 <meta name="twitter:image" content="https://grooters.github.io/img/Android/消息收发机制/关系图.jpg">
 
   
@@ -57,7 +58,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
   
 </head>
-
+</html>
 <body>
 
 
@@ -76,67 +77,37 @@
     <ul class="list-toolbox">
       
         <li class="item-toolbox">
-          <a
-            class="CIRCLE"
-            href="/archives/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
             归档
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a
-            class="CIRCLE"
-            href="/category/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
             分类
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a
-            class="CIRCLE"
-            href="/tag/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
             标签
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a
-            class="CIRCLE"
-            href="/link/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
             友链
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a
-            class="CIRCLE"
-            href="/about/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
             关于
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a
-            class="CIRCLE"
-            href="/search/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
             搜索
           </a>
         </li>
@@ -191,45 +162,27 @@
 
   <div class="article-content">
     
-      <p><strong> <font size="5sp"> <li> <a href="https://developer.android.google.cn/reference/android/os/Handler" target="_blank" rel="noopener">Handle</a>的使用</li></font></strong></p>
-<p><strong> <font size="4sp">主要方法 </font></strong></p>
-<p><li> <a href="https://developer.android.google.cn/reference/android/os/Handler.html#obtainMessage" target="_blank" rel="noopener">final Message obtainMessage()</a></li></p>
-<p><li><a href="https://developer.android.google.cn/reference/android/os/Handler.html#obtainMessage(int,%20java.lang.Object" target="_blank" rel="noopener">final Message obtainMessage(int what, Object obj)</a></li></p>
-<p>从Message Pool获取一个Message实例</p>
-<p><li><a href="https://developer.android.google.cn/reference/android/os/Handler.html#sendMessage(android.os.Message" target="_blank" rel="noopener">boolean sendMessage(Message msg)</a></li></p>
-<p>将一个Message发送到MessaQueue</p>
-<p><li><a href="https://developer.android.google.cn/reference/android/os/Handler.html#sendEmptyMessage(int" target="_blank" rel="noopener">boolean sendEmptyMessage(int what)</a></li></p>
-<p>发送一个只有标记值的消息，通常用来激活handleMessage方法，而不是消息内容传递</p>
-<p><li><a href="https://developer.android.google.cn/reference/android/os/Handler.html#handleMessage(android.os.Message" target="_blank" rel="noopener">handleMessage(Message msg)</a></li></p>
-<p>重写该方法接受Message，eg：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Handler()&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.handleMessage(msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>Handler作为Message的发送类，也作为Message的处理类</p>
-<p><strong> <font size="5sp"><li> <a href="https://developer.android.google.cn/reference/android/os/Message" target="_blank" rel="noopener">Message</a>的使用</li></font></strong></p>
-<p><strong> <font size="4sp">常用方法</font></strong></p>
-<p><li><a href="https://developer.android.google.cn/reference/android/os/Message.html#sendToTarget(" target="_blank" rel="noopener">void sendToTarget()</a></li></p>
-<p>将该Message消息发送至MessageQueue，eg:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">handler.obtainMessage(MESSAGE_DOWNLOAD,targetHolder).sendToTarget();</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>obtainMessage会从公共循环池里获取消息，比创建新实例效率更高</p>
-</blockquote>
-<p><strong> <font size="4sp">常用变量</font></strong></p>
-<p><li>final Objetc Obj</li></p>
-<p>Message可携带的信息对象</p>
-<p><li>final int what</li></p>
-<p>Message的标识符</p>
-<p><em>运用方法如下：</em></p>
+      <p><strong><font size="5sp">Handler的基本使用</font></strong></p>
+<p>子线程到主线程</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//主线程</span></span><br><span class="line"><span class="keyword">private</span> handler=<span class="keyword">new</span> Handler()&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.handleMessage(msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//子线程</span></span><br><span class="line">handler.sendEmptyMessage();</span><br></pre></td></tr></table></figure>
+<p>主线程到子线程</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//主线程</span></span><br><span class="line">Looper.prepare();</span><br><span class="line">handler.sendEmptyMessage();</span><br><span class="line">Looper.loop();</span><br><span class="line"></span><br><span class="line"><span class="comment">//子线程</span></span><br><span class="line"><span class="keyword">private</span> handler=<span class="keyword">new</span> Handler()&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.handleMessage(msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>Handler作为Message的发送类，也作为Message的处理类</strong></p>
+<p>Message作为消息供Handler发送:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">handler.obtainMessage(MESSAGE,handler).sendToTarget();</span><br><span class="line"></span><br><span class="line">Message message=Message.obtain();</span><br><span class="line">handler.sendMessage(message)</span><br></pre></td></tr></table></figure>
+<p><strong>obtainMessage会从公共循环池里获取消息，比创建新实例效率更高</strong></p>
+<p>获取Message内容：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Handler()&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.handleMessage(msg);</span><br><span class="line">        <span class="keyword">switch</span>(msg.what)&#123;</span><br><span class="line">          <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            Object obj=msg.Obj;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p><strong> <font size="5sp"> <li> <a href="https://developer.android.google.cn/reference/android/os/Looper" target="_blank" rel="noopener">Looper</a>的使用 </li></font></strong></p>
-<p><strong>封装了消息循环和消息队列</strong></p>
 <p>常通过Handler与Looper进行交互，Handler为指定Looper提供了发送消息和处理消息的方法</p>
 <p>通常创建Handler需要指定一个Looper与其绑定，如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Looper.prepare()</span><br><span class="line">handler=<span class="keyword">new</span> Handler()&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">Looper.loop();</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Looper.prepare()</span><br><span class="line">handler.sendEmptyMessage();</span><br><span class="line">Looper.loop();</span><br></pre></td></tr></table></figure>
 <p><strong>Looper.prepare()</strong></p>
 <blockquote>
 <p>启动一个Looper</p>
 </blockquote>
 <p><strong>Looper.loop()</strong></p>
 <blockquote>
-<p>让Looper开始工作，在调用该方法后，会阻塞线程，导致该方法后面的代码无法执行，直到调用<strong>handler.getLooper().quit()</strong>才能解除阻塞</p>
+<p>让Looper开始工作，在调用该方法后，会阻塞线程，导致该方法后面的代码无法执行，直到调用<strong>handler.getLooper().quit()</strong> 才能解除阻塞</p>
 </blockquote>
 <p>但在主线程中创建Handler会默认与主线程中的Looper绑定，即：</p>
 <blockquote>
@@ -239,15 +192,15 @@
 <blockquote>
 <p>获取当前进程的Looper</p>
 </blockquote>
-<p><strong> <font size="5sp"> <li> <a href="https://developer.android.google.cn/reference/android/os/HandlerThread" target="_blank" rel="noopener">HandleThread</a>的使用 </li></font></strong></p>
+<p><strong><font size="5sp">HandleThread的基本使用</font></strong></p>
 <p><strong>用于启动具有looper的新线程的类</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoaderThread</span> &lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">HandlerThread</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LoaderThread</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(TAG);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onLooperPrepared</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onLooperPrepared();</span><br><span class="line">        Log.i(TAG,<span class="string">"onLooperPrepared"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//通过以下方式启动线程，启动后会执行onLooperPrepared方法</span></span><br><span class="line">LoaderThread&lt;InnerHolder&gt; loaderThread=<span class="keyword">new</span> LoaderThread&lt;&gt;();</span><br><span class="line">loaderThread.start();</span><br><span class="line">loaderThread.getLooper();</span><br></pre></td></tr></table></figure>
-<p><strong> <font size="5sp"> <li> 关系图 </li></font></strong></p>
+<p><strong> <font size="4sp"> 关系图 </font></strong></p>
 <p><img src="/img/Android/消息收发机制/关系图.jpg" alt="关系图"></p>
 <blockquote>
-<p>一个Handler仅与一个Looper相关联，一个Message也仅与一个目标Handler相关联，多个Message可以引用统一目标Handler。多个Handler也可和一个Looper相关联</p>
+<p>Looper对象的内部又维护有唯一的一个MessageQueue，所以一个线程可以有多个handler，<br>但是只能有一个Looper和一个MessageQueue</p>
 </blockquote>
-<p><strong> <font size="5sp"> <li> 源码分析 </li></font></strong></p>
+<p><strong> <font size="5sp">源码分析 </font></strong></p>
 <p>建立完整的消息机制Looper，MessageQuery，Handler一个都不能少，Handler用于发送和接收消息，MessageQuery用于存放消息，Looper用于从MessageQuery中不停的取消息</p>
 <p>在Looper向MessageQuery取消息时需要调用prepare方法：</p>
 <p><em>Looper.java：</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">prepare</span><span class="params">(<span class="keyword">boolean</span> quitAllowed)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (sThreadLocal.get() != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Only one Looper may be created per thread"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    sThreadLocal.set(<span class="keyword">new</span> Looper(quitAllowed));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -276,7 +229,9 @@
 <p><em>Handler.java：</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Message <span class="title">getPostMessage</span><span class="params">(Runnable r)</span> </span>&#123;</span><br><span class="line">    Message m = Message.obtain();</span><br><span class="line">    m.callback = r;</span><br><span class="line">    <span class="keyword">return</span> m;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>再回到将消息转交给handler进行处理的地方：</p>
 <p><em>Handler.java：</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dispatchMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (msg.callback != <span class="keyword">null</span>) &#123;</span><br><span class="line">        handleCallback(msg);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (mCallback != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (mCallback.handleMessage(msg)) &#123;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        handleMessage(msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>msg.callback是什么便一目了然了。</p>
+<p>msg.callback是什么便一目了然了：即</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">handler.post(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><img src="/img/Android/消息收发机制/关系图.png" alt="关系图"></p>
 
     
   </div>
@@ -296,14 +251,14 @@
             
               <span>微信扫一扫</span>
             
-            <img src="/images/qr-wechat.png" alt="">
+            <img src="/images/qr-wechat.png" alt>
           </li>
         
           <li class="item">
             
               <span>支付宝扫一扫</span>
             
-            <img src="/images/qr-alipay.png" alt="">
+            <img src="/images/qr-alipay.png" alt>
           </li>
         
         </ul>
@@ -337,7 +292,7 @@
 	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 	
 	
-    <div id="comment" class="vcomment" ></div>
+    <div id="comment" class="vcomment"></div>
     <script>
         var notify = 'false' == true ? true : false;
         var verify = 'false' == true ? true : false;
@@ -380,67 +335,37 @@
       <ul class="list-toolbox">
         
           <li class="item-toolbox">
-            <a
-              class="CIRCLE"
-              href="/archives/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
               归档
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a
-              class="CIRCLE"
-              href="/category/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
               分类
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a
-              class="CIRCLE"
-              href="/tag/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
               标签
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a
-              class="CIRCLE"
-              href="/link/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
               友链
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a
-              class="CIRCLE"
-              href="/about/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
               关于
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a
-              class="CIRCLE"
-              href="/search/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
               搜索
             </a>
           </li>

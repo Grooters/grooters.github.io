@@ -4,7 +4,7 @@
   <html class="light page-post">
 
 
-<head>
+<head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
   <title>Context解析 | Grooter&#39;s Home</title>
@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java," />
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
   
 
   <meta name="description" content="Context作为Activity，Service，Application的上下文环境，提供了许多方法，其继承结构如下图： 以下图片来自互联网： 由图可知，其有两个直接子类，分别是ContentWrapper和ContentImpl，其中ContentWrapper实现了对Context方法的封装： 123456789101112131415161718192021222324252627publ">
@@ -24,7 +24,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://grooters.github.io/img/Android/Context解析/Context继承树.png">
 <meta property="og:image" content="https://grooters.github.io/img/Android/Context解析/方法适应表.png">
-<meta property="og:updated_time" content="2019-02-20T09:16:28.203Z">
+<meta property="og:updated_time" content="2019-02-26T14:16:24.636Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Context解析">
 <meta name="twitter:description" content="Context作为Activity，Service，Application的上下文环境，提供了许多方法，其继承结构如下图： 以下图片来自互联网： 由图可知，其有两个直接子类，分别是ContentWrapper和ContentImpl，其中ContentWrapper实现了对Context方法的封装： 123456789101112131415161718192021222324252627publ">
@@ -58,7 +58,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
   
 </head>
-
+</html>
 <body>
 
 
@@ -77,67 +77,37 @@
     <ul class="list-toolbox">
       
         <li class="item-toolbox">
-          <a
-            class="CIRCLE"
-            href="/archives/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
             归档
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a
-            class="CIRCLE"
-            href="/category/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
             分类
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a
-            class="CIRCLE"
-            href="/tag/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
             标签
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a
-            class="CIRCLE"
-            href="/link/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
+          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
             友链
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a
-            class="CIRCLE"
-            href="/about/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
             关于
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a
-            class="CIRCLE"
-            href="/search/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
             搜索
           </a>
         </li>
@@ -204,8 +174,8 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Activity <span class="title">performLaunchActivity</span><span class="params">(ActivityClientRecord r, Intent customIntent)</span> </span>&#123;</span><br><span class="line">      ....</span><br><span class="line">      appContext.setOuterContext(activity);</span><br><span class="line">      activity.attach(appContext, <span class="keyword">this</span>, getInstrumentation(), r.token,</span><br><span class="line">              r.ident, app, r.intent, r.activityInfo, title, r.parent,</span><br><span class="line">              r.embeddedID, r.lastNonConfigurationInstances, config,</span><br><span class="line">              r.referrer, r.voiceInteractor, window, r.configCallback);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (customIntent != <span class="keyword">null</span>) &#123;</span><br><span class="line">          activity.mIntent = customIntent;</span><br><span class="line">      &#125;</span><br><span class="line">      r.lastNonConfigurationInstances = <span class="keyword">null</span>;</span><br><span class="line">      checkAndBlockForNetworkAccess();</span><br><span class="line">      activity.mStartedActivity = <span class="keyword">false</span>;</span><br><span class="line">      <span class="keyword">int</span> theme = r.activityInfo.getThemeResource();</span><br><span class="line">      <span class="keyword">if</span> (theme != <span class="number">0</span>) &#123;</span><br><span class="line">          activity.setTheme(theme);</span><br><span class="line">      &#125;</span><br><span class="line">      activity.mCalled = <span class="keyword">false</span>;</span><br><span class="line">      <span class="keyword">if</span> (r.isPersistable()) &#123;</span><br><span class="line">          mInstrumentation.callActivityOnCreate(activity, r.state, r.persistentState);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          mInstrumentation.callActivityOnCreate(activity, r.state);</span><br><span class="line">      &#125;</span><br><span class="line">      ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>由以上代码的以下代码可以看出attach时在onCreate方法前调用的</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">activity.attach(appContext, <span class="keyword">this</span>, getInstrumentation(), r.token,</span><br><span class="line">        r.ident, app, r.intent, r.activityInfo, title, r.parent,</span><br><span class="line">        r.embeddedID, r.lastNonConfigurationInstances, config,</span><br><span class="line">        r.referrer, r.voiceInteractor, window, r.configCallback);</span><br><span class="line">......        </span><br><span class="line">mInstrumentation.callActivityOnCreate(activity, r.state, r.persistentState);</span><br></pre></td></tr></table></figure>
-<p>由此也可得出一个结论，不能再构造方法中获取Context，但可以在onCreate中获取，而最好的获取方法时在重写attachBaseContext方法在super.attachBaseContext后获取</p>
-<p>然后回到前面说的ContentWrapper实现了对Context方法的封装，其中mBase就是每个创建的activity通过提attachBaseContext方法提供过去的context，从此就可直接通过传过去的封装了方法后的context来获取Context中的方法</p>
+<p>由此也可得出一个结论，不能在构造方法中获取Context，但可以在onCreate中获取，而最好的获取方法时在重写attachBaseContext方法在super.attachBaseContext后获取</p>
+<p>然后回到前面说的ContentWrapper实现了对Context方法的封装，其中mBase就是每个创建的activity通过attachBaseContext方法提供过去的context，从此就可直接通过传过去的封装了方法后的context来获取Context中的方法</p>
 <p>ContentImpl类是一个Context类的实现类，其实现了Context的方法</p>
 <p>曾经有一个问题就是android是否可以直接通过实例化一个Activity类来创建一个Activity，这不会出错，但这创建的仅仅只是一个实例化对象，并没有Activity的整套启动流程，既没有Context上下文环境也没有什么生命周期可言，所以通过该方法实例化出来的Activity不算是一个真正的activity</p>
 <p><em>以下图片来自无互联网：</em><br><img src="/img/Android/Context解析/方法适应表.png" alt="方法适应图"></p>
@@ -231,14 +201,14 @@
             
               <span>微信扫一扫</span>
             
-            <img src="/images/qr-wechat.png" alt="">
+            <img src="/images/qr-wechat.png" alt>
           </li>
         
           <li class="item">
             
               <span>支付宝扫一扫</span>
             
-            <img src="/images/qr-alipay.png" alt="">
+            <img src="/images/qr-alipay.png" alt>
           </li>
         
         </ul>
@@ -249,10 +219,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2018/07/20/探索RecyclerView/">
+    <a class="show pull-left" href="/2018/07/20/探索Fragment/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2018/07/20/探索Fragment/">
+    <a class="show pull-right" href="/2018/07/22/泛型/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
@@ -272,7 +242,7 @@
 	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 	
 	
-    <div id="comment" class="vcomment" ></div>
+    <div id="comment" class="vcomment"></div>
     <script>
         var notify = 'false' == true ? true : false;
         var verify = 'false' == true ? true : false;
@@ -315,67 +285,37 @@
       <ul class="list-toolbox">
         
           <li class="item-toolbox">
-            <a
-              class="CIRCLE"
-              href="/archives/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
               归档
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a
-              class="CIRCLE"
-              href="/category/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
               分类
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a
-              class="CIRCLE"
-              href="/tag/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
               标签
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a
-              class="CIRCLE"
-              href="/link/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
+            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
               友链
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a
-              class="CIRCLE"
-              href="/about/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
               关于
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a
-              class="CIRCLE"
-              href="/search/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
               搜索
             </a>
           </li>
