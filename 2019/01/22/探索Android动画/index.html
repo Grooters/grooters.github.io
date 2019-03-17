@@ -4,7 +4,7 @@
   <html class="light page-post">
 
 
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
   <meta charset="utf-8">
   
   <title>探索Android动画 | Grooter&#39;s Home</title>
@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java," />
   
 
   <meta name="description" content="View动画View动画包含四种动画效果，分别为平移，缩放，旋转和透明，分别对应以下Animation 的子类：  TranslateAnimation  android:fromXDelta 表示x的起始值，为float类型  android:toXDelta 表示x的结束值，为float类型  android:fromYDelta  android:toYDelta   1234567&amp;lt;">
@@ -55,7 +55,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
   
 </head>
-</html>
+
 <body>
 
 
@@ -74,37 +74,67 @@
     <ul class="list-toolbox">
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             归档
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             分类
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             标签
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             友链
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             关于
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             搜索
           </a>
         </li>
@@ -211,7 +241,7 @@
 <p><strong><a href="https://developer.android.google.cn/reference/android/view/animation/AnimationUtils" target="_blank" rel="noopener">AnimationUtils</a></strong></p>
 <h1 id="逐帧动画"><a href="#逐帧动画" class="headerlink" title="逐帧动画"></a>逐帧动画</h1><p>通过Xml实现：</p>
 <p><em>res -&gt; drawable：</em></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">animation-list</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span>=<span class="string">"@drawable/test_first"</span> <span class="attr">android:duration</span>=<span class="string">"1000"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span>=<span class="string">"@drawable/test_second"</span> <span class="attr">android:duration</span>=<span class="string">"1000"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">animation-list</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">animation-list</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span>=<span class="string">"@drawable/test_first"</span> <span class="attr">android:duration</span>=<span class="string">"1000"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span>=<span class="string">"@drawable/test_second"</span> <span class="attr">android:duration</span>=<span class="string">"1000"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">animation-list</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>通过java代码实现：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AnimationDrawable animationDrawable=<span class="keyword">new</span> AnimationDrawable();</span><br><span class="line">  Drawable drawable=getResources().getDrawable(R.id.test_drawable,<span class="keyword">null</span>);</span><br><span class="line">  animationDrawable.addFrame(drawable,<span class="number">2000</span>);</span><br></pre></td></tr></table></figure>
 <h1 id="属性动画"><a href="#属性动画" class="headerlink" title="属性动画"></a>属性动画</h1><p>属性动画与View动画不同，其动画对象可以是任何物体，且是通过改变属性来实现动画效果，所以并不像View动画仅仅是视觉上的动画</p>
@@ -269,14 +299,14 @@
             
               <span>微信扫一扫</span>
             
-            <img src="/images/qr-wechat.png" alt>
+            <img src="/images/qr-wechat.png" alt="">
           </li>
         
           <li class="item">
             
               <span>支付宝扫一扫</span>
             
-            <img src="/images/qr-alipay.png" alt>
+            <img src="/images/qr-alipay.png" alt="">
           </li>
         
         </ul>
@@ -310,7 +340,7 @@
 	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 	
 	
-    <div id="comment" class="vcomment"></div>
+    <div id="comment" class="vcomment" ></div>
     <script>
         var notify = 'false' == true ? true : false;
         var verify = 'false' == true ? true : false;
@@ -353,37 +383,67 @@
       <ul class="list-toolbox">
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               归档
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               分类
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               标签
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               友链
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               关于
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               搜索
             </a>
           </li>

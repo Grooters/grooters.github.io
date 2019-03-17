@@ -4,7 +4,7 @@
   <html class="light page-post">
 
 
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
   <meta charset="utf-8">
   
   <title>RxJava与MVP结构的使用 | Grooter&#39;s Home</title>
@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java,">
+    <meta name="keywords" content="Grooter,前端,设计,Hexo主题,前端开发,用户体验,设计,Android,后台,java," />
   
 
   <meta name="description" content="MVP有一种跟MVP相类似的开发结构MVC，该结构由三层组成：  M 模型层 该层也叫实体层，是存放数据的部分  V 视图层 该层用来构建UI界面  C 控制器层 该层对视图层和实体层起到连接作用 eg：  一个简单的登录层序，登录界面的构建由V层实现，数据存放（包括对数据库的操作）由M层实现，而C层功能为：当用户输入账号密码，C层便会从V层拿到用户数据后再从M层拿到原有数据进行比对，若一致再通知">
@@ -57,7 +57,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
   
 </head>
-</html>
+
 <body>
 
 
@@ -76,37 +76,67 @@
     <ul class="list-toolbox">
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             归档
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             分类
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             标签
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             友链
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             关于
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             搜索
           </a>
         </li>
@@ -243,14 +273,14 @@
             
               <span>微信扫一扫</span>
             
-            <img src="/images/qr-wechat.png" alt>
+            <img src="/images/qr-wechat.png" alt="">
           </li>
         
           <li class="item">
             
               <span>支付宝扫一扫</span>
             
-            <img src="/images/qr-alipay.png" alt>
+            <img src="/images/qr-alipay.png" alt="">
           </li>
         
         </ul>
@@ -284,7 +314,7 @@
 	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 	
 	
-    <div id="comment" class="vcomment"></div>
+    <div id="comment" class="vcomment" ></div>
     <script>
         var notify = 'false' == true ? true : false;
         var verify = 'false' == true ? true : false;
@@ -327,37 +357,67 @@
       <ul class="list-toolbox">
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               归档
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               分类
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               标签
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/link/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               友链
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               关于
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
               搜索
             </a>
           </li>
