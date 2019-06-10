@@ -1,0 +1,90 @@
+@charset "UTF-8";
+html{
+    background-color: cadetblue;
+}
+body{
+    /*配合margin实现图片居中*/
+    text-align: center;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+.div_main{
+    width: 100%;
+    height: 50%;
+    top: 50%;
+    margin-top: 8%;
+}
+.img_aws{
+    width: 100px;
+    height: 100px;
+    margin: 1% auto 0 0;
+}
+
+.img_aws:hover{
+    width: 100px;
+    height: 100px;
+    margin: 1% auto 0 0;
+
+}
+
+.div_intro{
+    position: relative;
+    left: 180px;
+    top: 50px;
+    font-family: 方正舒体;
+    line-height: 2em;
+    visibility: hidden;
+    color: antiquewhite;
+}
+
+.p_name{
+    margin: 10px auto;
+    font-weight: bold;
+    font-size: 2em;
+    color: white;
+    font-family:华文琥珀;
+}
+ul{
+    width:550px;
+    height: 100px;
+    margin: 0 auto
+}
+li{
+    float: left;
+    list-style-type: none;
+    margin: 10% auto 0 10%;
+    font-family: 华文行楷;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+.li_a{
+    color: white;
+    text-decoration: none;
+}
+.li_a:hover{
+    font-size: 1.8em;
+    color: antiquewhite;
+    font-family: YouYuan;
+}
+.p_signature{
+    font-family: 华文隶书;
+    font-size: 1.1em;
+    margin-top: 5%;
+    color: aliceblue;
+}
+
+.img_android{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 15%;
+}
+
+.img_android:hover{
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    left: 15%;
+}

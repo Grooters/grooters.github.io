@@ -1,0 +1,109 @@
+.div_content{
+    width: 1000px;
+    height: 1000px;
+    margin: 0 auto;
+    /*border: red solid 1px;*/
+}
+
+.div_head{
+    width: 100%;
+    height: 12%;
+}
+
+.div_contact{
+    height: 100%;
+    width: 87%;
+    float: right;
+}
+
+.img_photo{
+    width: 10%;
+    height: 100%;
+    float: left;
+    margin-left: 10px;
+}
+
+.span_name{
+    margin-left: 10px;
+    font-size: 2em;
+}
+
+.table_contact{
+    margin-top: 2%;
+    margin-left: 10px;
+}
+
+.table_job{
+    margin-top: 3%;
+    margin-left: 10px;
+}
+
+.td_contact{
+    padding-top: 3px;
+    padding-left: 30px;
+    font-weight: bold;
+    font-size: 0.6em;
+}
+
+a{
+    color: black;
+    text-decoration-line: none;
+}
+
+.td_contact_first{
+    padding-top: 3px;
+    padding-left: 10px;
+    font-weight: bold;
+    font-size: 0.6em;
+}
+
+.td_contact_name{
+    color: #8D8E90;
+    padding-top: 3px;
+    font-size: 0.6em;
+    padding-left: 30px;
+    font-weight: bold;
+}
+
+.td_contact_name_first{
+    color: #8D8E90;
+    padding-top: 3px;
+    font-size: 0.6em;
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+.td_job_name{
+    color: #8D8E90;
+    padding-left: 10px;
+    font-weight: bold;
+    font-size: 1.0em;
+}
+
+td.td_job_name_second{
+    color: #8D8E90;
+    padding-left: 205px;
+    font-weight: bold;
+    font-size: 1.0em;
+}
+
+.td_job{
+    font-weight: bold;
+    font-size: 0.8em;
+    padding-left: 10px;
+}
+
+.resume_div_intro{
+    margin-top: 15px;
+}
+
+.resume_span_name{
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+.span_line{
+    background: black;
+    height: 2px;
+    margin-top: 5px;
+}
