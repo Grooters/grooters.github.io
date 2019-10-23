@@ -1,0 +1,2996 @@
+<html>
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>i5ting_ztree_toc:book</title>
+		<link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css"/>
+	  <style>
+		pre {
+		    counter-reset: line-numbering;
+		    border: solid 1px #d9d9d9;
+		    border-radius: 0;
+		    background: #fff;
+		    padding: 0;
+		    line-height: 23px;
+		    margin-bottom: 30px;
+		    white-space: pre;
+		    overflow-x: auto;
+		    word-break: inherit;
+		    word-wrap: inherit;
+		}
+
+		pre a::before {
+		  content: counter(line-numbering);
+		  counter-increment: line-numbering;
+		  padding-right: 1em; /* space after numbers */
+		  width: 25px;
+		  text-align: right;
+		  opacity: 0.7;
+		  display: inline-block;
+		  color: #aaa;
+		  background: #eee;
+		  margin-right: 16px;
+		  padding: 2px 10px;
+		  font-size: 13px;
+		  -webkit-touch-callout: none;
+		  -webkit-user-select: none;
+		  -khtml-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		}
+
+		pre a:first-of-type::before {
+		  padding-top: 10px;
+		}
+
+		pre a:last-of-type::before {
+		  padding-bottom: 10px;
+		}
+
+		pre a:only-of-type::before {
+		  padding: 10px;
+		}
+
+		.highlight { background-color: #ffffcc } /* RIGHT */
+		</style>
+  </head>
+  <body>
+	  <div>
+				<div style='width:25%;'>
+						<ul id="tree" class="ztree" style='width:100%'>
+
+						</ul>
+				</div>
+        <div id='readme' style='width:70%;margin-left:20%;'>
+          	<article class='markdown-body'>
+            
+<h1 id="android">Android</h1>
+<h2 id="-">工具箱</h2>
+<ol>
+<li><p>获取屏幕高度方法：</p>
+<pre><code class="lang-java">//方法1
+WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+//WindowManager wm = this.getWindowManager();
+int width = wm.getDefaultDisplay().getWidth();
+int height = wm.getDefaultDisplay().getHeight();
+
+//方法2
+WindowManager manager = this.getWindowManager();
+DisplayMetrics outMetrics = new DisplayMetrics();
+manager.getDefaultDisplay().getMetrics(outMetrics);
+int width = outMetrics.widthPixels;
+int height = outMetrics.heightPixels;
+
+//方法3：
+Resources resources = this.getResources();
+DisplayMetrics dm = resources.getDisplayMetrics();
+float density = dm.density;
+int width = dm.widthPixels;
+int height = dm.heightPixels;
+</code></pre>
+</li>
+<li><p>在控制台编译获取更多信息：gradlew compileDebug --stacktrace</p>
+</li>
+<li><p>自定义权限</p>
+<pre><code class="lang-xml">&lt;permission 
+    android:description=&quot;string resource&quot;
+    android:icon=&quot;drawable resource&quot;
+    android:label=&quot;string resource&quot;
+    android:name=&quot;string&quot;
+    android:permissionGroup=&quot;string&quot;
+    android:protectionLevel=[&quot;normal&quot; | &quot;dangerous&quot; | &quot;signature&quot; | &quot;signatureOrSystem&quot;] /&gt;
+</code></pre>
+<p><img src="D:\Blog\source\img\Android\自定义权限.PNG" alt="自定义权限"></p>
+</li>
+<li><p>判断Activity是否存在的方法</p>
+<pre><code class="lang-java">if (activity == null || activity.isDestroyed() || activity.isFinishing()) {}
+</code></pre>
+</li>
+<li><p>保存View状态通过在OnSaveInstanceState方法中使用SavedState来实现，eg：</p>
+<pre><code class="lang-java">SaveState save=new SaveState();
+save.setCurrentPosition();
+</code></pre>
+</li>
+</ol>
+<ol start="6">
+<li><p>字体高度测量方法：</p>
+<pre><code class="lang-java">TextPaint mTextPaint = new TextPaint();
+mTextPaint.setTextSize(mLabelTextSize);
+//Y向下为正，向上为负
+Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
+// 计算文字高度 
+float fontHeight = fontMetrics.bottom - fontMetrics.top;
+</code></pre>
+<p><img src="https://img-blog.csdn.net/20160704230318475" alt="img"></p>
+<p><img src="D:\Blog\source\img\Android\工具箱\字体基线表.PNG" alt="字体基线表"></p>
+</li>
+<li><p>将dp转换成标准单位：</p>
+<pre><code class="lang-java">DisplayMetrics displayMetrics = getDisplayMetrics();
+mStrokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,12,displayMetrics);
+</code></pre>
+</li>
+<li><p>ListView的优化：</p>
+<ol>
+<li><p>使用ViewHolder：</p>
+<pre><code class="lang-java">class  ViewHolder{
+    ImageView img;
+    TextView name;
+}
+
+public View getView(int position, View convertView, ViewGroup parent) {
+    ViewHolder holder = null;
+    if(convertView==null){
+        convertView = inflater.inflate(R.layout.list_item, parent, false);
+        holder.img = (ImageView) convertView.findViewById(R.id.img);
+        holder.name = (TextView) convertView.findViewById(R.id.name);
+        holder = new ViewHolder();
+        convertView.setTag(holder);
+    }else{
+        holder = (ViewHolder) convertView.getTag();
+    }
+    //设置holder
+    holder.img.setImageResource(R.drawable.ic_launcher);
+    holder.name.setText(list.get(position).partname);
+    return convertView;
+}
+</code></pre>
+</li>
+</ol>
+</li>
+<li><p>判断是否有外置存储设备：</p>
+<pre><code class="lang-java">Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
+</code></pre>
+</li>
+<li><p>Android存储路径：</p>
+<pre><code>Environment.getDataDirectory() = /data
+Environment.getDownloadCacheDirectory() = /cache
+Environment.getExternalStorageDirectory() = /mnt/sdcard
+Environment.getRootDirectory() = /system
+context.getCacheDir() = /data/data/PackageName/cache
+context.getExternalCacheDir() = /mnt/sdcard/Android/data/PackageName/cache
+context.getFilesDir() = /data/data/PackageName/files
+</code></pre></li>
+<li><p>生成aar和jar</p>
+</li>
+<li><p>将apply plugin: &#39;com.android.application&#39;改为apply plugin: &#39;com.android.library&#39;，去掉applicationId &quot;io.github.grooters.jober&quot;</p>
+</li>
+<li><p><img src="D:\markdowm\img\生成arr和jar.PNG" alt="生成arr和jar"></p>
+</li>
+<li><p>切换project模式</p>
+<ul>
+<li>aar</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20161115120608324?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
+<ul>
+<li>jar</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20161115121153753?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
+</li>
+<li><p>APK瘦身</p>
+<ol>
+<li><p>配置build.gradle文件，开启minifyEnabled，作用是启用混淆压缩模式，会过滤掉整个项目中未使用到的jar和class文件，对代码进行混淆，从而减少dex文件大小：</p>
+<pre><code class="lang-xml">buildTypes {
+     //增加构建类型
+     releaseMinifyEnabled {
+     //开启dex字节码压缩，舍去未使用的jar和class文件
+     minifyEnabled true
+     proguardFiles getDefaultProguardFile(&#39;proguard-android.txt&#39;),&#39;proguard-rules.pro&#39;
+     }
+     //默认release构建类型
+     release {
+     minifyEnabled false
+     proguardFiles getDefaultProguardFile(&#39;proguard-android.txt&#39;), &#39;proguard-rules.pro&#39;
+     }
+} 
+</code></pre>
+</li>
+<li><p>配置build.gradle文件，开启shrinkResources，作用是将res目录下未使用到的图片文件进行特殊处理，其具体做法是将未使用到的图片全部变成1x1像素的小图，从而减少res目录的大小：</p>
+<pre><code class="lang-xml">shrinkResources {
+    //启用res资源过滤，会将项目中未使用到的图片变成1x1的小图，从而减少体积
+    shrinkResources true
+    minifyEnabled true
+    proguardFiles getDefaultProguardFile(&#39;proguard-android.txt&#39;), &#39;proguard-rules.pro&#39;
+}
+</code></pre>
+</li>
+<li><p>配置build.gradle文件，指定resConfigs，作用是指定打包时编译的语言包类型，未指定的其他语言包，将不会打包到apk文件中，从而减少apk体积的大小：</p>
+<pre><code class="lang-xml">defaultConfig {
+    applicationId &quot;com.example.lxj.appthin&quot;
+    minSdkVersion 14
+    targetSdkVersion 24
+    versionCode 1
+    versionName &quot;1.0&quot;
+    //配置打包时编译的语言类型，默认会编译value目录，此处再增加一个中文类型
+    resConfigs(&quot;zh&quot;)
+}  
+</code></pre>
+</li>
+<li><p>采用三方工具（如tinypng）来进一步压缩项目中的所有png图片，从而进一步减小apk体积。</p>
+</li>
+<li><p>采用webp格式的图片替换png和jpg格式的图片。</p>
+</li>
+</ol>
+</li>
+<li><p>添加自定义代码</p>
+<blockquote>
+<p>Setting -&gt; Live Templates</p>
+</blockquote>
+</li>
+<li><p>设置渐变色：</p>
+<pre><code class="lang-java">int[] colors=new int[]{Color.BLUE,Color.Red};
+radialGradient=new RadialGradient(x,y,r,colors,null, Shader.TileMode.CLAMP);
+paint.setShader(radialGradient);
+</code></pre>
+</li>
+</ol>
+<h2 id="-">记事本</h2>
+<ol>
+<li><p>置Activity的android:screenOrientation=&quot;portrait&quot;属性时,无法切换横竖屏，因此不但不会重新调用各个生命周期方法，而且onConfigurationChanged()方法也不会执行</p>
+</li>
+<li><p>Toast没有焦点</p>
+</li>
+<li><p>移动端hook框架：xposed，Substrate，Cydia，frida</p>
+</li>
+<li><p>使用IBinder进行IPC通讯时，能够传递的数据有：Parcleable，Serializable，Bundle</p>
+</li>
+<li><p>AsynTask是线程池改造的，池里 默认提供（核数+1）个线程进行并发操作，最大支持（核数  * 2 + 1）个线程，超过后会丢弃其他任务，也为Message提供了消息池，有静态方法Obtain从消息池中取对象</p>
+</li>
+<li><p><img src="D:\Blog\source\img\Android\Context解析\Context继承树.png" alt="Context继承树"></p>
+<p><img src="D:\Blog\source\img\Android\Context解析\方法适应表.png" alt="方法适应表"></p>
+</li>
+<li><p>build.gradle下载的依赖路径为：</p>
+<blockquote>
+<p>C:\Users\Administrator.gradle\caches\modules-2\files-2.1\com.android.tools.build\gradle</p>
+</blockquote>
+</li>
+<li><p>GLSurfaceView提供了下列特性</p>
+<ul>
+<li><p>管理一个surface，这个surface就是一块特殊的内存，能直接排版到android的视图view上</p>
+</li>
+<li><p>管理一个EGL display，它能让opengl把内容渲染到上述的surface上</p>
+</li>
+<li><p>用户自定义渲染器(render)</p>
+</li>
+<li><p>让渲染器在独立的线程里运作，和UI线程分离</p>
+</li>
+<li><p>支持按需渲染(on-demand)和连续渲染(continuous)</p>
+</li>
+<li><p>一些可选工具，如调试</p>
+</li>
+</ul>
+</li>
+<li><p>Android中Activity在finish前会调用方法setResult()</p>
+</li>
+<li><p><img src="https://uploadfiles.nowcoder.com/images/20181113/765809_1542112654637_1681F1A36B52C24DF2D6CC7FD9146CE1" alt="img"></p>
+</li>
+</ol>
+<h2 id="-">错误集锦</h2>
+<p><a href="https://grooters.github.io/2018/09/09/Android%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6/"><strong><font size="4sp" color="#DC143C">看这里</font></strong></a></p>
+<h2 id="-">四大组件</h2>
+<h3 id="activity">Activity</h3>
+<h4 id="-">生命周期</h4>
+<p><img src="D:\Blog\source\img\Android\Activity的生命周期\ActivityLife.jpg" alt="ActivityLife"></p>
+<ul>
+<li><p>意外情况</p>
+<p><img src="D:\Blog\source\img\Android\Activity的生命周期\ActivityErrorLife.png" alt="ActivityErrorLife"></p>
+</li>
+</ul>
+<p>  注意：</p>
+<ol>
+<li>用户主动结束activity不会调用onSaveInstanceState</li>
+<li>用户正在操作某个Activity，这时如果其他应用程序需要内存。 此时的Activity是Foreground process,应该按照Empty process，Background process，Service process，Visible process顺序kill，最后才是前台进程</li>
+</ol>
+<h4 id="-">启动模式</h4>
+<pre><code class="lang-xml">&lt;activity android:name=&quot;.MainActivity&quot; android:launchMode=&quot;standard&quot;&gt;
+</code></pre>
+<ul>
+<li><p>Standard</p>
+<p>默认模式，每启动一个Activity都会创建一个Activity对象放到栈顶</p>
+</li>
+<li><p>SingleTop</p>
+<p>启动一个Activity检查栈顶是否存在该Activity，存在则不需要再创建Activity对象</p>
+</li>
+<li><p>SingleTask</p>
+<p>检查栈中是否存在该Activity</p>
+</li>
+<li><p>SingleInstance</p>
+<p>在SingleTask的基础上，当启动一个Activity栈中不存在，则会独立创建一个栈用来存放该Activity</p>
+</li>
+</ul>
+<p>注意：</p>
+<p>​    launchMode为singleTask的时候，通过Intent启到一个Activity, 如果系统已经存在一个实例，系统就会将请求发送到这个实例上，但这个时候，系统就不会再调用通常情况下我们处理请求数据的onCreate方法，而是调用onNewIntent方法</p>
+<h4 id="-">创建流程</h4>
+<h3 id="service">Service</h3>
+<h4 id="-">各方法启动流程</h4>
+<ul>
+<li><p>startActivity</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/944365-8b770ac70b0d0402.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="è°ç¨é&quot;è¾"></p>
+</li>
+<li><p>stopActivity</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/944365-8b1ee9cf54c8834a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="è°ç¨é&quot;è¾"></p>
+</li>
+<li><p>bindService</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/944365-66932d1330e96541.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="è°ç¨çé&quot;è¾"></p>
+</li>
+<li><p>unBindService</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/944365-ac363af70e26cd2f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="è°ç¨çé&quot;è¾"></p>
+</li>
+</ul>
+<h4 id="-">常见生命周期</h4>
+<ul>
+<li><p>startService</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/944365-c9d086267869945c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="startServiceå¯å¨æå¡ççå½å¨æ"></p>
+</li>
+<li><p>bindService</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/944365-ca62abafd7815297.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="BindServiceç&quot;å®æå¡ççå½å¨æ"></p>
+</li>
+<li><p>先startService后bindService</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/944365-b42335ad20daed14.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+</li>
+</ul>
+<h3 id="intentservice">IntentService</h3>
+<ul>
+<li>与Service的异同<ol>
+<li>和Service的启动方式相同</li>
+<li>IntentService默认开启了一个子线程用于执行耗时操作</li>
+<li>IntentService执行完后自动结束子线程</li>
+</ol>
+</li>
+</ul>
+<h3 id="broadcast-receiver">Broadcast Receiver</h3>
+<h4 id="-">广播注册</h4>
+<ul>
+<li><p>动态注册</p>
+<pre><code class="lang-java">TestReceiver testReceiver=new TestReceiver();
+IntentFilter filter=new IntentFilter();
+filter.addAction(&quot;io.github.grooters.test&quot;);
+registerReceiver(testReceiver,filter);
+</code></pre>
+</li>
+<li><p>静态注册</p>
+<pre><code class="lang-java">&lt;receiver android:name=&quot;.TestReceiver&quot;&gt;
+     &lt;intent-filter&gt;
+         &lt;action android:name=&quot;io.github.grooters.test&quot;/&gt;
+     &lt;/intent-filter&gt;
+&lt;/receiver&gt;
+</code></pre>
+</li>
+</ul>
+<h4 id="-">广播发送</h4>
+<ul>
+<li><p>普通广播</p>
+<pre><code class="lang-java">sendBroadcast(Intent intent)
+</code></pre>
+</li>
+<li><p>有序广播</p>
+<pre><code class="lang-java">sendOrderedBroadcast(Intent intent,String permission)
+</code></pre>
+<p>permission为广播权限，需要和广播接收器的权限要求一致，若没设权限可传null</p>
+<ul>
+<li><p>静态注册设置权限</p>
+<pre><code class="lang-xml">&lt;receiver 
+    android:name=&quot;.TestReceiver&quot;
+    android:permission=&quot;io.github.grooters.permission.TEST_PERMISSION&quot;&gt;
+     &lt;intent-filter&gt;
+         &lt;action android:name=&quot;io.github.grooters.test&quot;/&gt;
+     &lt;/intent-filter&gt;
+&lt;/receiver&gt;
+</code></pre>
+</li>
+<li><p>动态注册设置权限</p>
+<pre><code class="lang-java">registerReceiver(testReceiver,filter,&quot;io.github.grooters.permission.TEST_PERMISSION&quot;,null);
+</code></pre>
+<p>第四个参数为：Handler schaduler</p>
+<blockquote>
+<p>Handler identifying the thread that will receive the Intent. If null, the main thread of the process will be used.</p>
+<p>处理程序标识将接收Intent的线程。如果为null，则将使用该进程的主线程。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>本地广播</p>
+<pre><code class="lang-java">LocalBroadcastManager manager=LocalBroadcastManager.getInstance(this);
+manager.sendLocalBroadcast()
+</code></pre>
+</li>
+</ul>
+<h4 id="-">广播接收</h4>
+<pre><code class="lang-java">public class TestReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+
+    }
+}
+</code></pre>
+<ul>
+<li><p>注意</p>
+<p>每次广播被接收后会重新创建BroadcastReceiver对象，并在onReceiver方法中执行完就销毁，如果BroadcastReceiver的onReceiver方法中不能在10秒内执行完成，Android会出现ANR异常，所以如果需要在BroadcastReceiver中执行耗时的操作，可以通过Intent启动Service来完成，但不能绑定Service</p>
+</li>
+</ul>
+<h3 id="content-provider">Content Provider</h3>
+<h2 id="-">常见组件</h2>
+<h3 id="webview">WebView</h3>
+<p>使用：</p>
+<pre><code class="lang-java">        webView.loadUrl(&quot;https://blog.csdn.net/wulex/article/details/79753045&quot;);
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return super.shouldOverrideUrlLoading(view, request);
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+            }
+
+            @Override
+            public void onLoadResource(WebView view, String url) {
+                super.onLoadResource(view, url);
+            }
+        });
+        webView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+            }
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+            }
+
+            @Override
+            public void onReceivedIcon(WebView view, Bitmap icon) {
+                super.onReceivedIcon(view, icon);
+            }
+        });
+
+        WebSettings settings=webView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        webView.addJavascriptInterface(new Js(),&quot;js&quot;);
+    }
+
+    //Html调用Android方法：js.toAndroid(&quot;info&quot;)
+    class Js{
+        public String toAndroid(){
+            return &quot;fromHtml&quot;;
+        }
+        public void toAndroid(String info){
+            Log.d(&quot;Js&quot;, &quot;info&quot;);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.main:
+                Log.d(&quot;MainActivity&quot;, &quot;main&quot;);
+                webView.loadUrl(&quot;javascript:toAndroid&quot;)
+                break;
+            case R.id.texter:
+                Log.d(&quot;MainActivity&quot;, &quot;texter&quot;);
+                break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        constraintLayout.removeView(webView);
+        webView.destroy();
+    }
+</code></pre>
+<p>setJavaScriptEnabled存在js注入漏洞：
+    JS中可以遍历window对象，找到存在“getClass”方法的对象，然后再通过反射的机制，得到Runtime对象，然后调用静态方法来执行一些命令，比如访问文件的命令。</p>
+<pre><code class="lang-js">function execute(cmdArgs){
+    for (var obj in window) {
+        if (&quot;getClass&quot; in window[obj]) {
+            alert(obj);
+            return  window[obj].getClass().forName(&quot;java.lang.Runtime&quot;)
+                .getMethod(&quot;getRuntime&quot;,null).invoke(null,null).exec(cmdArgs);
+        }
+    }
+</code></pre>
+<h4 id="-">缓存策略</h4>
+<p><a href="https://juejin.im/entry/57d6434067f3560057e50b20">看这里</a></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/944365-5f9648d34bc73b18.png" alt="img"></p>
+<ul>
+<li><p>资源预加载</p>
+<pre><code class="lang-java">webView.setWebViewClient(new WebViewClient(){
+    //资源预加载
+    @Override
+    public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {           if(request.getUrl().toString().contains(&quot;.png&quot;)){
+            InputStream inputStream=null;
+            try {
+                inputStream=getApplication().getAssets().open(&quot;images/temp.png&quot;);
+                Log.d(&quot;MainActivity&quot;, &quot;shouldInterceptRequest&quot;);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return new WebResourceResponse(&quot;image/png&quot;,&quot;UTF-8&quot;,inputStream);
+
+        }
+        return super.shouldInterceptRequest(view, request);
+    }
+});
+</code></pre>
+<p>使用images/temp.png替换网络需要请求的png资源</p>
+</li>
+<li><p>对象预创建</p>
+<p>在app生命周期初期创建全局静态webview并初始化，然后在跳转至webview页面时在将该对象addview进去</p>
+</li>
+</ul>
+<h3 id="fragment">Fragment</h3>
+<p><a href="https://grooters.github.io/2018/07/20/%E6%8E%A2%E7%B4%A2Fragment/">看这里</a></p>
+<h4 id="-">生命周期</h4>
+<p><img src="https://upload-images.jianshu.io/upload_images/7508328-41e30f8bf75b2d1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/340/format/webp" alt="img"></p>
+<h4 id="-">使用</h4>
+<ul>
+<li><p>静态加载</p>
+<pre><code class="lang-java">public class MyFragment extends Fragment {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.container_fragment, container,false);
+        return view;
+    }   
+}
+</code></pre>
+<p><code>`</code>xml</p>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+    android:layout_width="match_parent"  
+    android:layout_height="match_parent"  
+    android:baselineAligned="false" >  
+
+
+</li>
+</ul>
+<pre><code>  &lt;fragment  
+      android:id=&quot;@+id/view_fragment&quot;  
+      android:name=&quot;io.github.grooters.MyFragment&quot;  
+      android:layout_width=&quot;0dip&quot;  
+      android:layout_height=&quot;match_parent&quot;  
+      android:layout_weight=&quot;1&quot; /&gt;  
+</code></pre><p>  </LinearLayout>  </p>
+<pre><code>
+* 动态加载
+
+  ```java
+  FragmentManager manager = getSupportFragmentManager();  
+  FragmentTransaction transaction = manager.beginTransaction();  
+  MyFragment myFragment = new MyFragment();  
+  transaction.add(R.id.container_fragment, myFragment);  
+  transaction.commit(); 
+</code></pre><h3 id="dialog">Dialog</h3>
+<h3 id="viewpager">ViewPager</h3>
+<p><strong>使用：</strong></p>
+<pre><code class="lang-java">public class MyPagerAdapter extends PagerAdapter {
+    private Context mContext;
+    private List&lt;View&gt; views;
+
+    public MyPagerAdapter(Context context ,List&lt;View&gt; views) {
+        mContext = context;
+        this.views = views;
+    }
+
+    @Override
+    public int getCount() {
+        return views.size();
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        View view=views.get(position)
+         container.addView(view);
+         return view;
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        // super.destroyItem(container,position,object); 这一句要删除，否则报错
+        container.removeView((View)object);
+    }
+
+    @Override
+    public boolean isViewFromObject(View view, Object object) {
+        return view == object;
+    }
+}
+MyPagerAdapter adapter=new MyPagerAdapter(this,views);
+viewPager.setAdapter(pagerAdapter);  
+</code></pre>
+<h3 id="recyclerview">RecyclerView</h3>
+<pre><code class="lang-java">private class InerHolder extends RecyclerView.ViewHolder{
+    private TextView textView;
+    private InerHolder(@NonNull View itemView) {
+        super(itemView);
+        textView=findViewById(R.id.recycler_textView);
+    }
+}
+private class InerAdapter extends RecyclerView.Adapter&lt;InerHolder&gt;{
+    @NonNull
+    @Override
+    public InerHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        return new InerHolder(LayoutInflater.from(getApplicationContext()).inflate(R.layout.recycler_item,viewGroup,false));
+    }
+    @Override
+    public void onBindViewHolder(@NonNull InerHolder inerHolder, int i) {
+        inerHolder.textView.setText(&quot;i:&quot;+i);
+    }
+    @Override
+    public int getItemCount() {
+        return 1;
+    }
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
+}
+</code></pre>
+<h3 id="spinner">Spinner</h3>
+<h2 id="view-">View的事件分发机制</h2>
+<p><a href="https://grooters.github.io/2019/01/22/View%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6/">看这里</a></p>
+<h2 id="view-">View的工作原理</h2>
+<font size="4sp"> <strong>getHeight与getMeasureHeight的区别：</strong></font>
+
+<ol>
+<li>当在onMeasure的setMeasuredDimension前调用时getMeasureHeight和getHeight均为0</li>
+<li>当在onMeasure的setMeasuredDimension后调用时getMeasureHeight有值而getHeight为0</li>
+<li>当在onDraw中调用getMeasureHeight和getHeight均有值</li>
+<li>当在onLayout中调用getMeasureHeight和getHeight均有值</li>
+</ol>
+<blockquote>
+<p>分析源码可得getHeight方法是通过计算mBottom - mTop获得高度的，而mBottom和mTop又是在setFrame方法被赋值的，由于setFrame是在layout被调用，所以getHeight只有在onLayout后才能计算出高度</p>
+</blockquote>
+<p>注意：</p>
+<p>​    getMeasureHeight获得的值可能会和getHeight的不同，因为有时需要测量多变才能得到最终的结果即getHeight拿到的值</p>
+<h2 id="-">自定义控件</h2>
+<p>attrs的使用：</p>
+<ul>
+<li><p>定义</p>
+<pre><code class="lang-java">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;resources&gt;
+    &lt;declare-styleable name=&quot;CustomView&quot;&gt;
+        &lt;attr name=&quot;viewWidth&quot; format=&quot;dimension&quot;/&gt;
+        &lt;attr name=&quot;viewHeight&quot; format=&quot;dimension&quot;/&gt;
+        &lt;attr name=&quot;viewColor&quot; format=&quot;color&quot;/&gt;
+    &lt;/declare-styleable&gt;
+&lt;/resources&gt;
+</code></pre>
+</li>
+<li><p>使用</p>
+<p>java代码中：</p>
+<pre><code class="lang-java">TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.CustomView);
+int size = a.getIndexCount();
+for(int i = 0;i &lt; size;i++){
+    int attr = a.getIndex(i)；
+    if (attr == R.styleable.viewWidth){
+        String width=a.getString();
+    }
+}
+</code></pre>
+<p>xml布局文件中：</p>
+<pre><code class="lang-xml">&lt;io.github.grooters.CustomView
+    android:viewWidth=&quot;100&quot;
+    android:minHeight=&quot;100&quot;                                               
+/&gt;
+</code></pre>
+</li>
+</ul>
+<h3 id="view-">View的测量</h3>
+<p><img src="https://grooters.github.io/img/Android/View%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/%E6%99%AE%E9%80%9AView%E7%9A%84MeasureSpec%E7%9A%84%E5%88%9B%E5%BB%BA%E8%A7%84%E5%88%99.jpg" alt="æ®éViewçMeasureSpecçåå&quot;ºè§å"></p>
+<pre><code class="lang-java">@Overrideprotected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+    int width = MeasureSpec.getSize(widthMeasureSpec);
+    int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+    int height = MeasureSpec.getSize(heightMeasureSpec);
+    int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+
+    if (widthMode == MeasureSpec.AT_MOST &amp;&amp; heightMode == MeasureSpec.AT_MOST) {
+        setMeasuredDimension(WRAP_WIDTH, WRAP_HEIGHT);
+    } else if (widthMode == MeasureSpec.AT_MOST) {
+        setMeasuredDimension(WRAP_WIDTH, height);
+    } else if (heightMode == MeasureSpec.AT_MOST) {
+        setMeasuredDimension(width, WRAP_HEIGHT);
+    }
+}
+</code></pre>
+<blockquote>
+<p><code>match_parent</code>---&gt;EXACTLY。怎么理解呢？match_parent就是要利用父View给我们提供的所有剩余空间，而父View剩余空间是确定的，也就是这个测量模式的整数里面存放的尺寸。
+ <code>wrap_content</code>---&gt;AT_MOST。怎么理解：就是我们想要将大小设置为包裹我们的view内容，那么尺寸大小就是父View给我们作为参考的尺寸，只要不超过这个尺寸就可以啦，具体尺寸就根据我们的需求去设定。
+ <code>固定尺寸（如100dp）</code>---&gt;EXACTLY。用户自己指定了尺寸大小，我们就不用再去干涉了，当然是以指定的大小为主啦。</p>
+</blockquote>
+<h3 id="-">画图</h3>
+<h2 id="drawable">Drawable</h2>
+<h2 id="-">动画</h2>
+<h2 id="-">跨进程通讯</h2>
+<p><img src="https://img-blog.csdn.net/20180918173830422?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Nvbmd6aTEyMjg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
+<h3 id="aidl">AIDL</h3>
+<blockquote>
+<p>Binder的整个设计是C/S结构，客户端进程通过获取服务端进程的代理，并通过向这个代理接口方法中读写数据来完成进程间的数据通信。</p>
+</blockquote>
+<p>Android之所以选择Binder，有2个方面的原因</p>
+<ol>
+<li><p>是安全，每个进程都会被Android系统分配UID和PID，不像传统的在数据里加入UID，这就让那些恶意进程无法直接和其他进程通信，进程间通信的安全性得到提升。</p>
+</li>
+<li><p>是高效，像Socket之类的IPC每次数据拷贝都需要2次，而Binder只要1次，在手机这种资源紧张的情况下很重要。</p>
+</li>
+</ol>
+<p><img src="https://img-blog.csdn.net/20180919095849743?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Nvbmd6aTEyMjg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
+<p><img src="https://grooters.github.io/img/Android/Android%E7%9A%84IPC%E6%9C%BA%E5%88%B6/Binder%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6.jpg" alt="Binderå·¥ä½æºå¶"></p>
+<ol>
+<li>客户端获取服务端的代理对象（proxy）。我们需要明确的是客户端进程并不能直接操作服务端中的方法，如果要操作服务端中的方法，那么有一个可行的解决方法就是在客户端建立一个服务端进程的代理对象，这个代理对象具备和服务端进程一样的功能，要访问服务端进程中的某个方法，只需要访问代理对象中对应的方法即可。</li>
+<li>客户端通过调用代理对象向服务端发送请求。</li>
+<li>代理对象将用户请求通过Binder驱动发送到服务器进程。</li>
+<li><p>服务端进程处理客户端发过来的请求，处理完之后通过Binder驱动返回处理结果给客户端的服务端代理对象。</p>
+</li>
+<li><p>代理对象将请求结果进一步返回给客户端进程。</p>
+</li>
+</ol>
+<p><strong>Serializable</strong> </p>
+<p>Java序列化接口 在硬盘上读写 读写过程中有大量临时变量的生成，内部执行大量的i/o操作，效率很低。</p>
+<p><strong>Parcelable</strong></p>
+<p>Android 序列化接口 效率高 使用麻烦 在内存中读写（AS有相关插件 一键生成所需方法） ，对象不能保存到磁盘中。</p>
+<p><strong>使用：</strong></p>
+<pre><code class="lang-java">//Book.java
+package io.github.grooters.jober.IPC;
+import android.os.Parcel;
+import android.os.Parcelable;
+public class Book implements Parcelable {
+    public Book() {
+    }
+    private String name;
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    //规定public static final Parcelable.Creator&lt;~&gt; CREATOR
+    public static final Parcelable.Creator&lt;Book&gt; CREATOR=new Parcelable.Creator&lt;Book&gt;(){
+        @Override
+        public Book createFromParcel(Parcel source) {
+            Book book=new Book();
+            book.name=source.readString();
+            return book;
+        }
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+    }
+}
+
+//MyServer.java
+package io.github.grooters.jober.IPC;
+import android.app.Service;
+import android.content.Intent;
+import android.os.Binder;
+import android.os.IBinder;
+import android.os.RemoteException;
+public class MyServer extends Service {
+    private Book book;
+    private Binder mBinder=new IPCBook.Stub() {
+        @Override
+        public void setBook(Book book) throws RemoteException {
+            MyServer.this.book=book;
+        }
+        @Override
+        public Book getBook() throws RemoteException {
+            return book;
+        }
+    };
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        book=new Book();
+        book.setName(&quot;book&quot;);
+    }
+    @Override
+    public IBinder onBind(Intent intent) {
+        return mBinder;
+    }
+}
+
+//MyClient.java
+package io.github.grooters.jober.IPC;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+public class MyClient extends AppCompatActivity {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        startService(new Intent(this,MyServer.class));
+        bindService(new Intent(this,MyServer.class),connection,0);
+    }
+    private ServiceConnection connection=new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            IPCBook ipcBook=IPCBook.Stub.asInterface(service);
+            try {
+                Book book=ipcBook.getBook();
+                Log.d(&quot;MyClient&quot;, book.getName());
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName name) {}
+    };
+}
+
+//IPCBook.aidl
+package io.github.grooters.jober.IPC;
+//注意要导包
+import io.github.grooters.jober.IPC.Book;
+interface IPCBook {
+    //注意in
+    void setBook(in Book book);
+    Book getBook();
+}
+
+//Book.aidl
+package io.github.grooters.jober.IPC;
+parcelable Book;
+
+</code></pre>
+<h3 id="messenger">Messenger</h3>
+<p>客户端：</p>
+<pre><code class="lang-java">Intent intent=new Intent(this,Servicer.class);
+bindService(intent,serviceConnection, Context.BIND_AUTO_CREATE);
+ServiceConnection serviceConnection=new ServiceConnection() {
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        Messenger reply=new Messenger(new MessengerHandler());
+        Messenger messenger=new Messenger(service);
+        Message msg=Message.obtain();
+        msg.replyTo=reply;
+        try {
+            messenger.send(msg);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void onServiceDisconnected(ComponentName name) {}
+};
+private static class MessengerHandler extends Handler{
+    @Override
+    public void handleMessage(Message msg) {
+        super.handleMessage(msg);
+        Log.i(TAG,&quot;handleMessage&quot;);
+    }
+}
+</code></pre>
+<p>服务端：</p>
+<pre><code class="lang-java">public class Servicer extends Service {
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return super.onStartCommand(intent, flags, startId);
+    }
+    private static class MessagerHandler extends Handler{
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Messenger client=msg.replyTo;
+            Message message=Message.obtain();
+            try {
+                client.send(message);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    Messenger messenger=new Messenger(new MessagerHandler());
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return messenger.getBinder();
+    }
+    @Override
+    public boolean onUnbind(Intent intent) {
+        return super.onUnbind(intent);
+    }
+}
+</code></pre>
+<p><img src="https://grooters.github.io/img/Android/Android%E7%9A%84IPC%E6%9C%BA%E5%88%B6/Messenger.PNG" alt="Messengerçå·¥ä½åç"></p>
+<h3 id="-">权限验证</h3>
+<ul>
+<li><p>客户端</p>
+<pre><code class="lang-xml">&lt;permission android:name=&quot;io.github.grooters.practicer.BindeRer.ACCESS_BOOK&quot;
+    android:protectionLevel=&quot;normal&quot;/&gt;
+</code></pre>
+<pre><code class="lang-java">@Nullable
+@Override
+public IBinder onBind(Intent intent) {
+    Log.i(TAG,&quot;onBind&quot;);
+    int check=checkCallingOrSelfPermission(&quot;io.github.grooters.practicer.BindeRer.ACCESS_BOOK&quot;);
+    if(check==PackageManager.PERMISSION_DENIED){
+        Log.i(TAG,&quot;check==PackageManager.PERMISSION_DENIED&quot;);
+        return null;
+    }
+    return iBookManager;
+}
+</code></pre>
+<blockquote>
+<p>checkCallingOrSelfPermission判断是否具有某项权限，有返回0，没有返回1</p>
+</blockquote>
+</li>
+<li><p>服务端</p>
+<pre><code class="lang-xml">&lt;uses-permission android:name=&quot;io.github.grooters.practicer.BindeRer.ACCESS_BOOK&quot;/&gt;
+</code></pre>
+</li>
+</ul>
+<h3 id="remoteviews">RemoteViews</h3>
+<h2 id="-">多线程</h2>
+<h2 id="-">消息机制</h2>
+<p><a href="https://grooters.github.io/2018/08/06/Handler%E6%B6%88%E6%81%AF%E6%9C%BA%E5%88%B6/">看这里</a></p>
+<p><img src="https://img-blog.csdn.net/20180513192006823?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dzcV90b21hdG8=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="è¿éåå¾çæè¿°"></p>
+<ol>
+<li>在使用handler的时候，在handler所创建的线程需要维护一个唯一的Looper对象， 每个线程对应一个Looper，每个线程的Looper通过ThreadLocal来保证。</li>
+<li>Looper对象的内部又维护有唯一的一个MessageQueue，所以一个线程可以有多个handler，但是只能有一个Looper和一个MessageQueue。</li>
+<li>Message在MessageQueue不是通过一个列表来存储的，而是将传入的Message存入到了上一个Message的next中，在取出的时候通过顶部的Message就能按放入的顺序依次取出Message。</li>
+<li>Looper对象通过loop()方法开启了一个死循环，不断地从looper内的MessageQueue中取出Message。</li>
+<li>然后通过handler将消息分发传回handler所在的线程。</li>
+</ol>
+<h2 id="-">图像处理</h2>
+<h2 id="-">缓存</h2>
+<p><a href="https://blog.csdn.net/weixin_42580207/article/details/80866742">看这里</a></p>
+<h3 id="lrucache">LruCache</h3>
+<p>LruCache是内存缓存</p>
+<p>LruCache的使用：</p>
+<pre><code class="lang-java">final int size=4*1024*1024;
+LruCache&lt;String,String&gt; cache=new LruCache&lt;String,String&gt;(size){
+    //清理缓存空间
+    @Override
+    public void trimToSize(int maxSize) {
+        super.trimToSize(maxSize);
+        Log.d(&quot;MainActivity&quot;, &quot;trimToSize&quot;);
+    }
+
+    //在某缓存被清除前可以对该缓存进行处理，如二级缓存
+    @Override
+    protected void entryRemoved(boolean evicted, String key, String oldValue, String newValue) {
+        super.entryRemoved(evicted, key, oldValue, newValue);
+        Log.d(&quot;MainActivity&quot;, &quot;entryRemoved&quot;);
+    }
+
+    //get出来的缓存为空的话返回create的返回值，不重写默认为null
+    @Override
+    protected String create(String key) {
+        return &quot;create&quot;;
+    }
+
+    //设置缓存文件的大小，不重写的话默认为1
+    @Override
+    protected int sizeOf(String key, String value) {
+        Log.d(&quot;MainActivity&quot;, &quot;value.length():&quot; + value.length());
+        return value.length();
+    }
+};
+cache.put(&quot;key_test&quot;,&quot;value_test&quot;);
+Log.d(&quot;MainActivity&quot;, cache.get(&quot;key_test&quot;));
+Log.d(&quot;MainActivity&quot;, cache.get(&quot;key_null&quot;));
+cache.remove(&quot;key_test&quot;);
+</code></pre>
+<p>输出：</p>
+<blockquote>
+<p>value.length():10
+trimToSize
+value_test
+value.length():6
+trimToSize
+create
+value.length():10
+entryRemoved</p>
+</blockquote>
+<h3 id="disklrucache">DiskLruCache</h3>
+<p>DiskLruCache是硬盘缓存</p>
+<p>DiskLruCache的使用：</p>
+<ul>
+<li><p>存储</p>
+<pre><code class="lang-java">try {
+    DiskLruCache diskLruCache=DiskLruCache.open(getCacheDir(&quot;test&quot;),1,1,size);
+    DiskLruCache.Editor editor=diskLruCache.edit(getSafeKey(&quot;key_test&quot;));
+    OutputStreamWriter writer=new OutputStreamWriter(editor.newOutputStream(0));
+    writer.write(&quot;value_test&quot;);
+    editor.commit();
+    diskLruCache.flush();
+    diskLruCache.close();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+
+private File getCacheDir(String name){
+    Log.d(&quot;MainActivity&quot;, getExternalCacheDir().getPath());
+    Log.d(&quot;MainActivity&quot;, getCacheDir().getPath());
+    File file=null;
+    if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
+        file=new File(getExternalCacheDir().getPath()+File.separator+name);
+    }else {
+        Log.d(&quot;MainActivity&quot;, &quot;else&quot;);
+        file=new File(getCacheDir().getPath()+File.separator+name);
+    }
+    if(!file.exists()){
+        Log.d(&quot;MainActivity&quot;, &quot;!file.exists()&quot;);
+        file.mkdirs();
+    }
+    return  file;
+}
+
+private String getSafeKey(String key){
+    StringBuffer buffer=new StringBuffer();
+    try {
+        //MD5加密
+        MessageDigest digest=MessageDigest.getInstance(&quot;MD5&quot;);
+        digest.update(key.getBytes());
+        byte[] result=digest.digest();
+        for(int i=0;i&lt;result.length;i++){
+            if(buffer.length()&gt;60){
+                break;
+            }
+            buffer.append(Integer.toHexString(result[i]));
+        }
+    } catch (NoSuchAlgorithmException e) {
+        e.printStackTrace();
+    }
+    Log.d(&quot;MainActivity&quot;, &quot;buffer.length():&quot; + buffer.length());
+    return buffer.toString();
+}
+</code></pre>
+</li>
+</ul>
+<ul>
+<li><p>获取</p>
+<pre><code class="lang-java">DiskLruCache.Snapshot snapshot =diskLruCache.get(getSafeKey(&quot;key_test&quot;));
+InputStream inputStream=snapshot.getInputStream(0);
+BufferedReader reader=new BufferedReader(new InputStreamReader(inputStream));
+Log.d(&quot;MainActivity&quot;, reader.readLine());
+</code></pre>
+</li>
+</ul>
+<h2 id="-">常见框架</h2>
+<h3 id="okhttp">OkHttp</h3>
+<p><img src="https://upload-images.jianshu.io/upload_images/5982616-c9b805378329b087.png" alt="img"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5982616-b8ad5abc73408832.png?imageMogr2/auto-orient/" alt="img"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5982616-a44688d678695fd0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="img"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5982616-5fd39ba8d14f3e2e.png?imageMogr2/auto-orient/" alt="img"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3631399-164b722ab35ae9bf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/432/format/webp" alt="img"></p>
+<h3 id="retrofit">Retrofit</h3>
+<h2 id="gradle">Gradle</h2>
+<h2 id="ndk-jni">NDK与JNI</h2>
+<h2 id="-">性能优化</h2>
+<h3 id="-">布局</h3>
+<ul>
+<li><p>ViewStub</p>
+<p>标签懒加载</p>
+<blockquote>
+<p>标签实质上是一个宽高都为 0 的不可见 View. 通过延迟加载布局的方式优化布局提升渲染性能.这里的延迟加载是指初始化时，程序无需显示该标签所指向的布局文件, 只有在特定的条件下, 所指向的布局文件才需要被渲染, 且此布局文件直接将当前的 ViewStub 替换掉. 但这里的替换并不是完全意义上的替换, 布局文件的 layout params 是以 ViewStub 为优先。</p>
+</blockquote>
+<p>使用：</p>
+<pre><code class="lang-java">&lt;ViewStub
+ android:id=&quot;@+id/view_stub&quot;
+ android:layout=&quot;@layout/layout_test&quot;
+ android:layout_width=&quot;match_parent&quot;
+ android:layout_height=&quot;match_parent&quot; /&gt;
+</code></pre>
+</li>
+<li><p>使用Space取代View做空白占位填充</p>
+</li>
+<li><p>使用merge取代原来的FrameLayout布局</p>
+</li>
+</ul>
+<h2 id="-">架构模式</h2>
+<h3 id="-">组件化</h3>
+<h3 id="-">插件化</h3>
+<h3 id="rxandroid">RxAndroid</h3>
+<h3 id="mvvm">MVVM</h3>
+<h4 id="databinding">DataBinding</h4>
+<ul>
+<li><p>基本使用</p>
+<p><em>Build.gradle：</em></p>
+<pre><code class="lang-xml">android {
+    compileSdkVersion 28
+    dataBinding{
+        enabled=true
+    }
+}
+</code></pre>
+<p><em>activity_databind.xml：</em></p>
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;layout xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;&gt;
+
+    &lt;data&gt;
+        &lt;variable
+            name=&quot;user&quot;
+            type=&quot;io.github.grooters.jober.mvvm.UserBean&quot;/&gt;
+        &lt;variable
+            name=&quot;str&quot;
+            type=&quot;String&quot;/&gt;
+        &lt;variable
+            name=&quot;clickListener&quot;
+            type=&quot;android.view.View.OnClickListener&quot;/&gt;
+        &lt;variable
+            name=&quot;myClickListener&quot;
+            type=&quot;io.github.grooters.jober.mvvm.MyClickListener&quot;/&gt;
+    &lt;/data&gt;
+
+    &lt;android.support.constraint.ConstraintLayout
+        xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+        xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot;
+        tools:context=&quot;.mvvm.DataBindActivity&quot;
+        android:id=&quot;@+id/main&quot;&gt;
+
+        &lt;TextView
+            app:layout_constraintStart_toStartOf=&quot;parent&quot;
+            app:layout_constraintEnd_toEndOf=&quot;parent&quot;
+            app:layout_constraintBottom_toBottomOf=&quot;parent&quot;
+            app:layout_constraintTop_toTopOf=&quot;parent&quot;
+            android:id=&quot;@+id/text_name&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:text=&quot;@{user.sex}&quot;/&gt;
+        &lt;TextView
+            app:layout_constraintTop_toBottomOf=&quot;@id/text_name&quot;
+            android:id=&quot;@+id/text_sex&quot;
+            app:layout_constraintStart_toStartOf=&quot;@id/text_name&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:text=&quot;@{user.name}&quot;/&gt;
+                &lt;TextView
+            app:layout_constraintTop_toBottomOf=&quot;@id/text_sex&quot;
+            android:id=&quot;@+id/text_str&quot;
+            app:layout_constraintStart_toStartOf=&quot;@id/text_name&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:text=&quot;@{str}&quot; /&gt;
+        &lt;TextView
+            app:layout_constraintTop_toBottomOf=&quot;@id/text_str&quot;
+            android:id=&quot;@+id/text_add&quot;
+            app:layout_constraintStart_toStartOf=&quot;@id/text_str&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:text=&#39;@{&quot;dwdwdw&quot;+str}&#39; /&gt;
+        &lt;Button
+            android:id=&quot;@+id/butt_my&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            app:layout_constraintTop_toBottomOf=&quot;@id/text_add&quot;
+            app:layout_constraintStart_toStartOf=&quot;@id/text_add&quot;
+            android:onClick=&quot;@{myClickListener::onClick}&quot;/&gt;
+        &lt;Button
+            android:id=&quot;@+id/butt_this&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            app:layout_constraintTop_toBottomOf=&quot;@id/butt_my&quot;
+            app:layout_constraintStart_toStartOf=&quot;@id/butt_my&quot;
+            android:onClick=&quot;@{clickListener}&quot;/&gt;
+
+    &lt;/android.support.constraint.ConstraintLayout&gt;
+
+&lt;/layout&gt;
+</code></pre>
+<pre><code class="lang-java">public class MyClickListener {
+    public void onClick(View view){
+        Toast.makeText(view.getContext(),&quot;onClick_my&quot;,Toast.LENGTH_SHORT).show();
+    }
+}
+
+public class DataBindActivity extends AppCompatActivity implements View.OnClickListener{
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //ActivityDatabindBinding为自动生成的类，activity_databind.xml
+        ActivityDatabindBinding activityDatabindBinding= DataBindingUtil.setContentView(this,R.layout.activity_databind);
+        UserBean userBean=new UserBean();
+        userBean.setName(&quot;hah&quot;);
+        userBean.setSex(&quot;lulu&quot;);
+        activityDatabindBinding.setUser(userBean);
+        activityDatabindBinding.setStr(&quot;tt&quot;);
+        activityDatabindBinding.setMyClickListener(new MyClickListener());
+        activityDatabindBinding.setClickListener(this);
+    }
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.butt_this:
+                Toast.makeText(view.getContext(),&quot;onClick_this&quot;,Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+}
+</code></pre>
+</li>
+<li><p>在Recyclerview中使用</p>
+<p><code>`</code>java
+public class MyAdapter extends RecyclerView.Adapter<MyHolder> {</p>
+<pre><code>private Context context;
+private List&lt;UserBean&gt; list;
+public MyAdapter(Context context, List&lt;UserBean&gt; list) {
+    this.context=context;
+    this.list=list;
+}
+@NonNull
+@Override
+public MyHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    //view_databind.xml
+    ViewDatabindBinding item= 
+        //注意必须为null，否则只显示一行数据
+        DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.view_databind,null,false);
+    return new MyHolder(item);
+}
+
+@Override
+public void onBindViewHolder(@NonNull MyHolder viewHolder, int i) {
+    viewHolder.getBinding().setUser(list.get(i));
+}
+
+@Override
+public int getItemCount() {
+    return list.size();
+}
+
+@Override
+public int getItemViewType(int position) {
+    return super.getItemViewType(position);
+}
+</code></pre><p>}
+class MyHolder extends RecyclerView.ViewHolder{</p>
+<pre><code>private ViewDatabindBinding binding;
+public MyHolder(ViewDatabindBinding binding) {
+    super(binding.getRoot());
+    this.binding=binding;
+}
+public ViewDatabindBinding getBinding(){
+    return binding;
+}
+</code></pre><p>}</p>
+</li>
+</ul>
+<p>  recyclerView.setLayoutManager(new LinearLayoutManager(this));
+  List<UserBean> list=new ArrayList&lt;&gt;();
+  UserBean userBean=new UserBean();
+  userBean.setName(&quot;haha&quot;);
+  userBean.setNumber(&quot;huhu&quot;);
+  list.add(userBean);
+  userBean=new UserBean();
+  userBean.setNumber(&quot;haha&quot;);
+  userBean.setName(&quot;huhu&quot;);
+  list.add(userBean);
+  recyclerView.setAdapter(new MyAdapter(this,list));</p>
+<pre><code>
+  *view_databind.xml：*
+
+  ```xml
+  &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+  &lt;layout&gt;
+      &lt;data&gt;
+          &lt;variable
+              name=&quot;user&quot;
+              type=&quot;io.github.grooters.jober.mvvm.UserBean&quot;/&gt;
+      &lt;/data&gt;
+      &lt;LinearLayout
+          xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+          android:layout_width=&quot;match_parent&quot;
+          android:layout_height=&quot;match_parent&quot;
+          android:orientation=&quot;horizontal&quot;&gt;
+          &lt;TextView
+              android:layout_width=&quot;wrap_content&quot;
+              android:layout_height=&quot;wrap_content&quot;
+              android:text=&quot;@{user.name}&quot;/&gt;
+          &lt;TextView
+              android:layout_width=&quot;wrap_content&quot;
+              android:layout_height=&quot;wrap_content&quot;
+              android:text=&quot;@{user.number}&quot;/&gt;
+      &lt;/LinearLayout&gt;
+  &lt;/layout&gt;
+
+</code></pre><ul>
+<li><p>自定义属性</p>
+<pre><code class="lang-xml">&lt;TextView
+          app:layout_constraintTop_toBottomOf=&quot;@id/text_add&quot;
+          android:id=&quot;@+id/text_set&quot;
+          app:layout_constraintStart_toStartOf=&quot;@id/text_add&quot;
+          android:layout_width=&quot;wrap_content&quot;
+          android:layout_height=&quot;wrap_content&quot;
+          app:text_content=&#39;@{&quot;sdefdsrgrdtgr&quot;}&#39; /&gt;
+</code></pre>
+<pre><code class="lang-java">@BindingAdapter({&quot;text_content&quot;})
+//注意要静态共有方法
+public static void setTextContent(TextView textView, String str){
+    textView.setText(str);
+}
+</code></pre>
+</li>
+<li><p>动态刷新UI</p>
+<pre><code class="lang-java">public class UserBean extends BaseObservable {
+    private String name;
+    @Bindable
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+        notifyPropertyChanged(BR.name);
+    }
+    //public final ObservableField&lt;String&gt; name = new ObservableField&lt;&gt;();
+}
+
+</code></pre>
+</li>
+</ul>
+<h2 id="android-">Android虚拟机</h2>
+<p><img src="https://images2015.cnblogs.com/blog/316892/201601/316892-20160108195223950-1655922999.png" alt="img"></p>
+<p><strong>Dalvik虚拟机：</strong></p>
+<blockquote>
+<p>Dalvik虚拟机是Android程序的虚拟机，其指令集基于寄存器架构，执行其特有的文件格式——dex字节码，主要负责完成对象生命周期管理、堆栈管理、线程管理、安全异常管理、垃圾回收等重要功能。</p>
+</blockquote>
+<p>一个进程即指一个虚拟机，每启动一个app，虚拟机进程Zygote就会fork出一个子进程来执行该应用程序。</p>
+<p>Dalvik虚拟机通过JIT来实现代码转译，JIT是在应用程序运行时才会讲字节码转译为机器码执行。</p>
+<p><strong>APT：</strong></p>
+<p>与Dalvik不同的是，APT使用AOP来转译字节码，AOP会在应用程序安装的时候就完成该工作。</p>
+<h1 id="java">Java</h1>
+<h2 id="-">记事本</h2>
+<ol>
+<li><p>hashCode与equal</p>
+<p>两个对象的hashCode相同，并不一定表示两个对象就相同，只能够说明这两个对象在散列存储结构中，也就是hashCode是用于查找使用的，而equals是用于比较两个对象的是否相等的</p>
+</li>
+<li><p>静态属性和静态方法是否可以被继承？是否可以被重写？以及原因</p>
+<p><strong>可继承 不可重写 而是被隐藏</strong>，如果子类里面定义了静态方法和属性，那么这时候父类的静态方法或属性称之为&quot;隐藏&quot;。如果你想要调用父类的静态方法和属性，直接通过父类名.方法或变量名完成。</p>
+</li>
+<li><p>哪些情况下的对象会被垃圾回收机制处理掉？</p>
+</li>
+<li><p>判断对象是没用的对象的2种方法：</p>
+<ol>
+<li><p>采用标记计数的方法</p>
+<p>给内存中的对象给打上标记，对象被引用一次，计数就加1，引用被释放了，计数就减一，当这个计数为0的时候，这个对象就可以被回收了。但，循环引用的对象是无法被识别出来并且被回收的。</p>
+</li>
+<li><p>采用根搜索算法</p>
+<p>从一个根出发，搜索所有的可达对象，这样剩下的那些对象就是需要被回收的。</p>
+</li>
+</ol>
+</li>
+<li><p>Java中实现多态的机制：方法的重写Overriding和重载Overloading是Java多态性的不同表现</p>
+<ol>
+<li><p>重写Overriding是父类与子类之间多态性的一种表现</p>
+</li>
+<li><p>重载Overloading是一个类中多态性的一种表现</p>
+</li>
+</ol>
+</li>
+<li><p>JRE指Java的运行环境，包括Java虚拟机，Java核心类库和支持文件，JDK指Java集成开发环境，包含JRE和其它开发工具包</p>
+</li>
+</ol>
+<h2 id="-">工具箱</h2>
+<ol>
+<li><p>打包成jar</p>
+<pre><code class="lang-java">jar cvf MdToHt.jar MdToHt.class
+</code></pre>
+</li>
+</ol>
+<h2 id="-">容器</h2>
+<p><a href="https://blog.csdn.net/zhangqunshuai/article/details/80660974">看这里</a></p>
+<p><img src="https://img-blog.csdn.net/20180612094225630?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW5ncXVuc2h1YWk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="è¿éåå¾çæè¿°"></p>
+<h3 id="list">List</h3>
+<ul>
+<li><p>ArrayList </p>
+<p> 代表长度可以改变得数组。可以对元素进行随机的访问，向ArrayList中插入与删除元素的速度慢。</p>
+</li>
+<li><p>LinkedList </p>
+<p>在实现中采用链表数据结构。插入和删除速度快，访问速度慢。</p>
+<p><img src="https://gitee.com/CyC2018/CS-Notes/raw/master/docs/pics/09184175-9bf2-40ff-8a68-3b467c77216a.png" alt="img"></p>
+</li>
+</ul>
+<p>ArrayList与Vector相比，实现原理相识。相比Vector，ArrayList是线程不安全的，但性能更好。</p>
+<p><strong>通过以下办法可得到一个线程安全的ArrayList：</strong></p>
+<pre><code class="lang-java">List&lt;String&gt; synList = Collections.synchronizedList(list);
+
+List&lt;String&gt; list = new CopyOnWriteArrayList&lt;&gt;();
+</code></pre>
+<p>CopyOnWriteArrayList能实现读写分离，即：</p>
+<ol>
+<li>写操作在一个复制的数组上进行，读操作还是在原始数组中进行，读写分离，互不影响</li>
+<li>写操作需要加锁，防止并发写入时导致写入数据丢失</li>
+<li>写操作结束之后需要把原始数组指向新的复制数组</li>
+</ol>
+<h3 id="map">Map</h3>
+<p><a href="https://cyc2018.github.io/CS-Notes/#/notes/Java%20%E5%AE%B9%E5%99%A8?id=hashmap">看这里</a></p>
+<p><img src="https://img-blog.csdn.net/20180612135157564?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW5ncXVuc2h1YWk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="è¿éåå¾çæè¿°"></p>
+<p>Hashtable是线程安全的，HashMap不是线程安全的，HashMap效率较高，Hashtable效率较低</p>
+<ul>
+<li><p>HashMap</p>
+<blockquote>
+<p>  HashMap的底层是用hash数组和单向链表实现的 ，当调用put方法是，首先计算key的hashcode，定位到合适的数组索引，然后再在该索引上的单向链表进行循环遍历用equals比较key是否存在，如果存在则用新的value覆盖原值，如果没有则插入单向链表的头部</p>
+</blockquote>
+<p><strong>hashcode和equal：</strong></p>
+<p>HashMap通过这两个方法确定键值位置和值内容</p>
+<ol>
+<li>equal不同，hashcode不一定不同</li>
+<li>equal相同，hashcode一定相同</li>
+</ol>
+</li>
+</ul>
+<p><strong>HashMap和Hashtable的区别：</strong></p>
+<ol>
+<li>HashMap允许键和值是null，而Hashtable不允许键或者值是null</li>
+<li>Hashtable是同步的，而HashMap不是</li>
+<li><p>Hashtable可使用Enumeration迭代器快速迭代，而HashMap是快速失败的</p>
+</li>
+<li><p>LinkedHashMap</p>
+</li>
+</ol>
+<p><img src="https://img-blog.csdn.net/20170512155609530?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvanVzdGxvdmV5b3Vf/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="è¿éåå¾çæè¿°"></p>
+<p>通过LinkedHashMap实现LRU缓存：</p>
+<pre><code class="lang-java">class LRUCache&lt;K, V&gt; extends LinkedHashMap&lt;K, V&gt; {
+    private static final int MAX_ENTRIES = 3;
+
+    protected boolean removeEldestEntry(Map.Entry eldest) {
+        return size() &gt; MAX_ENTRIES;
+    }
+
+    LRUCache() {
+        super(MAX_ENTRIES, 0.75f, true);
+    }
+}
+
+public static void main(String[] args) {
+    LRUCache&lt;Integer, String&gt; cache = new LRUCache&lt;&gt;();
+    cache.put(1, &quot;a&quot;);
+    cache.put(2, &quot;b&quot;);
+    cache.put(3, &quot;c&quot;);
+    cache.get(1);
+    cache.put(4, &quot;d&quot;);
+    System.out.println(cache.keySet());
+}
+</code></pre>
+<blockquote>
+<p>[3, 1, 4]</p>
+</blockquote>
+<p><strong>LinkHashMap的区别：</strong></p>
+<blockquote>
+<p> linkedMap在于存储数据能保持进入的顺序与被取出的顺序一致</p>
+</blockquote>
+<h3 id="queue">Queue</h3>
+<ul>
+<li><p>PriorityQueue</p>
+<blockquote>
+<p> PriorityQueue是一个基于优先级堆的无界队列，它的元素是按照自然顺序(natural order)排序的。在创建的时候，我们可以给它提供一个负责给元素排序的比较器。PriorityQueue不允许null值，因为他们没有自然顺序，或者说他们没有任何的相关联的比较器。最后，PriorityQueue不是线程安全的，入队和出队的时间复杂度是O(log(n))。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="set">Set</h3>
+<p><img src="https://img-blog.csdn.net/20180612133411137?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW5ncXVuc2h1YWk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="å¿å¿"></p>
+<p>TreeSet有序，LinkedHashSet先进先出有序。</p>
+<p><strong>TreeSet</strong></p>
+<pre><code class="lang-java">public class Test {
+    public static void main(String[] args) {
+        TreeSet&lt;Integer&gt; ts = new TreeSet&lt;Integer&gt;();
+        ts.add(20);
+        ts.add(18);
+        ts.add(23);
+        for (Integer i : ts) {
+            System.out.print(i+&quot; &quot;);
+        }
+    }
+}
+</code></pre>
+<blockquote>
+<p>18 20 23</p>
+</blockquote>
+<pre><code class="lang-java">public class Test {
+    public static void main(String[] args) {
+        TreeSet&lt;Student&gt; ts=new TreeSet&lt;Student&gt;();
+        Student s1=new Student(&quot;zhangsan&quot;,20);
+        Student s2=new Student(&quot;lis&quot;,22);
+        Student s3=new Student(&quot;wangwu&quot;,24);
+        Student s4=new Student(&quot;chenliu&quot;,26);
+        Student s5=new Student(&quot;zhangsan&quot;,22);
+        Student s6=new Student(&quot;qianqi&quot;,24);
+        ts.add(s1);
+        ts.add(s2);
+        ts.add(s3);
+        ts.add(s4);
+        ts.add(s5);
+        ts.add(s6);
+        for(Student s:ts){
+            System.out.println(s.getName()+&quot;:&quot;+s.getAge());
+        }
+    }
+}
+</code></pre>
+<blockquote>
+<p>由于不知道该安照那一中排序方式排序，所以会报错</p>
+</blockquote>
+<p>将Student实现自然排序：</p>
+<pre><code class="lang-java">public class Student implements Comparable&lt;Student&gt;{
+    private String name;
+    private int age;
+    public Student() {
+        super();
+    }
+    public Student(String name, int age) {
+        super();
+        this.name = name;
+        this.age = age;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+    @Override
+    public int compareTo(Student s) {
+        //判断姓名长度
+        int lenI=this.name.length()-s.name.length();
+        //当姓名长度一样时判断姓名顺序
+        int nameI=lenI==0?this.name.compareTo(s.name):lenI;
+        //当姓名顺序一样时判断年龄
+        int ageI=nameI==0?this.age-s.age:nameI;
+        return ageI;
+    }
+}
+</code></pre>
+<h3 id="-">排序</h3>
+<pre><code class="lang-java">import java.util.*;
+import java.lang.Comparable;
+
+/**
+ * @desc &quot;Comparator&quot;和“Comparable”的比较程序。
+ *   (01) &quot;Comparable&quot;
+ *   它是一个排序接口，只包含一个函数compareTo()。
+ *   一个类实现了Comparable接口，就意味着“该类本身支持排序”，它可以直接通过Arrays.sort() 或 Collections.sort()进行排序。
+ *   (02) &quot;Comparator&quot;
+ *   它是一个比较器接口，包括两个函数：compare() 和 equals()。
+ *   一个类实现了Comparator接口，那么它就是一个“比较器”。其它的类，可以根据该比较器去排序。
+ *
+ *   综上所述：Comparable是内部比较器，而Comparator是外部比较器。
+ *   一个类本身实现了Comparable比较器，就意味着它本身支持排序；若它本身没实现Comparable，也可以通过外部比较器Comparator进行排序。
+ */
+public class CompareComparatorAndComparableTest{
+
+    public static void main(String[] args) {
+        ....
+        // 添加对象到ArrayList中
+        // 对list进行排序
+        // 这里会根据“Person实现的Comparable&lt;String&gt;接口”进行排序，即会根据“name”进行排序
+        Collections.sort(list);
+        // 通过“比较器(AscAgeComparator)”，对list进行排序
+        // AscAgeComparator的排序方式是：根据“age”的升序排序
+        Collections.sort(list, new AscAgeComparator());
+        // 通过“比较器(DescAgeComparator)”，对list进行排序
+        // DescAgeComparator的排序方式是：根据“age”的降序排序
+        Collections.sort(list, new DescAgeComparator());
+        ....
+    }
+    /**
+     * @desc Person类。
+     *       Person实现了Comparable接口，这意味着Person本身支持排序
+     */
+    private static class Person implements Comparable&lt;Person&gt;{
+        int age;
+        String name;
+
+        public Person(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public String toString() {
+            return name + &quot; - &quot; +age;
+        }
+
+        /**
+         * 比较两个Person是否相等：若它们的name和age都相等，则认为它们相等
+         */
+        boolean equals(Person person) {
+            if (this.age == person.age &amp;&amp; this.name == person.name)
+                return true;
+            return false;
+        }
+
+        /**
+         * @desc 实现 “Comparable&lt;String&gt;” 的接口，即重写compareTo&lt;T t&gt;函数。
+         *  这里是通过“person的名字”进行比较的
+         */
+        @Override
+        public int compareTo(Person person) {
+            return name.compareTo(person.name);
+            //return this.name - person.name;
+        }
+    }
+
+    /**
+     * @desc AscAgeComparator比较器
+     *       它是“Person的age的升序比较器”
+     */
+    private static class AscAgeComparator implements Comparator&lt;Person&gt; {
+
+        @Override 
+        public int compare(Person p1, Person p2) {
+            return p1.getAge() - p2.getAge();
+        }
+    }
+
+    /**
+     * @desc DescAgeComparator比较器
+     *       它是“Person的age的升序比较器”
+     */
+    private static class DescAgeComparator implements Comparator&lt;Person&gt; {
+        @Override 
+        public int compare(Person p1, Person p2) {
+            return p2.getAge() - p1.getAge();
+        }
+    }
+}
+</code></pre>
+<h3 id="-">迭代器</h3>
+<ul>
+<li><p>Enumeration</p>
+<pre><code class="lang-java">Hashtable&lt;Integer,Integer&gt; map=new Hashtable&lt;&gt;();
+Enumeration&lt;Integer&gt; enumeration=map.elements();
+while(enumeration.hasMoreElements()){
+    int value=enumeration.nextElement();
+}
+</code></pre>
+</li>
+<li><p>Iterator</p>
+<pre><code class="lang-java">List&lt;Integer&gt; list=new ArrayList&lt;&gt;();
+Iterator&lt;Integer&gt; iterator=list.iterator();
+while(iterator.hasNext()){
+    int value=iterator.next();
+}
+</code></pre>
+</li>
+</ul>
+<p><strong>区别：</strong></p>
+<blockquote>
+<p>Enumeration是Iterator速度的两倍，但由于Iterator在进行遍历操作时，不允许对集合进行插入操作，所以Iterator更安全</p>
+</blockquote>
+<h2 id="string">String</h2>
+<p><img src="https://img-blog.csdn.net/20131113170355750?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcmVuZnVmZWk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img"></p>
+<blockquote>
+<p> 假若字符串对象允许改变,那么将会导致各种逻辑错误,比如改变一个对象会影响到另一个独立对象. 严格来说，这种常量池的思想,是一种优化手段.</p>
+</blockquote>
+<p><strong><font size="4sp">String，StringBuilder，StringBuffer的异同：</font></strong></p>
+<ol>
+<li>String可变，而StringBuilder，StringBuffer可变</li>
+<li>StringBuilder是线程不安全而StringBuffer是线程安全</li>
+<li>效率上StringBuilder&gt;StringBuffer&gt;String</li>
+</ol>
+<p><strong><font size="4sp">String的等价分析：</font></strong></p>
+<ul>
+<li><p>初始值为字符串之间比较</p>
+<pre><code class="lang-java">//a==b=true
+String a=&quot;v&quot;;
+String b=&quot;v&quot;;
+</code></pre>
+<p>均在编译期间载入到常量池中，a和b都指向常量池的同一个字符串</p>
+</li>
+<li><p>初始值为字符串与初始值为变量之间比较</p>
+<pre><code class="lang-java">//a==b=false
+String t=&quot;v&quot;;
+String a=&quot;v&quot;;
+String b=t;
+</code></pre>
+<p>t和a一样在编译期间将v载入到常量池，所以t==a，但在编译期并未决定b的值，所以在运行期会创建一个b对象值为常量池的v，虽然值相同但对象不同</p>
+</li>
+<li><p>初始值为字符串与初始值为字符串和字符串变量混合相加的变量之间比较</p>
+<pre><code class="lang-java">//a==b=false
+String t=&quot;p&quot;;
+String a=&quot;vp&quot;;
+String b=&quot;v&quot;+t;
+</code></pre>
+<p>String b=&quot;v&quot;+t相当于：</p>
+<pre><code class="lang-java">StringBuilder sb=new StringBuilder(&quot;v&quot;);
+sb.apend(t);
+String b=sb.toString();
+</code></pre>
+<p>此过程创建了sb和b这2个对象</p>
+</li>
+<li><p>初始值为字符串与初始值为字符串和字符串相加的变量之间比较</p>
+<pre><code class="lang-java">//a==b=true
+String a=&quot;pv&quot;;
+String b=&quot;p&quot;+&quot;v&quot;;
+</code></pre>
+<p>在编译期间编译期会自动将b优化为pv</p>
+</li>
+<li><p>初始值为字符串与初始值为字符串和字符串常变量的变量之间的比较</p>
+<pre><code class="lang-java">//a==b=true
+final String t=&quot;v&quot;;
+String a=&quot;pv&quot;;
+String b=&quot;p&quot;+t;
+</code></pre>
+<blockquote>
+<p>被final标识的变量，在编译时会被解析为常量值的一个本地拷贝存储到自己的常量池中或嵌入到它的字节码流中</p>
+</blockquote>
+<p>所以<strong>&quot;p&quot;+t等同于&quot;p&quot;+&quot;t&quot;</strong></p>
+</li>
+<li><p>初始值为字符串与初始值为字符串和字符串常变量（值通过方法返回值获取）的变量之间的比较</p>
+<pre><code class="lang-java">//a==b=false
+final String t=getV();
+String a=&quot;pv&quot;;
+String b=&quot;p&quot;+t;
+V getV(){
+    return v;
+}
+</code></pre>
+<p>由于是通过调用getV获取常变量值的，所以在编译期间仍然无法获得t的值</p>
+<p><strong><font size="4sp"> intent方法的使用： </font></strong></p>
+<p>JDK1.6-</p>
+<blockquote>
+<p>它由类String独自维护。当调用 intern方法时，如果池已经包含一个等于此String对象的字符串（用equals(oject)方法确定），则返回池中的字符串。否则，将此String对象添加到池中，并返回此String对象的引用</p>
+</blockquote>
+<pre><code class="lang-java">//a==b=true
+String a=&quot;pv&quot;;
+String b=new String(p)+new String(&quot;v&quot;);
+b=b.intent();
+</code></pre>
+<p>需要注意的是其返回的池中的字符串所以要b=b.intent()，如果b.intent()则无效，eg：</p>
+<pre><code class="lang-java">//a==b=false
+String a=&quot;pv&quot;;
+String b=new String(p)+new String(&quot;v&quot;);
+b.intent();
+</code></pre>
+<p>JDK1.7+</p>
+<blockquote>
+<p>它由类String独自维护。当调用 intern方法时，如果池已经包含一个等于此String对象的字符串（用equals(oject)方法确定），则返回池中的字符串。否则，在常量池中生成一个对原字符串的引用</p>
+</blockquote>
+<p><strong>根据以上描述并没有返回值</strong></p>
+<pre><code class="lang-java">//a==b=false
+String a=&quot;pv&quot;;
+String b=new String(p)+new String(&quot;v&quot;);
+b.intent();
+</code></pre>
+<p>但：</p>
+<pre><code class="lang-java">//a==b=true
+String b=new String(p)+new String(&quot;v&quot;);
+b.intent();
+String a=&quot;pv&quot;;
+</code></pre>
+<p>当调用完b.intent()后，已经在常量池中生成了一个对pv字符串的引用，所以String a=”pv“则使a指向了b对象</p>
+</li>
+</ul>
+<h2 id="java-">Java多线程与锁</h2>
+<h3 id="lock-">Lock的使用</h3>
+<p>synchronized与Lock的区别</p>
+<ol>
+<li>通过synchronized锁住的地方无法被主动释放锁，只有等其执行完被锁住的内容或则抛出异常才会释放锁，而lock可以随实释放</li>
+<li><p>synchronized是Java的一个关键字，而Lock用于上锁的类</p>
+</li>
+<li><p>lock</p>
+<pre><code class="lang-java">public class Test {
+    private Lock lock = new ReentrantLock();
+    private ArrayList&lt;Integer&gt; arrayList = new ArrayList&lt;Integer&gt;();
+    public static void main(String[] args)  {
+        final Test test = new Test();
+        new Thread(){
+            public void run() {
+                test.insert(Thread.currentThread());
+            };
+        }.start();
+
+        new Thread(){
+            public void run() {
+                test.insert(Thread.currentThread());
+            };
+        }.start();
+    }  
+    public void insert(Thread thread) {
+        lock.lock();
+        try {
+            System.out.println(thread.getName()+&quot;得到了锁&quot;);
+            for(int i=0;i&lt;5;i++) {
+                arrayList.add(i);
+            }
+        } catch (Exception e) {
+        }finally {
+            System.out.println(thread.getName()+&quot;释放了锁&quot;);
+            lock.unlock();
+        }
+    }
+}
+</code></pre>
+<p>当锁被别人占用时会一直等待该锁。</p>
+</li>
+<li><p>tryLock</p>
+<pre><code class="lang-java">public class Test {
+    private ArrayList&lt;Integer&gt; arrayList = new ArrayList&lt;Integer&gt;();
+    private Lock lock = new ReentrantLock();
+    public static void main(String[] args)  {
+        final Test test = new Test();
+
+        new Thread(){
+            public void run() {
+                test.insert(Thread.currentThread());
+            };
+        }.start();
+
+        new Thread(){
+            public void run() {
+                test.insert(Thread.currentThread());
+            };
+        }.start();
+    }  
+
+    public void insert(Thread thread) {
+        if(lock.tryLock()) {
+            try {
+                System.out.println(thread.getName()+&quot;得到了锁&quot;);
+                for(int i=0;i&lt;5;i++) {
+                    arrayList.add(i);
+                }
+            } catch (Exception e) {
+            }finally {
+                System.out.println(thread.getName()+&quot;释放了锁&quot;);
+                lock.unlock();
+            }
+        } else {
+            System.out.println(thread.getName()+&quot;获取锁失败&quot;);
+        }
+    }
+}
+</code></pre>
+<p>tryLock()方法是有返回值的，它表示用来尝试获取锁，如果获取成功，则返回true，如果获取失败（即锁已被其他线程获取），则返回false，也就说这个方法无论如何都会立即返回。在拿不到锁时不会一直在那等待。</p>
+</li>
+<li><p>lockInterrupt</p>
+<pre><code class="lang-java">public class Test {
+    private Lock lock = new ReentrantLock();   
+    public static void main(String[] args)  {
+        Test test = new Test();
+        MyThread thread1 = new MyThread(test);
+        MyThread thread2 = new MyThread(test);
+        thread1.start();
+        thread2.start();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        thread2.interrupt();
+    }  
+
+    public void insert(Thread thread) throws InterruptedException{
+        //thread2.interrupt()时会抛出InterruptedException异常
+        lock.lockInterruptibly(); 
+        try {  
+            System.out.println(thread.getName()+&quot;得到了锁&quot;);
+            long startTime = System.currentTimeMillis();
+            for(    ;     ;) {
+                if(System.currentTimeMillis() - startTime &gt;= Integer.MAX_VALUE)
+                    break;
+                //插入数据
+            }
+        }
+        finally {
+            System.out.println(Thread.currentThread().getName()+&quot;执行finally&quot;);
+            lock.unlock();
+            System.out.println(thread.getName()+&quot;释放了锁&quot;);
+        }  
+    }
+}
+
+class MyThread extends Thread {
+    private Test test = null;
+    public MyThread(Test test) {
+        this.test = test;
+    }
+    @Override
+    public void run() {
+
+        try {
+            test.insert(Thread.currentThread());
+        } catch (InterruptedException e) {
+            System.out.println(Thread.currentThread().getName()+&quot;被中断&quot;);
+        }
+    }
+}
+</code></pre>
+<p>lockInterruptibly()方法比较特殊，当通过这个方法去获取锁时，如果线程正在等待获取锁，则这个线程能够响应中断，即中断线程的等待状态。也就使说，当两个线程同时通过lock.lockInterruptibly()想获取某个锁时，假若此时线程A获取到了锁，而线程B只有在等待，那么对线程B调用threadB.interrupt()方法能够中断线程B的等待过程。</p>
+</li>
+</ol>
+<h2 id="-">内部类</h2>
+<p>内部类可直接访问外部类的属性
+Java中内部类主要分为：</p>
+<ol>
+<li>成员内部类</li>
+<li>局部内部类(嵌套在方法和作用域内)</li>
+<li>匿名内部类（没构造方法）</li>
+<li>静态内部类（static修饰的类，不能使用任何外围类的非static成员变量和方法，不依赖外围类）</li>
+</ol>
+<h2 id="-">线程</h2>
+<p><img src="http://uploadfiles.nowcoder.com/images/20151217/149974_1450349079825_4697A22AC611680A692472687DEC1CFD" alt="img"></p>
+<h2 id="jvm-gc">JVM与GC</h2>
+<p>JVM运行时数据区主要分为两大块：线程私有区（程序计数器，虚拟机栈，本地方法区）和共享区，线程私有区的生命周期与线程同步，所以它们会随线程的终结而自动释放，故只有共享区需要GC</p>
+<p>GC回收时机</p>
+<blockquote>
+<p>在共享区内存的对象回收的条件是：没有任何作用时，就需要被回收。而实例回收的时机取决于GC算法</p>
+</blockquote>
+<p>GC算法</p>
+<ul>
+<li><p>计数算法</p>
+<p>对象每被引用一次计数器就加1，失去引用就减1，当计数器在一段时间内保持为0，GC则会回收该对象</p>
+<p>但该方法存在缺陷：</p>
+<blockquote>
+<p>当两个对象相互引用，但是二者已经没有作用时，按照常规，应该对其进行垃圾回收，但是其相互引用，又不符合垃圾回收的条件，因此无法完美处理这块内存清理</p>
+</blockquote>
+</li>
+<li><p>根搜索算法</p>
+<p>对象之间的引用构建成一个树，根元素是GC Roots对象。从根元素向下搜索，如果一个对象不能达到根元素，说明不再引用，即可被回收</p>
+</li>
+</ul>
+<p>常见GC算法</p>
+<ul>
+<li><p>标记回收算法</p>
+<p>从”GC Roots”集合开始，将内存整个遍历一次，保留所有可以被GC Roots直接或间接引用到的对象，而剩下的对象都当作垃圾对待并回收，这个算法需要中断进程内其它组件的执行并且可能产生内存碎片。</p>
+</li>
+<li><p>复制算法</p>
+<p>将现有的内存空间分为两快，每次只使用其中一块，在垃圾回收时将正在使用的内存中的存活对象复制到未被使用的内存块中，之后，清除正在使用的内存块中的所有对象，交换两个内存的角色，完成垃圾回收。</p>
+</li>
+<li><p>标记压缩算法</p>
+<p>先需要从根节点开始对所有可达对象做一次标记，但之后，它并不简单地清理未标记的对象，而是将所有的存活对象压缩到内存的一端。之后，清理边界外所有的空间。这种方法既避免了碎片的产生，又不需要两块相同的内存空间，因此，其性价比比较高。</p>
+</li>
+</ul>
+<h2 id="-">类的加载过程</h2>
+<p><img src="https://images2015.cnblogs.com/blog/879896/201604/879896-20160414224549770-60006655.png" alt="img"></p>
+<h3 id="-">加载</h3>
+<p>根据类定位全限定名转为字节流载入jvm虚拟机</p>
+<h3 id="-">连接</h3>
+<ul>
+<li><p>验证</p>
+<p>验证阶段主要包括四个检验过程：文件格式验证、元数据验证、字节码验证和符号引用验证;</p>
+</li>
+<li><p>准备</p>
+<p>为类中的所有静态变量分配内存空间</p>
+</li>
+<li><p>解析</p>
+<p>将常量池中的所有符号引用转换成直接引用，该阶段也可在初始化后执行‘</p>
+</li>
+</ul>
+<h3 id="-">初始化</h3>
+<p>根据程序编写的逻辑代码为变量重新赋值：</p>
+<pre><code class="lang-java">public static int value1  = 5;
+public static int value2  = 6;
+static{
+    value2 = 66;
+}
+</code></pre>
+<p>最后value1和value2的值分别为：5，66</p>
+<h3 id="-">实例</h3>
+<pre><code class="lang-java">public class Test {
+    public static void main(String...args){
+        System.out.println(Child.str1);
+        System.out.println(Child.str2);
+    }
+}
+class Child{
+    static final String str1=&quot;str1&quot;;
+    static String str2=&quot;str2&quot;;
+    public Child(){
+        System.out.println(&quot;Child&quot;);
+    }
+    static{
+        System.out.println(&quot;static&quot;);
+    }
+    {
+        System.out.println(&quot;!static&quot;);
+    }
+}
+</code></pre>
+<p>输出：</p>
+<pre><code>str1
+static
+str2
+</code></pre><p>结论：</p>
+<blockquote>
+<p>编译期常量在编译期便将变量替换成具体值无需依赖类，故调用该变量静态代码块不会得到执行；而非静态常量即运行时常量依赖于类调用该变量会执行static代码块方法</p>
+</blockquote>
+<pre><code class="lang-java">public class Test {
+    public static void main(String...args){
+        System.out.println(Child.str1);
+        System.out.println(Child.str2);
+        new Child();
+    }
+}
+class Child{
+    static final String str1=&quot;str1&quot;;
+    static String str2=&quot;str2&quot;;
+    public Child(){
+        System.out.println(&quot;Child&quot;);
+    }
+    static{
+        System.out.println(&quot;static&quot;);
+    }
+    {
+        System.out.println(&quot;!static&quot;);
+    }
+}
+</code></pre>
+<p>输出：</p>
+<pre><code>str1
+static
+str2
+!static
+Child
+</code></pre><p>结论：</p>
+<blockquote>
+<p>实例化类时，遵循 静态代码块—&gt;非静态代码块—&gt;构造方法 顺序</p>
+</blockquote>
+<h2 id="-">内存模型</h2>
+<p><a href="https://www.cnblogs.com/cjsblog/p/9850300.html">看这里</a></p>
+<p><img src="https://img2018.cnblogs.com/blog/1489669/201810/1489669-20181009185527316-1708790974.png" alt="img"></p>
+<p><img src="D:\markdowm\img\Java内存模型.png" alt="Java内存模型"></p>
+<h3 id="-">引用</h3>
+<ul>
+<li><p>强引用</p>
+<pre><code class="lang-java">Object o = new Object();
+</code></pre>
+<p>当内存不足时，JVM会抛出OOM异常终止程序，而不会去回收强引用实例来释放内存，若希望o被回收需要对o赋值为null</p>
+</li>
+<li><p>弱引用</p>
+<pre><code class="lang-java">String str=new String(&quot;str&quot;);      
+WeakReference&lt;String&gt; abcWeakRef = new WeakReference&lt;String&gt;(str); 
+</code></pre>
+<p>无论当前内存空间是否足够，一旦被垃圾回收线程发现，就会回收它。</p>
+<p>如果一个对象引用频率不高且要求快速引用，但不想控制其生命周期，使其不被回收，可以使用弱引用。</p>
+</li>
+<li><p>软引用</p>
+<pre><code class="lang-java">String str = new String(&quot;str&quot;);
+SoftReference&lt;String&gt; sr = new SoftReference&lt;String&gt;(str);
+</code></pre>
+<p>则当内存不够时，垃圾回收器就会回收它。</p>
+<p>软引用用于实现内存敏感的高速缓存。</p>
+</li>
+<li><p>虚引用</p>
+<p>虚引用的主要作用是用来跟踪对象垃圾回收的活动。当Java回收一个对象的时候，如果发现他有虚引用，会在回收对象之前将他的虚引用加入到与之关联的引用队列中。可以通过这个特性在一个对象被回收之前采取措施。</p>
+</li>
+</ul>
+<h2 id="-">泛型</h2>
+<h3 id="-">元组类库</h3>
+<p>通过一个对象携带多个对象来解决只能返回一个对象的问题</p>
+<pre><code class="lang-java">class Tuple&lt;A,B&gt;{
+    public final A a;
+    public final B b;
+    public Tuple(A a,B b){
+        this.a=a;
+        this.b=b;
+    }
+}
+public class Test{
+    private Tuple&lt;Integer,String&gt; test(Integer,String){
+        return new Tuple(1,&quot;str&quot;);
+    }
+}
+</code></pre>
+<p>元组内的对象只允许读，不允许写</p>
+<h1 id="-">计算机网络</h1>
+<h2 id="-">基础知识</h2>
+<ol>
+<li><p>计算机网络主要有七个常用的性能指标：速率，带宽，吞吐量，时延，时延带宽积，往返时间，利用率</p>
+</li>
+<li><p>计算机网络提供的两个主要功能为：<strong>连通性</strong>和<strong>共享性</strong></p>
+</li>
+<li><p>OSI参考模型</p>
+<p><img src="D:\Blog\source\img\计算机网络\OSI参考模型.PNG" alt="OSI参考模型"></p>
+<p>其中会话层负责确立建立和断开连接的时机，真正执行的时在传输层</p>
+</li>
+<li><p>网络设备：</p>
+<p><a href="https://www.nowcoder.com/questionTerminal/497f4570bcfa4399a803f23fb92f7732">看这里</a></p>
+<p><img src="D:\Blog\source\img\计算机网络\网络设备.PNG" alt="网络设备"></p>
+<ul>
+<li>物理层：集线器、网线、中继器（转发器）</li>
+<li>数据链路层：网卡、交换机、网桥（桥接器）</li>
+<li>网络层：路由器</li>
+<li>网络层以上：网关</li>
+</ul>
+</li>
+<li><p>网络带宽与吞吐量：</p>
+<p><img src="D:\Blog\source\img\计算机网络\带宽与吞吐量.PNG" alt="带宽与吞吐量"></p>
+</li>
+</ol>
+<h2 id="tcp-ip-">TCP/IP协议</h2>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-c69d60eeeebadd37.png?imageMogr2/auto-orient/" alt="img"></p>
+<p><img src="D:\Blog\source\img\计算机网络\TCPIP协议群.PNG" alt="TCPIP协议群"></p>
+<p>动态主机配置协议（DHCP ）是一个局域网的网络协议，使用UDP协议工作， 主要有两个用途：</p>
+<ol>
+<li>给内部网络或网络服务供应商自动分配IP地址</li>
+<li>给用户或者内部网络管理员作为对所有计算机作中央管理的手段</li>
+</ol>
+<p>ARP是地址解析协议</p>
+<ol>
+<li>首先，每个主机都会在自己的ARP缓冲区中建立一个ARP列表，以表示IP地址和MAC地址之间的对应关系。</li>
+<li>当源主机要发送数据时，首先检查ARP列表中是否有对应IP地址的目的主机的MAC地址，如果有，则直接发送数据，如果没有，就向本网段的所有主机发送ARP数据包，该数据包包括的内容有：源主机 IP地址，源主机MAC地址，目的主机的IP 地址。</li>
+<li>当本网络的所有主机收到该ARP数据包时，首先检查数据包中的IP地址是否是自己的IP地址，如果不是，则忽略该数据包，如果是，则首先从数据包中取出源主机的IP和MAC地址写入到ARP列表中，如果已经存在，则覆盖，然后将自己的MAC地址写入ARP响应包中，告诉源主机自己是它想要找的MAC地址。</li>
+<li>源主机收到ARP响应包后。将目的主机的IP和MAC地址写入ARP列表，并利用此信息发送数据。如果源主机一直没有收到ARP响应数据包，表示ARP查询失败。</li>
+<li>广播发送ARP请求，单播发送ARP响应。</li>
+</ol>
+<p>数据单位</p>
+<ul>
+<li>包是单位总称；</li>
+<li>帧用于表示数据链路层中包的单位；</li>
+<li>数据包是 IP 和 UDP 等网络层以上的分层中包的单位；</li>
+<li>段则表示 TCP 数据流中的信息；</li>
+<li>消息是指应用协议中数据的单位。</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-2051967a4e85d719.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/772/format/webp" alt="img"></p>
+<h3 id="tcp-udp">TCP与UDP</h3>
+<p>TCP 是面向连接的、可靠的<strong>流协议</strong>。流就是指不间断的数据结构，当应用程序采用 TCP 发送消息时，虽然可以保证发送的顺序，但还是犹如没有任何间隔的数据流发送给接收端。TCP 为提供可靠性传输，实行“顺序控制”或“重发控制”机制。此外还具备“流控制（流量控制）”、“拥塞控制”、提高网络利用率等众多功能。</p>
+<ul>
+<li>通过检验和、序列号、确认应答、重发控制、连接管理以及窗口控制等机制让 IP 这种无连接的网络上也能够实现高可靠性的通信</li>
+</ul>
+<p>UDP 是不具有可靠性的<strong>数据报协议</strong>。细微的处理它会交给上层的应用去完成。在 UDP 的情况下，虽然可以确保发送消息的大小，却不能保证消息一定会到达。因此，<strong>应用</strong>有时会根据自己的需要进行重发处理。</p>
+<ul>
+<li>UDP 不提供复杂的控制机制，利用 IP 提供面向无连接的通信服务。</li>
+<li>UDP 无法进行流量控制等避免网络拥塞行为</li>
+<li>传输途中出现丢包，UDP 不负责重发。</li>
+<li>当包的到达顺序出现乱序时没有纠正的功能。</li>
+<li>如果需要以上的细节控制，需要由采用 UDP 的应用程序去处理。</li>
+</ul>
+<blockquote>
+<p> TCP 用于在传输层有必要实现可靠传输的情况；而在一方面，UDP 主要用于那些对高速传输和实时性有较高要求的通信或广播通信。TCP 和 UDP 应该根据应用的目的按需使用。</p>
+</blockquote>
+<h3 id="-">端口号</h3>
+<p>端口号类似于运输层的地址，告知数据传输到哪个应用程序</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-96457c6ddbe3157f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/763/format/webp" alt="img"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-47a50ea9428c29fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/748/format/webp" alt="img"></p>
+<p>端口号的分布</p>
+<ul>
+<li>知名端口号，分布在 0~1023 之间</li>
+<li>正式注册端口号，分布在 1024~49151 之间</li>
+</ul>
+<h3 id="tcp-">TCP的消息通信</h3>
+<h4 id="-">三次握手</h4>
+<p>与服务端建立连接</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-52baa0818e1bd1c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/602/format/webp" alt="img"></p>
+<ol>
+<li>第一次握手：客户端将标志位SYN置为1，随机产生一个值seq=J，并将该数据包发送给服务器端，客户端进入SYN_SENT状态，等待服务器端确认。</li>
+<li>第二次握手：服务器端收到数据包后由标志位SYN=1知道客户端请求建立连接，服务器端将标志位SYN和ACK都置为1，ack=J+1，随机产生一个值seq=K，并将该数据包发送给客户端以确认连接请求，服务器端进入SYN_RCVD状态。</li>
+<li>第三次握手：客户端收到确认后，检查ack是否为J+1，ACK是否为1，如果正确则将标志位ACK置为1，ack=K+1，并将该数据包发送给服务器端，服务器端检查ack是否为K+1，ACK是否为1，如果正确则连接建立成功，客户端和服务器端进入ESTABLISHED状态，完成三次握手，随后客户端与服务器端之间可以开始传输数据了。</li>
+</ol>
+<p>若不采用三次握手：</p>
+<blockquote>
+<p>客户端发送的连接请求，并没有消失，而是在某个网络节点长时间滞留了，以至于延迟到连接释放之后才打到服务器。原本这个早已失效的报文段，但是服务器误认为是客服端发送的新的请求，于是就向客户端发送确定的报文段，同意建立连接，若不采用三次握手，新的连接就建立了。由于客户端并没有发送连接请求，不会理睬服务器的请求，浪费服务器的资源。  </p>
+</blockquote>
+<h4 id="-">四次握手</h4>
+<p>与服务端断开连接，中断连接端可以是客户端，也可以是服务器端。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-8787d7fb9fc4e802.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/596/format/webp" alt="img"></p>
+<ol>
+<li>第一次挥手：客户端发送一个FIN=M，用来关闭客户端到服务器端的数据传送，客户端进入FIN_WAIT_1状态。意思是说&quot;我客户端没有数据要发给你了&quot;，但是如果你服务器端还有数据没有发送完成，则不必急着关闭连接，可以继续发送数据。</li>
+<li>第二次挥手：服务器端收到FIN后，先发送ack=M+1，告诉客户端，你的请求我收到了，但是我还没准备好，请继续你等我的消息。这个时候客户端就进入FIN_WAIT_2 状态，继续等待服务器端的FIN报文。</li>
+<li>第三次挥手：当服务器端确定数据已发送完成，则向客户端发送FIN=N报文，告诉客户端，好了，我这边数据发完了，准备好关闭连接了。服务器端进入LAST_ACK状态。</li>
+<li>第四次挥手：客户端收到FIN=N报文后，就知道可以关闭连接了，但是他还是不相信网络，怕服务器端不知道要关闭，所以发送ack=N+1后进入TIME_WAIT状态，如果Server端没有收到ACK则可以重传。服务器端收到ACK后，就知道可以断开连接了。客户端等待了2MSL后依然没有收到回复，则证明服务器端已正常关闭，那好，我客户端也可以关闭连接了。最终完成了四次握手。</li>
+</ol>
+<p><strong>三次握手： </strong></p>
+<ol>
+<li><p>客户端发送SYN请求，进入SYN_SEND状态 </p>
+</li>
+<li><p>服务端收到SYN请求，并返回一个ACK应答，并发送一个SYN其请求，服务器进入SYN_RECV状态 </p>
+</li>
+<li><p>客户端收到服务端的SYN请求和ACK应答，发送ACK应答，客户端进入ESTABLISH状态，服务端收到应答后进入ESTABLISH。 </p>
+<p>如果没有收到应答，数据包都会根据TCP的重传机制进行重传。 </p>
+<p><strong>四次挥手：</strong> </p>
+</li>
+<li><p>客户端发送FIN包，请求断开连接，客户端进入FIN_WAIT1状态 </p>
+</li>
+<li><p>服务端收到FIN包后返回应答，进入CLOSE_WAIT状态 </p>
+</li>
+<li><p>客户端收到FIN的应答后进入FIN_WAIT2状态 </p>
+</li>
+<li><p>服务端发送FIN请求包，进入LAST_ACK状态 </p>
+</li>
+<li><p>客户端收到FIN请求包后，发送应答进入TIME_WAIT状态 </p>
+</li>
+<li><p>服务器收到ACK应答后，进入close状态。</p>
+</li>
+</ol>
+<h4 id="-">同时握手</h4>
+<p>​    <img src="https://upload-images.jianshu.io/upload_images/1856419-baf89c213c19d3bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/619/format/webp" alt="img"></p>
+<ul>
+<li>重发机制</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-9221af60624ef403.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="img"></p>
+<ul>
+<li><p>窗口控制中的重发机制</p>
+<ul>
+<li><p>确认应答未返回，但报文已到达</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-f17380d7afc3bb73.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/595/format/webp" alt="img"></p>
+</li>
+<li><p>报文未到达</p>
+<p><img src="D:\Blog\source\img\计算机网络\窗口数据传输丢包.png" alt="窗口数据传输丢包"></p>
+</li>
+</ul>
+</li>
+<li><p>滑动窗口协议有</p>
+<p>1、停止等待协议，发送窗口=1，接受窗口=1；</p>
+<p>2、退后N帧协议，发送&gt;1,接收=1;</p>
+<p>3、选择重传协议，发送&gt;1,接收&gt;1;</p>
+</li>
+<li><p>超时</p>
+<p>通过TCP协议发包时都会计算往返时间及其偏差。将这个往返时间和偏差时间相加，重发超时的时间就是比这个总和要稍大一点的值。</p>
+<blockquote>
+<p>在 BSD 的 Unix 以及 Windows 系统中，超时都以0.5秒为单位进行控制，因此重发超时都是0.5秒的整数倍。不过，最初其重发超时的默认值一般设置为6秒左右。数据被重发之后若还是收不到确认应答，则进行再次发送。此时，等待确认应答的时间将会以2倍、4倍的指数函数延长。此外，数据也不会被无限、反复地重发。达到一定重发次数之后，如果仍没有任何确认应答返回，就会判断为网络或对端主机发生了异常，强制关闭连接。并且通知应用通信异常强行终止</p>
+</blockquote>
+</li>
+<li><h4 id="-">利用窗口控制提高速度</h5>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-3883cce343404099.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/605/format/webp" alt="img"></p>
+<p><img src="http://blog.chinaunix.net/attachment/201402/17/26275986_1392626885IL2q.png" alt="img"></p>
+</li>
+</ul>
+<h3 id="-">流量控制</h3>
+<blockquote>
+<p>流量控制主要是接收方传递信息给发送方，使其不要发送数据太快，是一种端到端的控制。主要的方式就是返回的ack中会包含自己的接收窗口的大小，并且利用大小来控制发送方的数据发送</p>
+</blockquote>
+<p><img src="http://blog.chinaunix.net/attachment/201402/17/26275986_1392627535jeG5.png" alt="img"></p>
+<h3 id="-">拥塞控制</h3>
+<ul>
+<li><p>慢开始与拥塞避免</p>
+<p><img src="http://img.blog.csdn.net/20130801220358468?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2ljb2ZpZWxk/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img"></p>
+</li>
+<li><p>快重传和快恢复</p>
+<p><img src="D:\Blog\source\img\计算机网络\TCP阻塞预防.jpg" alt="TCP阻塞预防"></p>
+</li>
+</ul>
+<h3 id="-ip-">网络层的IP协议</h3>
+<p>IP 大致分为三大作用模块，它们是 IP 寻址、路由（最终节点为止的转发）以及 IP 分包与组包</p>
+<p>IP地址由网络和主机两部分组成</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-d653f38b146f5f9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/728/format/webp" alt="img"></p>
+<h4 id="ip-">IP地址分类</h4>
+<ul>
+<li><p>A类</p>
+<p> IP 地址是首位以 “0” 开头的地址。从第 1 位到第 8 位是它的网络标识。用十进制表示的话，0.0.0.0~127.0.0.0 是 A 类的网络地址。A 类地址的后 24 位相当于主机标识。因此，一个网段内可容纳的主机地址上限为16,777,214个。</p>
+</li>
+<li><p>B类</p>
+<p> IP 地址是前两位 “10” 的地址。从第 1 位到第 16 位是它的网络标识。用十进制表示的话，128.0.0.0~191.255.0.0 是 B 类的网络地址。B 类地址的后 16 位相当于主机标识。因此，一个网段内可容纳的主机地址上限为65,534个。</p>
+</li>
+<li><p>C类</p>
+<p> IP 地址是前三位为 “110” 的地址。从第 1 位到第 24 位是它的网络标识。用十进制表示的话，192.0.0.0~223.255.255.0 是 C 类的网络地址。C 类地址的后 8 位相当于主机标识。因此，一个网段内可容纳的主机地址上限为254个。</p>
+</li>
+<li><p>D类</p>
+<p>IP 地址是前四位为 “1110” 的地址。从第 1 位到第 32 位是它的网络标识。用十进制表示的话，224.0.0.0~239.255.255.255 是 D 类的网络地址。D 类地址没有主机标识，常用于多播。</p>
+</li>
+</ul>
+<blockquote>
+<p>在分配 IP 地址时关于主机标识有一点需要注意。即要用比特位表示主机地址时，不可以全部为 0 或全部为 1。因为全部为 0 只有在表示对应的网络地址或 IP 地址不可以获知的情况下才使用。而全部为 1 的主机通常作为广播地址。因此，在分配过程中，应该去掉这两种情况。这也是为什么 C 类地址每个网段最多只能有 254（ 28 - 2 = 254）个主机地址的原因。</p>
+</blockquote>
+<p>广播地址</p>
+<ul>
+<li>广播地址用于在同一个链路中相互连接的主机之间发送数据包。将 IP 地址中的主机地址部分全部设置为 1，就成了广播地址。</li>
+<li>广播分为本地广播和直接广播两种。在本网络内的广播叫做本地广播；在不同网络之间的广播叫做直接广播。</li>
+</ul>
+<p>多播地址</p>
+<ul>
+<li>多播用于将包发送给<strong>特定组内</strong>的所有主机。由于其直接使用 IP 地址，因此也不存在可靠传输。</li>
+<li>相比于广播，多播既可以穿透路由器，又可以实现只给那些必要的组发送数据包。</li>
+<li>多播使用 D 类地址。因此，如果从首位开始到第 4 位是 “1110”（224.0.0.0~239.255.255.255），就可以认为是多播地址。而剩下的 28 位可以成为多播的组编号。</li>
+<li>此外， 对于多播，所有的主机（路由器以外的主机和终端主机）必须属于 224.0.0.1 的组，所有的路由器必须属于 224.0.0.2 的组。</li>
+</ul>
+<h4 id="-">子网掩码</h4>
+<p><img src="D:\Blog\source\img\计算机网络\子网掩码.PNG" alt="子网掩码"></p>
+<blockquote>
+<p>2^3=8
+2^5=32-2=30
+192.168.1.(‭00110101‬)=&gt;192.168.1.(00100000)=192.168.1.32
+192.168.1.(‭00110101‬)=&gt;192.168.1.(00111111)=192.168.1.63</p>
+</blockquote>
+<h4 id="-">路由</h4>
+<p><img src="D:\Blog\source\img\计算机网络\数据包的转发.png" alt="数据包的转发"></p>
+<p>IP的分包和组包</p>
+<blockquote>
+<p>每种数据链路的最大传输单元（MTU）都不尽相同，因为每个不同类型的数据链路的使用目的不同。使用目的不同，可承载的 MTU 也就不同。任何一台主机都有必要对 IP 分片进行相应的处理。分片往往在网络上遇到比较大的报文无法一下子发送出去时才会进行处理。经过分片之后的 IP 数据报在被重组的时候，只能由目标主机进行。路由器虽然做分片但不会进行重组。</p>
+</blockquote>
+<p>多播与广播</p>
+<ul>
+<li><p>多播</p>
+<blockquote>
+<p>多播地址范围为224.0.0.0～239.255.255.255</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://images.51cto.com/files/uploadimg/20090417/114841258.jpg" alt="img"></p>
+<ul>
+<li><p>广播</p>
+<blockquote>
+<p> 广播分组的目标IP地址的主机部分全为1</p>
+</blockquote>
+<p><img src="http://images.51cto.com/files/uploadimg/20090417/114827618.jpg" alt="img"></p>
+</li>
+</ul>
+<h2 id="http-">HTTP协议</h2>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-bfaf1b883618ecb4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/725/format/webp" alt="img"></p>
+<h3 id="htpp-">HTPP协议工作过程</h3>
+<ol>
+<li>建立TCP连接</li>
+<li>向服务器发送请求命令</li>
+<li>向服务器发送头信息</li>
+<li>服务器向客户端发送响应状态码</li>
+<li>服务端向客户端发送头信息</li>
+<li>服务端向客户端发送具体请求内容</li>
+<li>断开TCP连接</li>
+</ol>
+<h3 id="http-https-">HTTP与HTTPS的区别</h3>
+<p>　　Http协议运行在TCP之上，明文传输，客户端与服务器端都无法验证对方的身份；Https是身披SSL(Secure Socket Layer)外壳的Http，运行于SSL上，SSL运行于TCP之上，是添加了加密和认证机制的HTTP。</p>
+<ul>
+<li><p>端口不同，Http与Http使用不同的连接方式，用的端口也不一样，前者是80，后者是443；</p>
+</li>
+<li><p>资源消耗</p>
+<p>和HTTP通信相比，Https通信会由于加减密处理消耗更多的CPU和内存资源；</p>
+</li>
+<li><p>开销</p>
+<p>Https通信需要证书，而证书一般需要向认证机构购买； </p>
+</li>
+</ul>
+<h3 id="cookies">Cookies</h3>
+<p>​    HTTP是一个无状态连接协议，而Cookies可以实现保存客户端和服务端的连接状态</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-f246d682b404bb08.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/689/format/webp" alt="img"></p>
+<blockquote>
+<p>​     Cookie 技术通过在请求和响应报文中写入 Cookie 信息来控制客户端的状态。Cookie 会根据从服务器端发送的响应报文内的一个叫做 Set-Cookie 的首部字段信息，通知客户端保存Cookie。当下次客户端再往该服务器发送请求时，客户端会自动在请求报文中加入 Cookie 值后发送出去。服务器端发现客户端发送过来的 Cookie 后，会去检查究竟是从哪一个客户端发来的连接请求，然后对比服务器上的记录，最后得到之前的状态信息。</p>
+</blockquote>
+<h3 id="http-">HTTP协议请求方法</h3>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-8e5fef1170d29f68.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/889/format/webp" alt="img"></p>
+<ul>
+<li><p>get和post的区别</p>
+<ol>
+<li><p>get在浏览器回退时是无害的，而post会再次请求</p>
+</li>
+<li><p>get产生的url地址可以被收藏，而post不会</p>
+</li>
+<li><p>get请求会被浏览器主动缓存，而post不会，除非手动设置</p>
+</li>
+<li><p>get请求只能进行url编码，而post支持多种编码方式</p>
+</li>
+<li><p>get请求参数会被完整保留在浏览历史记录里，而post中的参数不会被保留</p>
+</li>
+<li><p>get请求在url中传送的参数有长度限制，而post没有</p>
+</li>
+<li><p>对参数的数据类型，get只接受ascll字符，而post没有限制</p>
+</li>
+<li><p>get比post更安全，因为参数直接暴露在url上，所以不能用来传递敏感信息</p>
+</li>
+<li><p>get参数通过url传递，poet放在request body中</p>
+</li>
+<li><p>get产生一个TCP数据包，post产生两个TCP数据包</p>
+<blockquote>
+<p>对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200(返回数据)，而对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok(返回数据)</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="http-">HTTP 协议报文结构</h3>
+<p>用于 HTTP 协议交互的信息被称为 HTTP 报文</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-e8d90efbc1c33d93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/618/format/webp" alt="img"></p>
+<blockquote>
+<p>HTTP 报文大致可分为报文首部和报文主体两部分。两者由最初出现的空行（回车符+换行符）来划分</p>
+</blockquote>
+<ul>
+<li><p>请求报文结构</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-dda70fede5f1ef04.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/521/format/webp" alt="img"></p>
+<p>其中首部由以下内容组成</p>
+<ul>
+<li><p>请求行</p>
+<p>包含URI，请求方法和HTTP版本</p>
+</li>
+<li><p>首部字段</p>
+<p> 包含表示请求的地址，内容长度等各种属性</p>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-f8b56031bcc68ff8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/898/format/webp" alt="img"></p>
+<p>​    </p>
+</li>
+<li><p>响应报文结构</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-6db141cfd346ca0f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/484/format/webp" alt="img"></p>
+<p>响应报文的首部由以下内容组成</p>
+<ul>
+<li>状态行</li>
+<li>首部字段</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-96bab0acbfe8361e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/826/format/webp" alt="img"></p>
+</li>
+</ul>
+<p>  <strong>首部字段分为：</strong></p>
+<p>  <img src="D:\Blog\source\img\计算机网络\首部字段类型.PNG" alt="首部字段类型"></p>
+<p>  具体关于首部字段和响应状态码参见原文：<a href="https://www.jianshu.com/p/6e9e4156ece3"><strong>HTTP</strong></a></p>
+<h3 id="http-">HTTP报文实体与报文主体</h3>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-2ea0ce4286e00702.png?imageMogr2/auto-orient/" alt="img"></p>
+<blockquote>
+<p><strong>通常，报文主体等于实体主体。只有当传输中进行编码操作时，实体主体的内容发生变化，才导致它和报文主体产生差异</strong></p>
+</blockquote>
+<h3 id="http-">HTTP协议的缓存机制</h3>
+<ul>
+<li><p>第一次请求</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-021265fdcf9666a7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/411/format/webp" alt="img"></p>
+</li>
+<li><p>第二次请求</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-70571246d1ab6a67.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/554/format/webp" alt="img"></p>
+</li>
+</ul>
+<h3 id="http-">HTTP隧道</h3>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-86675c789496dda5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="img"></p>
+<blockquote>
+<p>隧道是会在建立起来之后，就会在两条连接之间对原始数据进行盲转发的 HTTP 应用程序。HTTP 隧道通常用来在一条或多条 HTTP 连接上转发非 HTTP 数据，转发时不会窥探数据。HTTP 隧道的一种常见用途就是通过 HTTP 连接承载加密的安全套接字层（SSL）流量，这样 SSL 流量就可以穿过只允许 Web 流量通过的防火墙了。</p>
+</blockquote>
+<h3 id="http-">HTTP协议的断点续传</h3>
+<blockquote>
+<p>Range：512k</p>
+</blockquote>
+<p>这个头通知服务端从文件的512K位置开始传输文件 </p>
+<p>服务端收到断点续传请求，从文件的512K位置开始传输，并且在HTTP头中增加： </p>
+<blockquote>
+<p>Content-Range:bytes 512000-/1024000</p>
+</blockquote>
+<p>此时返回的206而不是200</p>
+<p>在断点续传中为了应对在续传过程中服务端数据改变的问题，可通过添加标识来确认：</p>
+<ul>
+<li><p>Last-Modified</p>
+<p>标识文件最后更改时间</p>
+</li>
+<li><p>ETag</p>
+<p>存放校验MD5</p>
+</li>
+<li><p>If-Modified-Since</p>
+<p>如果时间一致，那么返回HTTP状态码304（不返回文件内容）</p>
+<blockquote>
+<p>是一个条件式请求首部，服务器只在所请求的资源在给定的日期时间之后对内容进行过修改的情况下才会将资源返回，状态码为 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status/200"><code>200</code></a>  。如果请求的资源从那时起未经修改，那么返回一个不带有消息主体的  <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status/304"><code>304</code></a>  响应，而在 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Last-Modified"><code>Last-Modified</code></a> 首部中会带有上次修改时间。 不同于  <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/If-Unmodified-Since"><code>If-Unmodified-Since</code></a>, <code>If-Modified-Since</code> 只可以用在 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/GET"><code>GET</code></a> 或 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/HEAD"><code>HEAD</code></a> 请求中</p>
+</blockquote>
+</li>
+<li><p>If-None-Match</p>
+<p>把ETag发送给服务器，服务器再次计算A的哈希值并和浏览器返回的值做比较，若未发生改变返回304</p>
+</li>
+<li><p>If-Range</p>
+<blockquote>
+<p>HTTP 请求头字段用来使得 <strong>Range</strong> 头字段在一定条件下起作用：当字段值中的条件得到满足时，<strong>Range</strong> 头字段才会起作用，同时服务器回复<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status/206"><code>206</code></a> 部分内容状态码，以及<strong>Range</strong> 头字段请求的相应部分；如果字段值中的条件没有得到满足，服务器将会返回 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status/200"><code>200</code></a> <code>OK</code> 状态码，并返回完整的请求资源</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="-">操作系统</h1>
+<h2 id="-">记事本</h2>
+<ol>
+<li><p>软连接</p>
+<ul>
+<li><p>文件有相同的 inode 及 data block。   </p>
+</li>
+<li><p>只能对已存在的文件进行创建。   </p>
+</li>
+<li><p>不能交叉文件系统进行硬链接的创建。   </p>
+</li>
+<li><p>不能对目录进行创建，只可对文件创建。</p>
+</li>
+<li><p>删除一个硬链接文件并不影响其他有相同 inode号的文件。</p>
+</li>
+</ul>
+</li>
+<li><p>原/反/补码</p>
+<ul>
+<li><p>原码</p>
+<p>值的二进制代码最高为为符号位</p>
+</li>
+<li><p>反码</p>
+<p>若为正数，原码=反码，若为负数，除符号位外按位取反</p>
+</li>
+<li><p>补码</p>
+<p>原码除符号位按位取反，低位加一</p>
+</li>
+</ul>
+</li>
+<li><p>系统命令</p>
+<ul>
+<li><p>export命令的功能是设置或显示环境变量;</p>
+</li>
+<li><p>cat命令的功能是linux下的一个文本输出命令,通常是用于观看某个文件的内容的;</p>
+</li>
+<li><p>echo命令的功能是在显示器上显示一段文字，一般起到一个提示的作用;</p>
+</li>
+<li><p>env命令的功能是查询环境变量 </p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="-">进程与线程</h2>
+<ol>
+<li>进程是系统资源分配与调度的基本单位，进程拥有自己独立的内存单元，而线程是CPU调度的基本单位只能共享进程的内存单元</li>
+<li>一个程序至少有一个进程，一个进程至少存在一个线程</li>
+<li>进程可实现了操作系统的并发，线程可实现进程内的并发</li>
+</ol>
+<h3 id="-">状态</h3>
+<ul>
+<li>进程</li>
+</ul>
+<p><img src="http://static.zybuluo.com/Rico123/xilfs88fqtduey2lj5o3503z/%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%B8%89%E7%A7%8D%E7%8A%B6%E6%80%81.jpg" alt="è¿ç¨çä¸ç§ç¶æ.jpg-14.1kB"></p>
+<ul>
+<li><p>线程</p>
+<p>创建(new)、就绪(runnable/start)、运行(running)、阻塞(blocked)、等待(waiting)、时间等待(time waiting) 和 消亡(dead/terminated)</p>
+<p><img src="http://uploadfiles.nowcoder.com/images/20151217/149974_1450349079825_4697A22AC611680A692472687DEC1CFD" alt="img"></p>
+<p>notify()方法（只随机唤醒一个 wait 线程），notifyAll()方法（唤醒所有 wait 线程）</p>
+</li>
+</ul>
+<h2 id="-">页面置换算法</h2>
+<p><a href="https://www.cnblogs.com/fkissx/p/4712959.html">看这里</a></p>
+<h2 id="-">进程调度算法</h2>
+<p><a href="https://blog.csdn.net/wanghao109/article/details/13004507">看这里</a></p>
+<h2 id="-">死锁</h2>
+<p>两个或者多个线程互相持有对方所需要的资源，导致这些线程处于等待状态，无法正常执行</p>
+<p>必要条件</p>
+<ol>
+<li>不可剥夺： 在资源没有释放前，任何进程都无法剥夺该资源</li>
+<li>请求和保持：当请求资源陷入阻塞状态时，自己所占有的资源不释放</li>
+<li>循环等待：所有阻塞进程造成一个环路</li>
+<li>互斥：分配的资源具有互斥性，只能由一个进程占有</li>
+</ol>
+<h3 id="-">死锁的避免</h3>
+<p>银行家算法</p>
+<ul>
+<li>Available向量：系统中可利用的资源数目 </li>
+<li>Max矩阵：每个进程对每种资源的最大需求 </li>
+<li>Allocation矩阵：每个进程已分配的各类资源的数目 </li>
+<li>Need矩阵：每个进程尚需的各类资源数 </li>
+</ul>
+<p><img src="https://img-blog.csdn.net/2018082900264813?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Zsb3dpbmdfd2luZA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="è¿éåå¾çæè¿°"></p>
+<h3 id="-">死锁的预防</h3>
+<p>破坏死锁产生的四大必要条件</p>
+<h3 id="-">死锁的解除</h3>
+<ol>
+<li>抢占资源分配产生死锁的某个进程</li>
+<li>杀掉某个进程，打破循环体</li>
+</ol>
+<h2 id="-">分页与分段</h2>
+<h3 id="-">分页存储管理</h3>
+<p>页表：</p>
+<p>页表需要两次访问内存</p>
+<p><img src="http://img.blog.csdn.net/20130519103229249" alt="img"></p>
+<p>快表：</p>
+<p>只需一次访问内存</p>
+<h3 id="-">分段存储管理</h3>
+<p><img src="http://img.blog.csdn.net/20130519103349824" alt="img"></p>
+<h3 id="-">区别</h3>
+<ul>
+<li><p>目的不同</p>
+<p>分页是由于系统管理的需要而不是用户的需要，它是信息的物理单位；分段的目的是为了能更好地满足用户的需要，它是信息的逻辑单位，它含有一组其意义相对完整的信息；</p>
+</li>
+<li><p>大小不同</p>
+<p>页的大小固定且由系统决定，而段的长度却不固定，由其所完成的功能决定；</p>
+</li>
+<li><p>地址空间不同</p>
+<p>段向用户提供二维地址空间；页向用户提供的是一维地址空间；</p>
+</li>
+<li><p>信息共享</p>
+<p>段是信息的逻辑单位，便于存储保护和信息的共享，页的保护和共享受到限制；</p>
+</li>
+<li><p>内存碎片</p>
+<p>页式存储管理的优点是没有外碎片（因为页的大小固定），但会产生内碎片（一个页可能填充不满）；而段式管理的优点是没有内碎片（因为段大小可变，改变段大小来消除内碎片）。但段换入换出时，会产生外碎片（比如4k的段换5k的段，会产生1k的外碎片）。</p>
+</li>
+</ul>
+<h2 id="-">局部性原理</h2>
+<ul>
+<li><p>时间局限性</p>
+<p>当某段代码被执行，不久后这段代码极有可能再次被执行</p>
+</li>
+<li><p>空间局部性</p>
+<p>当某个内存空间被访问时，与其相邻的其它内存空间也极可能被访问</p>
+</li>
+</ul>
+<h2 id="-">虚拟内存</h2>
+<p>根据局部性原理，在将程序载入内存时，无需将全部都载入，可在需要用到非内存部分的内容时再载入，同时也可以把不被访问的内容清除内存，这样就从逻辑上扩展了内存空间</p>
+<h2 id="-">信号量机制</h2>
+<p>利用PV操作对信号量进行管理</p>
+<p>当它的值大于0时，表示当前可用资源的数量。</p>
+<p>当它的值小于0时，其绝对值表示等待使用该资源的进程个数。</p>
+<h3 id="-">消费者与生产者问题</h3>
+<pre><code class="lang-java">p(empty);
+p(mutex);
+
+//生产
+
+v(mutex); 
+v(full); 
+
+p(full);
+p(mutex);
+
+//消费
+
+v(mutex); 
+v(empty); 
+</code></pre>
+<h3 id="-">读写者问题</h3>
+<p>Wmutex: 读、写互斥；写、写互斥 Rmutex: 读间访问Readcount互斥 Readcount: 记录读者进程数</p>
+<pre><code class="lang-java">Semaphore wmutex=new Semaphore(1,true);
+Semaphore rmutex=new Semaphore(1,true);
+rmutex.acquire();
+//当第一个读进程读共享文件时
+if(readCount==0){
+    wmutex.acquire();
+}
+readCount++;
+rmutex.release();
+
+//read
+
+rmutex.acquire();
+readCount--;
+//当最后一个读进程读完共享文件
+if(readCount==0){
+    wmutex.release();
+}
+rmutex.release();
+
+
+
+wmutex.acquire(wmutex);
+
+//write
+
+wmutex.release(wmutex);
+
+
+</code></pre>
+<h1 id="-">数据结构</h1>
+<h2 id="-">二叉树</h2>
+<p>二叉树的遍历</p>
+<ul>
+<li><p>前序遍历</p>
+<ol>
+<li>根子树</li>
+<li>左子树</li>
+<li>右子树</li>
+</ol>
+</li>
+<li><p>中序遍历</p>
+<ol>
+<li>左子树</li>
+<li>根子树</li>
+<li>右子树</li>
+</ol>
+</li>
+<li>后序遍历<ol>
+<li>左子树</li>
+<li>右子树</li>
+<li>根子树</li>
+</ol>
+</li>
+</ul>
+<p>唯一确定一颗二叉树</p>
+<ul>
+<li>前序遍历+中序遍历</li>
+<li>后序遍历+中序遍历</li>
+</ul>
+<blockquote>
+<p>树的出度=树的入度=树的节点数-1</p>
+<p>n0=n2+1</p>
+<p>二叉树的第i层至多有2^(i-1)个结点</p>
+<p>二叉树深度为k则至多有2^(k-1)个结点</p>
+</blockquote>
+<h3 id="-">满二叉树</h3>
+<p>最后一层全是叶子结点，叶子结点以上全是非叶子结点</p>
+<blockquote>
+<p>满二叉树的结点数：2^k-1</p>
+<p>第i层的结点数为：2^(i-1)</p>
+</blockquote>
+<p>设某个子结点为15，则其父结点为15/2=7，左子结点为15*2=30</p>
+<h3 id="-">完全二叉树</h3>
+<p>满二叉树是完全二叉树，但完全二叉树不一定是满二叉树</p>
+<p>所有叶子结点都在最后一层和倒数第二层，最后一层的叶子结点都集中在最左边的若干位置</p>
+<p><img src="https://images2017.cnblogs.com/blog/1138117/201801/1138117-20180124095621897-275151372.png" alt="img"></p>
+<h3 id="-">哈夫曼树</h3>
+<p><a href="https://blog.csdn.net/lmh10621/article/details/76100381">看这里</a></p>
+<p>小/大顶堆：跟结点比左右子结点都小/大</p>
+<ul>
+<li><p>路径长度</p>
+<blockquote>
+<p>从树中一个结点到另一个结点之间的分支构成两个结点之间的路径，路径上的分支数目称做路径长度。</p>
+</blockquote>
+</li>
+<li><p>树的路径长度</p>
+<blockquote>
+<p>路径长度就是从树根到每一结点的路径长度之和。</p>
+</blockquote>
+<p><img src="https://img-blog.csdn.net/20140728105655693?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMzAxMTg0MQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img"></p>
+</li>
+<li><p>带权路径长度</p>
+<blockquote>
+<p>WPL=1 <em> 5 + 2 </em> 15 + 3 <em> 40 + 4 </em> 30 + 4 * 10= 315</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="-">红黑树</h3>
+<p>首先是：二叉查找树</p>
+<ul>
+<li>左子树的所有结点都小于或等于根结点</li>
+<li>右子树的所有结点都大于或等于根结点</li>
+</ul>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20171102/202128cf82084e64a251b458f0ddcd9b.jpeg" alt="img"></p>
+<p>当需要查找10时：</p>
+<p>10&gt;9，故在9的右子树，10&lt;13，故在13的左子树，10&lt;11，故在11的左子树</p>
+<blockquote>
+<p>由此可得查找次数等于树的深度</p>
+</blockquote>
+<p>当插入结点时可能会导致：</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20171102/3490195d7e3a405c97c34d391c71f09b.png" alt="img"></p>
+<p>为了解决该问题，红黑树：</p>
+<ol>
+<li><p>节点是红色或黑色。</p>
+</li>
+<li><p>根节点是黑色。</p>
+</li>
+<li><p>每个叶子节点都是黑色的空节点（NIL节点）。</p>
+</li>
+<li><p>每个红色节点的两个子节点都是黑色。(从每个叶子到根的所有路径上不能有两个连续的红色节点)</p>
+</li>
+<li><p>从任一节点到其每个叶子的所有路径都包含相同数目的黑色节点。</p>
+</li>
+</ol>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20171102/eefb5a3397ef4089b356e7c9f0938a8d.jpeg" alt="img"></p>
+<p>此时根结点到叶子结点的最长路径不会超过最短路径的两倍。</p>
+<p>但当插入新结点时会破坏红黑树，如插入21：</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20171102/c0042741a40d47249e287908c16a9203.jpeg" alt="img"></p>
+<p>此时违反了条件4，此时需要调整：变色和旋转（左旋转和右旋转）</p>
+<ul>
+<li><p>变色</p>
+<p>使其符合条件4：</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20171102/142bd79263094ec89bccb2cfd8316113.png" alt="img"></p>
+<p>使其符合条件5：</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20171102/3e651c84a1494495a73287df0ca92216.jpeg" alt="img"></p>
+<p>使其符合条件4：</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20171102/a8c4ce5620424588bdbee69f4bb3d527.png" alt="img"></p>
+</li>
+<li><p>旋转</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20171102/9f6949f1ca624323ad26bd474912571a.jpeg" alt="img"></p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20171102/d7da48b838514b33bd8b44ab1b55c9e1.jpeg" alt="img"></p>
+<p>变色使其满足条件2和条件4：</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20171102/d32de019907c4e9a9c2e3490d66677de.jpeg" alt="img"></p>
+<p>旋转满足条件5：</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20171102/1fdcb0466c7a4ecc84b54cb701781243.jpeg" alt="img"></p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20171102/b3fcbe987f214340b0b03d129b2a2059.jpeg" alt="img"></p>
+<p>变色使其满足条件4：</p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20171102/79bbe75c48da4a7492c21af0e18065a5.jpeg" alt="img"></p>
+</li>
+</ul>
+<h1 id="-">算法</h1>
+<h2 id="kmp-">KMP算法</h2>
+<h2 id="-">排序</h2>
+<p><a href="https://www.cnblogs.com/onepixel/articles/7674659.html">看这里</a></p>
+<p><img src="https://images2018.cnblogs.com/blog/849589/201804/849589-20180402133438219-1946132192.png" alt="img"></p>
+<h3 id="-">选择排序</h3>
+<p><img src="https://images2017.cnblogs.com/blog/849589/201710/849589-20171015224719590-1433219824.gif" alt="img"></p>
+<h3 id="-">插入排序</h3>
+<p><img src="https://images2017.cnblogs.com/blog/849589/201710/849589-20171015225645277-1151100000.gif" alt="img"></p>
+<h3 id="-">冒泡排序</h3>
+<p><img src="https://images2017.cnblogs.com/blog/849589/201710/849589-20171015223238449-2146169197.gif" alt="img"></p>
+<p>冒泡，选择和插入的代码实现：</p>
+<pre><code class="lang-java">    private void bubbleSort(){
+        for(int i=0;i&lt;ts.length-1;i++){
+            for(int j=0;j&lt;ts.length-1-i;j++){
+                if(ts[j]&gt;ts[j+1]){
+                    t=ts[j];
+                    ts[j]=ts[j+1];
+                    ts[j+1]=t;
+                }
+            }
+        }
+        out();
+    }
+    private void chooseSort(){
+        。。。
+    }
+    private void insertSort(){
+        int pre,current;
+        for (int i=1;i&lt;ts.length;i++){
+            pre=i-1;
+            current=ts[i];
+            while(pre&gt;=0&amp;&amp;ts[pre]&gt;current){
+                //不满足条件的往后挪
+                ts[pre+1]=ts[pre];
+                --pre;
+            }
+            ts[pre+1]=current;
+        }
+        out();
+    }
+</code></pre>
+<h3 id="-">归并排序</h3>
+<p><img src="https://images2017.cnblogs.com/blog/849589/201710/849589-20171015230557043-37375010.gif" alt="img"></p>
+<p>​    归并排序是一种稳定的排序方法。和选择排序一样，归并排序的性能不受输入数据的影响，但表现比选择排序好的多，因为始终都是O(nlogn）的时间复杂度。代价是需要额外的内存空间。</p>
+<h3 id="-">快速排序</h3>
+<p><img src="D:\Blog\source\img\数据结构与算法\快速排序过程.PNG" alt="快速排序过程"></p>
+<h3 id="-">堆排序</h3>
+<blockquote>
+<p>构造大根堆，与根结点交换，不断重复</p>
+</blockquote>
+<p><img src="https://images2017.cnblogs.com/blog/849589/201710/849589-20171015231308699-356134237.gif" alt="img"></p>
+<h2 id="2-n-">2的N次方</h2>
+<pre><code class="lang-java">Scanner sc=new Scanner(System.in);
+int n=sc.nextInt();
+List&lt;Integer&gt; list=new ArrayList&lt;&gt;();
+list.add(1);
+int temp;
+boolean b=false;
+//eg:152=2^i
+for(int i=0;i&lt;n;i++){
+    //eg:152*2
+    for(int j=list.size()-1;j&gt;=0;j--){
+        temp=list.get(j);
+        if(b){
+            list.set(j,temp*2%10+1);
+            b=false;
+        }else{
+            list.set(j,temp*2%10);
+        }
+        //决定高位数字是否需要加一
+        if(temp&lt;5){
+            b=false;
+        //在j==0的特殊情况下temp&gt;=5时：
+        }else if(j==0){
+            list.add(0,1);
+        }else {
+            b=true;
+        }
+    }
+}
+for(int r:list){
+    System.out.print(r);
+}
+</code></pre>
+<h1 id="-">数据库</h1>
+<p>关系型数据库遵循ACID规则：</p>
+<ul>
+<li>A (Atomicity) 原子性</li>
+<li>C (Consistency) 一致性</li>
+<li>I (Isolation) 独立性</li>
+<li>D (Durability) 持久性</li>
+</ul>
+<h1 id="-">设计模式</h1>
+<h2 id="-">观察则模式</h2>
+<p>对象包括：</p>
+<ol>
+<li><p>抽象被观察者对象</p>
+<pre><code class="lang-java">public interface Observerable {
+    public void registerObserver(Observer o);
+    public void removeObserver(Observer o);
+    public void notifyObserver();
+}
+</code></pre>
+</li>
+<li><p>具体被观察对象</p>
+<pre><code class="lang-java">public class WechatServer implements Observerable {
+    private List&lt;Observer&gt; list;
+    private String message;
+    public WechatServer() {
+        list = new ArrayList&lt;Observer&gt;();
+    }
+    @Override
+    public void registerObserver(Observer o) {
+
+        list.add(o);
+    }
+    @Override
+    public void removeObserver(Observer o) {
+        if(!list.isEmpty())
+            list.remove(o);
+    }
+    @Override
+    public void notifyObserver() {
+        for(int i = 0; i &lt; list.size(); i++) {
+            Observer oserver = list.get(i);
+            oserver.update(message);
+        }
+    }
+    public void setInfomation(String s) {
+        this.message = s;
+        System.out.println(&quot;微信服务更新消息： &quot; + s);
+        //消息更新，通知所有观察者
+        notifyObserver();
+    }
+
+}
+</code></pre>
+</li>
+<li><p>抽象观察者对象</p>
+<pre><code class="lang-java">public interface Observer {
+    public void update(String message);
+}
+</code></pre>
+</li>
+<li><p>具体观察者对象</p>
+<pre><code class="lang-java">public class User implements Observer {
+    private String name;
+    private String message;
+    public User(String name) {
+        this.name = name;
+    }
+    @Override
+    public void update(String message) {
+        this.message = message;
+        read();
+    }
+    public void read() {
+        System.out.println(name + &quot; 收到推送消息： &quot; + message);
+    }
+
+}
+
+</code></pre>
+</li>
+</ol>
+<h2 id="-">增量模型</h2>
+<p>增量模型是把待开发的软件系统模块化，将每个模块作为一个增量组件，从而分批次地分析、设计、编码和测试这些增量组件。运用增量模型的软件开发过程是递增式的过程。相对于瀑布模型而言，采用增量模型进行开发，开发人员不需要一次性地把整个软件产品提交给用户，而是可以分批次进行提交。</p>
+
+          	</article>
+        </div>
+		</div>
+  </body>
+</html>
+<script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="toc/js/ztree_toc.js"></script>
+<script type="text/javascript" src="toc_conf.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+    var css_conf = eval(markdown_panel_style);
+    $('#readme').css(css_conf)
+    
+    var conf = eval(jquery_ztree_toc_opts);
+		$('#tree').ztree_toc(conf);
+});
+//-->
+</SCRIPT>
